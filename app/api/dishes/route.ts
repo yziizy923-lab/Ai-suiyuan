@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { pool } from '../../../lib/db';
+import { pool, searchDishesFallback, getAllDishesFromBackup } from '../../../lib/db';
 
 export async function GET(request: Request) {
   try {
@@ -39,10 +39,24 @@ export async function GET(request: Request) {
       dishes = result.rows;
     }
 
-    return NextResponse.json({ dishes });
+    return NextResponse.json({ dishes, fromBackup: false });
   } catch (err) {
-    console.error('API Error:', err);
-    return NextResponse.json({ dishes: [] }, { status: 500 });
+    console.error('[API] Database query failed, using backup:', err);
+
+    try {
+      let dishes;
+      const search = new URL(request.url).searchParams.get('search');
+
+      if (search) {
+        dishes = await searchDishesFallback(search);
+      } else {
+        dishes = await getAllDishesFromBackup();
+      }
+
+      return NextResponse.json({ dishes, fromBackup: true });
+    } catch (backupErr) {
+      console.error('[API] Backup data also failed:', backupErr);
+      return NextResponse.json({ dishes: [], fromBackup: true, error: 'No data available' }, { status: 500 });
+    }
   }
 }
-

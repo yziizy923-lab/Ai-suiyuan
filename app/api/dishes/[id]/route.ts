@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { pool } from '../../../../lib/db';
+import { pool, getDishByIdFallback } from '../../../../lib/db';
 
 export async function GET(
   request: Request,
@@ -28,9 +28,28 @@ export async function GET(
       return NextResponse.json({ error: 'Dish not found' }, { status: 404 });
     }
 
-    return NextResponse.json(result.rows[0]);
+    return NextResponse.json({ ...result.rows[0], fromBackup: false });
   } catch (err) {
-    console.error('API Error:', err);
-    return NextResponse.json({ error: 'Failed to fetch dish' }, { status: 500 });
+    console.error('[API] Database query failed, using backup:', err);
+
+    try {
+      const { id } = params;
+      const dishId = parseInt(id, 10);
+
+      if (isNaN(dishId)) {
+        return NextResponse.json({ error: 'Invalid dish ID' }, { status: 400 });
+      }
+
+      const dish = await getDishByIdFallback(dishId);
+
+      if (!dish) {
+        return NextResponse.json({ error: 'Dish not found' }, { status: 404 });
+      }
+
+      return NextResponse.json({ ...dish, fromBackup: true });
+    } catch (backupErr) {
+      console.error('[API] Backup data also failed:', backupErr);
+      return NextResponse.json({ error: 'Failed to fetch dish' }, { status: 500 });
+    }
   }
 }

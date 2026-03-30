@@ -1,4 +1,10 @@
 import { Pool } from 'pg';
+import {
+  getAllDishesFromBackup,
+  searchDishesFromBackup,
+  getDishByIdFromBackup,
+  BackupDish,
+} from './backup';
 
 const pool = new Pool({
   connectionString: process.env.POSTGRES_URL,
@@ -14,8 +20,9 @@ export async function queryWithFallback<T>(
     const result = await dbQuery();
     return { rows: result.rows, fromBackup: false };
   } catch (err) {
-    console.error('[DB] Database query failed:', err);
-    return { rows: [], fromBackup: true };
+    console.error('[DB] Database query failed, falling back to backup:', err);
+    const backupData = await getAllDishesFromBackup();
+    return { rows: backupData as T[], fromBackup: true };
   }
 }
 
@@ -44,6 +51,16 @@ export async function testConnection(): Promise<boolean> {
     console.error('[DB] Connection test failed:', err);
     return false;
   }
+}
+
+export async function searchDishesFallback(
+  keyword: string
+): Promise<BackupDish[]> {
+  return searchDishesFromBackup(keyword);
+}
+
+export async function getDishByIdFallback(id: number): Promise<BackupDish | null> {
+  return getDishByIdFromBackup(id);
 }
 
 export { pool };

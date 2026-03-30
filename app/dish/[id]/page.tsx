@@ -28,15 +28,28 @@ async function fetchDishFromAPI(id: number): Promise<Dish | null> {
     // 处理数据库返回的数据格式
     return {
       ...dish,
-      // 数据库中 tags 和 ingredients 可能是数组或字符串，需要处理
-      tags: Array.isArray(dish.tags) ? dish.tags : (typeof dish.tags === 'string' ? JSON.parse(dish.tags) : []),
-      ingredients: Array.isArray(dish.ingredients) ? dish.ingredients : (typeof dish.ingredients === 'string' ? JSON.parse(dish.ingredients) : []),
+      // 数据库中 tags 和 ingredients 可能是数组、JSON字符串或逗号分隔的字符串，需要处理
+      tags: Array.isArray(dish.tags) ? dish.tags : parseArrayField(dish.tags),
+      ingredients: Array.isArray(dish.ingredients) ? dish.ingredients : parseArrayField(dish.ingredients),
       image: dish.image || `https://picsum.photos/seed/${dish.id}/800/500`
     };
   } catch (error) {
     console.error('Failed to fetch dish:', error);
     return null;
   }
+}
+
+// 解析数组字段，支持数组、JSON字符串或逗号分隔的字符串
+function parseArrayField(value: unknown): string[] {
+  if (Array.isArray(value)) return value;
+  if (typeof value === 'string') {
+    try {
+      return JSON.parse(value);
+    } catch {
+      return value.split(',').map(s => s.trim()).filter(Boolean);
+    }
+  }
+  return [];
 }
 
 // 袁枚原文数据

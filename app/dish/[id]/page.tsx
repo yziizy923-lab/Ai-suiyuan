@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter, useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 type Dish = {
   id: number;
@@ -62,8 +62,63 @@ export default function DishDetailPage() {
   const [error, setError] = useState<string | null>(null);
   const [showContent, setShowContent] = useState(false);
   const [imgError, setImgError] = useState(false);
+  const [showCookingSteps, setShowCookingSteps] = useState(false);
+  const [cookingSteps, setCookingSteps] = useState<any[]>([]);
+  const [loadingSteps, setLoadingSteps] = useState(false);
+  // 动画状态
+  const [currentStep, setCurrentStep] = useState(0);
+  const animationIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const dishId = Number(params.id);
+
+  // 加载制作步骤
+  const loadCookingSteps = async () => {
+    if (!dish) return;
+
+    setLoadingSteps(true);
+    try {
+      // 1. 获取 AI 生成的步骤
+      const stepsRes = await fetch(
+        `/api/cooking-steps?dish=${encodeURIComponent(dish.name)}&desc=${encodeURIComponent(dish.desc)}&ingredients=${encodeURIComponent(dish.ingredients.join(','))}`
+      );
+      const stepsData = await stepsRes.json();
+
+      if (stepsData.success && stepsData.steps) {
+        setCookingSteps(stepsData.steps);
+        setShowCookingSteps(true);
+
+        // 2. 批量生成步骤图片
+        const batchRes = await fetch('/api/step-image', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            steps: stepsData.steps,
+            dishName: dish.name,
+          }),
+        });
+        const batchData = await batchRes.json();
+
+        if (batchData.success && batchData.steps) {
+          // 合并图片到步骤
+          setCookingSteps((prev) =>
+            prev.map((step) => {
+              const generated = batchData.steps.find(
+                (s: any) => s.stepNumber === step.step
+              );
+              return generated?.success
+                ? { ...step, imageBase64: generated.imageBase64 }
+                : step;
+            })
+          );
+        }
+      }
+    } catch (error) {
+      console.error('加载制作步骤失败:', error);
+      alert('生成制作过程失败，请重试');
+    } finally {
+      setLoadingSteps(false);
+    }
+  };
 
   useEffect(() => {
     async function loadDish() {
@@ -89,6 +144,29 @@ export default function DishDetailPage() {
       loadDish();
     }
   }, [dishId]);
+
+  useEffect(() => {
+    if (showCookingSteps && cookingSteps.length > 0) {
+      setCurrentStep(0);
+    }
+  }, [showCookingSteps]);
+
+  useEffect(() => {
+    if (animationIntervalRef.current) {
+      clearInterval(animationIntervalRef.current);
+      animationIntervalRef.current = null;
+    }
+    if (!showCookingSteps || cookingSteps.length <= 1) return;
+    animationIntervalRef.current = setInterval(() => {
+      setCurrentStep((i) => (i + 1) % cookingSteps.length);
+    }, 3000);
+    return () => {
+      if (animationIntervalRef.current) {
+        clearInterval(animationIntervalRef.current);
+        animationIntervalRef.current = null;
+      }
+    };
+  }, [showCookingSteps, cookingSteps.length]);
 
   const handleShare = () => {
     if (navigator.share) {
@@ -269,7 +347,7 @@ export default function DishDetailPage() {
 
       </div>
 
-      {/* 底部三个按键 */}
+      {/* 底部四个按键 */}
       <div className={`bottom-actions ${showContent ? 'visible' : ''}`}>
         <button className="action-btn action-secondary" onClick={() => router.push("/chat")}>
           <span className="btn-icon">🏠</span>
@@ -279,11 +357,89 @@ export default function DishDetailPage() {
           <span className="btn-icon">⭐</span>
           <span className="btn-text">收藏此菜</span>
         </button>
+        <button
+          className={`action-btn ${showCookingSteps ? 'action-cooking' : 'action-secondary'}`}
+          onClick={loadCookingSteps}
+          disabled={loadingSteps}
+        >
+          <span className="btn-icon">{loadingSteps ? '⏳' : '🍳'}</span>
+          <span className="btn-text">{loadingSteps ? '生成中...' : '观看制作'}</span>
+        </button>
         <button className="action-btn action-primary" onClick={handleShare}>
           <span className="btn-icon">📤</span>
           <span className="btn-text">分享食单</span>
         </button>
       </div>
+
+      {/* 制作过程动画 */}
+      {showCookingSteps && dish && cookingSteps.length > 0 && (
+        <div className="cooking-steps-modal">
+          <div className="modal-backdrop" onClick={() => setShowCookingSteps(false)} />
+          <div className="modal-content">
+            <button className="modal-close" onClick={() => setShowCookingSteps(false)}>
+              ✕
+            </button>
+
+            {/* 标题 */}
+            <div className="anim-header">
+              <span className="anim-icon">🍳</span>
+              <h2 className="anim-title">制作过程</h2>
+              <span className="anim-subtitle">{dish.name}</span>
+            </div>
+
+            {/* 横向时间轴 - 直接点击图片切换 */}
+            <div className="anim-timeline" role="region" aria-label="制作步骤时间轴">
+              <div className="anim-track">
+                {cookingSteps.map((s: any, i: number) => {
+                  const isActive = i === currentStep;
+                  const isPast = i < currentStep;
+                  return (
+                    <button
+                      type="button"
+                      key={s.step}
+                      className={`anim-frame ${isActive ? 'anim-frame-active' : ''} ${isPast ? 'anim-frame-past' : ''}`}
+                      aria-current={isActive ? 'step' : undefined}
+                      aria-label={`步骤 ${s.step}: ${s.title}`}
+                      onClick={() => setCurrentStep(i)}
+                    >
+                      {s.imageBase64 ? (
+                        <img
+                          src={`data:image/png;base64,${s.imageBase64}`}
+                          alt={s.title}
+                          className="anim-frame-img"
+                        />
+                      ) : (
+                        <div className="anim-frame-placeholder">
+                          <span className="anim-frame-placeholder-icon">🍽️</span>
+                        </div>
+                      )}
+                      <span className={`anim-frame-badge ${isActive ? 'anim-frame-badge-active' : ''}`}>
+                        {s.step}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* 当前步骤文字 */}
+            <div className="anim-textbox" key={currentStep}>
+              <h3 className="anim-step-title">{cookingSteps[currentStep]?.title}</h3>
+              <p className="anim-step-desc">{cookingSteps[currentStep]?.desc}</p>
+            </div>
+
+            {/* 底部进度点 */}
+            <div className="anim-progress-row" aria-hidden>
+              {cookingSteps.map((_: any, i: number) => (
+                <div
+                  key={i}
+                  className={`anim-dot ${i === currentStep ? 'anim-dot-active' : ''} ${i < currentStep ? 'anim-dot-past' : ''}`}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
 
       <style jsx>{`
         .dish-detail-container {
@@ -544,6 +700,236 @@ export default function DishDetailPage() {
           background: rgba(139,90,43,0.1);
           border-color: #8b5a2b;
           transform: translateY(-2px);
+        }
+
+        .action-cooking {
+          background: linear-gradient(135deg, #c9302c, #d44444);
+          color: #fff;
+          border-color: #c9302c;
+        }
+        .action-cooking:hover {
+          background: linear-gradient(135deg, #d44444, #e05555);
+          transform: translateY(-2px);
+          box-shadow: 0 8px 24px rgba(201,48,44,0.3);
+        }
+        .action-cooking:disabled {
+          opacity: 0.7;
+          cursor: wait;
+        }
+
+        /* 制作过程模态框 */
+        .cooking-steps-modal {
+          position: fixed;
+          inset: 0;
+          z-index: 1000;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 20px;
+        }
+        .modal-backdrop {
+          position: absolute;
+          inset: 0;
+          background: rgba(0,0,0,0.7);
+          backdrop-filter: blur(8px);
+        }
+        .modal-content {
+          position: relative;
+          width: 100%;
+          max-width: 900px;
+          max-height: 90vh;
+          overflow-y: auto;
+          z-index: 1;
+          border-radius: 16px;
+          background: linear-gradient(135deg, #1a1612 0%, #2d2620 40%, #1a1612 100%);
+          padding: 40px;
+        }
+        .modal-close {
+          position: absolute;
+          top: -50px;
+          right: 0;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          background: rgba(255,255,255,0.2);
+          border: 1px solid rgba(255,255,255,0.3);
+          color: #fff;
+          font-size: 20px;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.2s;
+        }
+        .modal-close:hover {
+          background: rgba(255,255,255,0.3);
+        }
+
+        /* 动画样式 */
+        .anim-header {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          margin-bottom: 20px;
+        }
+        .anim-icon { font-size: 24px; }
+        .anim-title {
+          font-size: 20px;
+          font-weight: 600;
+          color: #fff;
+          margin: 0;
+          letter-spacing: 3px;
+        }
+        .anim-subtitle {
+          font-size: 13px;
+          color: #f4c542;
+          margin-left: auto;
+          letter-spacing: 1px;
+        }
+
+        /* ── 横向时间轴 ── */
+        .anim-timeline {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 12px;
+        }
+
+        .anim-track {
+          display: flex;
+          gap: 10px;
+          flex: 1;
+          min-width: 0;
+          overflow-x: auto;
+          scroll-behavior: smooth;
+          scrollbar-width: none;
+          -ms-overflow-style: none;
+        }
+        .anim-track::-webkit-scrollbar { display: none; }
+
+        .anim-frame {
+          flex-shrink: 0;
+          width: 120px;
+          aspect-ratio: 4 / 3;
+          border-radius: 10px;
+          overflow: hidden;
+          position: relative;
+          background: #2d2620;
+          border: 2px solid rgba(255,255,255,0.06);
+          transition: border-color 0.4s ease, box-shadow 0.4s ease, opacity 0.4s ease, transform 0.3s ease;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+        }
+
+        .anim-frame:hover {
+          transform: scale(1.05);
+          border-color: rgba(255,255,255,0.25);
+        }
+
+        .anim-frame-active {
+          border-color: rgba(244, 197, 66, 0.7);
+          box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4);
+          z-index: 2;
+        }
+
+        .anim-frame-past {
+          opacity: 0.5;
+        }
+
+        .anim-frame:not(.anim-frame-active):not(.anim-frame-past) {
+          opacity: 0.28;
+        }
+
+        .anim-frame-img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+        }
+
+        .anim-frame-placeholder {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: linear-gradient(135deg, #2d2620 0%, #1a1612 100%);
+        }
+
+        .anim-frame-placeholder-icon {
+          font-size: 24px;
+          opacity: 0.4;
+        }
+
+        .anim-frame-badge {
+          position: absolute;
+          bottom: 6px;
+          right: 8px;
+          background: rgba(0, 0, 0, 0.55);
+          color: rgba(255, 255, 255, 0.75);
+          font-size: 10px;
+          font-weight: 600;
+          padding: 2px 6px;
+          border-radius: 4px;
+          pointer-events: none;
+        }
+
+        .anim-frame-badge-active {
+          background: linear-gradient(135deg, #f4c542, #e6a91a);
+          color: #2d2926;
+        }
+
+        .anim-textbox {
+          margin-top: 16px;
+          padding: 0 4px;
+          animation: fadeSlide 0.4s ease-out;
+        }
+
+        @keyframes fadeSlide {
+          from { opacity: 0; transform: translateY(6px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .anim-step-title {
+          font-size: 22px;
+          font-weight: 600;
+          color: #fff;
+          margin: 0 0 10px;
+          letter-spacing: 3px;
+        }
+
+        .anim-step-desc {
+          font-size: 14px;
+          line-height: 1.85;
+          color: rgba(255,255,255,0.75);
+          margin: 0;
+        }
+
+        .anim-progress-row {
+          display: flex;
+          justify-content: center;
+          gap: 8px;
+          margin-top: 16px;
+        }
+
+        .anim-dot {
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          background: rgba(255,255,255,0.2);
+          transition: all 0.35s ease;
+        }
+
+        .anim-dot-past {
+          background: rgba(255,255,255,0.35);
+        }
+
+        .anim-dot-active {
+          width: 20px;
+          border-radius: 3px;
+          background: linear-gradient(90deg, #f4c542, #e6a91a);
         }
 
         /* 响应式 */

@@ -12,6 +12,9 @@ export interface BackupDish {
   image: string;
   origin: string;
   history: string;
+  /** 与 API / 前端统一的驼峰字段（来自 original_text / modern_method） */
+  originalText?: string;
+  modernMethod?: string;
   dish_name?: string;
   original_text?: string;
   category?: string;
@@ -60,6 +63,8 @@ function transformToApiFormat(dish: RawBackupDish, index: number): BackupDish {
     image: dish.image_url || dish.image || '',
     origin: dish.geo_factors || dish.origin || '',
     history: dish.cultural_story || dish.history || '',
+    originalText: dish.original_text || '',
+    modernMethod: dish.modern_method || '',
     dish_name: dish.dish_name,
     original_text: dish.original_text,
     category: dish.category,

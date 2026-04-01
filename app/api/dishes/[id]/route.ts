@@ -3,16 +3,16 @@ import { pool, getDishByIdFallback } from '../../../../lib/db';
 
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
+  const dishId = parseInt(id, 10);
+
+  if (isNaN(dishId)) {
+    return NextResponse.json({ error: 'Invalid dish ID' }, { status: 400 });
+  }
+
   try {
-    const { id } = params;
-    const dishId = parseInt(id, 10);
-
-    if (isNaN(dishId)) {
-      return NextResponse.json({ error: 'Invalid dish ID' }, { status: 400 });
-    }
-
     const result = await pool.query(
       `
       SELECT id, dish_name AS name, modern_translation AS desc,
@@ -33,13 +33,6 @@ export async function GET(
     console.error('[API] Database query failed, using backup:', err);
 
     try {
-      const { id } = params;
-      const dishId = parseInt(id, 10);
-
-      if (isNaN(dishId)) {
-        return NextResponse.json({ error: 'Invalid dish ID' }, { status: 400 });
-      }
-
       const dish = await getDishByIdFallback(dishId);
 
       if (!dish) {

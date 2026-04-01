@@ -2,6 +2,8 @@
 
 import { useRouter, useParams } from "next/navigation";
 import { useEffect, useState, useRef } from "react";
+import mapboxgl from "mapbox-gl";
+import "mapbox-gl/dist/mapbox-gl.css";
 
 type Dish = {
   id: number;
@@ -61,13 +63,21 @@ export default function DishDetailPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [showContent, setShowContent] = useState(false);
-  const [imgError, setImgError] = useState(false);
+  const [imgError, setImgError] = useState(false); // 用于 fallback
   const [showCookingSteps, setShowCookingSteps] = useState(false);
   const [cookingSteps, setCookingSteps] = useState<any[]>([]);
   const [loadingSteps, setLoadingSteps] = useState(false);
+  // AI 图片生成状态
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const [isGeneratingImage, setIsGeneratingImage] = useState(true);
+  const [imageError, setImageError] = useState<string | null>(null);
   // 动画状态
   const [currentStep, setCurrentStep] = useState(0);
   const animationIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  // 地图背景引用 - 必须在所有 useEffect 之前声明，避免早期返回导致 Hooks 顺序变化
+  const mapContainerRef = useRef<HTMLDivElement>(null);
+  const mapBgRef = useRef<mapboxgl.Map | null>(null);
 
   const dishId = Number(params.id);
 
@@ -168,6 +178,120 @@ export default function DishDetailPage() {
     };
   }, [showCookingSteps, cookingSteps.length]);
 
+  // 初始化地图背景 - 依赖 dish 确保在数据加载完成后执行
+  useEffect(() => {
+    if (!dish || !mapContainerRef.current || mapBgRef.current) return;
+
+    const accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
+    console.log('[Mapbox] Token exists:', !!accessToken);
+    console.log('[Mapbox] Token prefix:', accessToken?.substring(0, 10) || 'none');
+    if (!accessToken) {
+      console.error('[Mapbox] NEXT_PUBLIC_MAPBOX_TOKEN is not set');
+      return;
+    }
+
+    mapboxgl.accessToken = accessToken;
+
+    // 创建复古风格的地图背景
+    const map = new mapboxgl.Map({
+      container: mapContainerRef.current,
+      style: "mapbox://styles/mapbox/light-v11",
+      center: [108, 34],
+      zoom: 5.5,
+      interactive: false,
+      attributionControl: false,
+      logoPosition: 'bottom-right',
+      projection: "mercator",
+      // 限制地图范围在中国境内
+      maxBounds: [
+        [73.5, 18.0],
+        [135.0, 54.0],
+      ],
+      minZoom: 3,
+      maxZoom: 10,
+    });
+
+    map.on('load', () => {
+      // 设置地图语言为中文
+      map.getStyle().layers?.forEach((layer: any) => {
+        if (layer.layout && layer.layout['text-field']) {
+          map.setLayoutProperty(layer.id, 'text-field', ['get', 'name_zh-Hans']);
+        }
+      });
+
+      // 你原来的背景色逻辑保留不变
+      map.getStyle().layers?.forEach((layer: any) => {
+        if (layer.type === 'background') {
+          map.setPaintProperty(layer.id, 'background-color', '#e8dcc8');
+        }
+      });
+    });
+
+    map.on('error', (e) => {
+      console.error('[Mapbox] Map error:', e);
+    });
+
+    mapBgRef.current = map;
+
+    return () => {
+      map.remove();
+      mapBgRef.current = null;
+    };
+  }, [dish]);
+
+  // 地图定位到菜品产地
+  useEffect(() => {
+    if (!mapBgRef.current || !dish?.originCoords) return;
+
+    const waitForMap = () => {
+      if (mapBgRef.current?.isStyleLoaded()) {
+        mapBgRef.current.flyTo({
+          center: [dish.originCoords![0], dish.originCoords![1]],
+          zoom: 6,
+          duration: 3000,
+        });
+      } else {
+        setTimeout(waitForMap, 100);
+      }
+    };
+
+    waitForMap();
+  }, [dish?.originCoords]);
+
+  // AI 生成菜品图片
+  useEffect(() => {
+    if (!dish) return;
+
+    const generateImage = async () => {
+      setIsGeneratingImage(true);
+      setImageError(null);
+      try {
+        const response = await fetch('/api/generate-dish-image', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            dish: dish.name,
+            desc: dish.desc || '',
+            ancient: dish.history || '',
+            method: '',
+          }),
+        });
+        const data = await response.json();
+        if (data.success && data.imageUrl) {
+          setImageUrl(data.imageUrl);
+        } else {
+          setImageError(data.error || '生成失败');
+        }
+      } catch {
+        setImageError('网络错误');
+      } finally {
+        setIsGeneratingImage(false);
+      }
+    };
+
+    generateImage();
+  }, [dish?.id, dish?.name, dish?.desc, dish?.history]);
+
   const handleShare = () => {
     if (navigator.share) {
       navigator.share({
@@ -266,109 +390,74 @@ export default function DishDetailPage() {
   return (
     <div className="dish-detail-container">
 
-      {/* 背景：水墨纸张 */}
-      <div className="paper-bg" />
+      {/* 背景：地理地图 */}
+      <div ref={mapContainerRef} className="map-bg" />
+
+      {/* 左侧绢轴背景 + 菜品图片叠加 */}
+      <div className="left-bg-image">
+        <div className="dish-image-overlay">
+          {isGeneratingImage ? (
+            <div className="overlay-generating">
+              <div className="overlay-spinner" />
+              <span className="overlay-text">画中寻味...</span>
+            </div>
+          ) : imageUrl ? (
+            <img 
+              src={imageUrl} 
+              alt={dish?.name} 
+              className="overlay-dish-img"
+              onError={() => setImgError(true)}
+            />
+          ) : imageError ? (
+            <div className="overlay-error">
+              <span className="overlay-error-icon">🌿</span>
+              <span className="overlay-error-text">{imageError}</span>
+            </div>
+          ) : dish?.image ? (
+            <img 
+              src={imgError ? `https://picsum.photos/seed/${dish.id}/400/500` : dish.image} 
+              alt={dish?.name} 
+              className="overlay-dish-img"
+              onError={() => setImgError(true)}
+            />
+          ) : (
+            <div className="overlay-placeholder">
+              <span className="overlay-placeholder-icon">🥢</span>
+            </div>
+          )}
+          <div className="overlay-vignette" />
+          <div className="overlay-frame" />
+        </div>
+      </div>
 
       {/* 顶部导航 */}
       <nav className={`top-nav ${showContent ? 'visible' : ''}`}>
         <button onClick={() => router.push("/chat")} className="back-link">「 返回随园 」</button>
-        <div className="dynasty-tag">清 · 随园食单</div>
       </nav>
+
+      {/* 右侧三个按键 */}
+      <div className={`right-actions ${showContent ? 'visible' : ''}`}>
+        <button className="right-action-btn" title="收藏">
+          <span className="right-action-icon">⭐</span>
+          <span className="right-action-text">收藏</span>
+        </button>
+        <button className="right-action-btn" title="分享">
+          <span className="right-action-icon">📤</span>
+          <span className="right-action-text">分享</span>
+        </button>
+        <button className="right-action-btn right-action-primary" title="制作">
+          <span className="right-action-icon">🍳</span>
+          <span className="right-action-text">制作</span>
+        </button>
+      </div>
 
       {/* 主内容 */}
       <div className={`content-overlay ${showContent ? 'visible' : ''}`}>
         
-        {/* 左上角：菜品大图 */}
-        <div className="dish-image-section">
-          <div className="dish-image-wrap">
-            <img
-              src={imgError ? `https://picsum.photos/seed/fallback${dish.id}/800/500` : dish.image}
-              alt={dish.name}
-              className="dish-img"
-              onError={() => setImgError(true)}
-            />
-            <div className="corner-seal">随园秘藏</div>
-            <div className="img-vignette" />
-          </div>
-        </div>
-
-        {/* 右侧：菜品介绍信息 */}
-        <div className="dish-info-section">
-          <div className="dish-info-card">
-            
-            {/* 菜品标题 */}
-            <div className="dish-header">
-              <h1 className="dish-title">{dish.name}</h1>
-              <p className="dish-desc">{dish.desc}</p>
-            </div>
-
-            {/* 产地 */}
-            <div className="info-block">
-              <div className="info-icon">📍</div>
-              <div className="info-content">
-                <span className="info-label">产地</span>
-                <span className="info-value">{dish.origin ?? "江南"}</span>
-              </div>
-            </div>
-
-            {/* 食材 */}
-            <div className="info-block">
-              <div className="info-icon">🥢</div>
-              <div className="info-content">
-                <span className="info-label">主料</span>
-                <span className="info-value">{dish.ingredients.join("、")}</span>
-              </div>
-            </div>
-
-            {/* 袁枚原文 */}
-            <div className="yuanmei-block">
-              <div className="yuanmei-header">
-                <div className="yuanmei-avatar">枚</div>
-                <span className="yuanmei-label">袁枚 · 随园主人</span>
-              </div>
-              <div className="yuanmei-quote-wrap">
-                <div className="quote-mark">❝</div>
-                <p className="yuanmei-quote">
-                  {dish.history ?? `此乃${dish.name}，乃随园食单中之上品。`}
-                </p>
-                <div className="quote-mark quote-mark-end">❞</div>
-              </div>
-            </div>
-
-            {/* 标签 */}
-            <div className="tags-row">
-              {dish.tags.map(tag => (
-                <span key={tag} className="tag">{tag}</span>
-              ))}
-            </div>
-
-          </div>
-        </div>
-
       </div>
 
-      {/* 底部四个按键 */}
+      {/* 底部按键 */}
       <div className={`bottom-actions ${showContent ? 'visible' : ''}`}>
-        <button className="action-btn action-secondary" onClick={() => router.push("/chat")}>
-          <span className="btn-icon">🏠</span>
-          <span className="btn-text">返回首页</span>
-        </button>
-        <button className="action-btn action-secondary" onClick={handleSave}>
-          <span className="btn-icon">⭐</span>
-          <span className="btn-text">收藏此菜</span>
-        </button>
-        <button
-          className={`action-btn ${showCookingSteps ? 'action-cooking' : 'action-secondary'}`}
-          onClick={loadCookingSteps}
-          disabled={loadingSteps}
-        >
-          <span className="btn-icon">{loadingSteps ? '⏳' : '🍳'}</span>
-          <span className="btn-text">{loadingSteps ? '生成中...' : '观看制作'}</span>
-        </button>
-        <button className="action-btn action-primary" onClick={handleShare}>
-          <span className="btn-icon">📤</span>
-          <span className="btn-text">分享食单</span>
-        </button>
       </div>
 
       {/* 制作过程动画 */}
@@ -443,7 +532,13 @@ export default function DishDetailPage() {
 
       <style jsx>{`
         .dish-detail-container {
-          position: fixed; inset: 0;
+          position: fixed;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
           overflow: hidden;
           font-family: "Noto Serif SC", "Source Han Serif CN", "SimSun", "STSong", serif;
           color: #2d2926;
@@ -451,17 +546,212 @@ export default function DishDetailPage() {
           flex-direction: column;
         }
 
-        /* 水墨纸张背景 */
-        .paper-bg {
-          position: absolute; inset: 0; z-index: 0;
-          background-color: #ede8db;
-          background-image:
-            radial-gradient(ellipse at 20% 50%, rgba(180,150,100,0.12) 0%, transparent 60%),
-            radial-gradient(ellipse at 80% 20%, rgba(160,130,90,0.10) 0%, transparent 50%),
-            repeating-linear-gradient(
-              0deg, transparent, transparent 31px,
-              rgba(180,160,120,0.06) 31px, rgba(180,160,120,0.06) 32px
-            );
+        /* 地理地图背景 */
+        .map-bg {
+          position: absolute;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          z-index: 0;
+        }
+
+        /* 左侧绢轴背景 */
+        .left-bg-image {
+          position: absolute;
+          top: 10%;
+          left: 0;
+          width: 40%;
+          height: 80%;
+          background-image: url('/juanzhou.PNG');
+          background-size: 100% 100%;
+          background-repeat: no-repeat;
+          z-index: 2;
+        }
+
+        /* 菜品图片叠加区域 - 相对于绢轴背景定位 */
+        .dish-image-overlay {
+          position: absolute;
+          top: 15%;
+          left: 20%;
+          right: 20%;
+          bottom: 10%;
+          border-radius: 12px;
+          overflow: hidden;
+          box-shadow: 
+            0 20px 50px rgba(0, 0, 0, 0.25),
+            0 8px 20px rgba(0, 0, 0, 0.15),
+            inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+        }
+        
+        .overlay-dish-img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+          filter: sepia(5%) contrast(1.05);
+          transition: transform 0.6s ease, filter 0.4s ease;
+        }
+        
+        .dish-image-overlay:hover .overlay-dish-img {
+          transform: scale(1.03);
+          filter: sepia(3%) contrast(1.08);
+        }
+
+        /* 渐变暗角 */
+        .overlay-vignette {
+          position: absolute;
+          inset: 0;
+          background: 
+            linear-gradient(to bottom, transparent 60%, rgba(45, 41, 38, 0.2) 100%),
+            linear-gradient(to right, transparent 85%, rgba(45, 41, 38, 0.1) 100%),
+            linear-gradient(to top, rgba(45, 41, 38, 0.08) 0%, transparent 20%);
+          pointer-events: none;
+        }
+
+        /* 复古边框 */
+        .overlay-frame {
+          position: absolute;
+          inset: 0;
+          border: 3px solid rgba(160, 0, 0, 0.25);
+          border-radius: 12px;
+          pointer-events: none;
+          box-shadow: inset 0 0 20px rgba(139, 90, 43, 0.1);
+        }
+
+        /* 加载中状态 */
+        .overlay-generating {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 16px;
+          background: linear-gradient(135deg, #f5f0e6 0%, #e8dcc8 50%, #f5f0e6 100%);
+        }
+        
+        .overlay-spinner {
+          width: 40px;
+          height: 40px;
+          border: 2px solid rgba(139, 90, 43, 0.15);
+          border-top-color: #8b5a2b;
+          border-radius: 50%;
+          animation: spin 1s linear infinite;
+        }
+        
+        .overlay-text {
+          font-size: 13px;
+          color: #8b5a2b;
+          letter-spacing: 4px;
+          animation: pulse 2s ease-in-out infinite;
+        }
+
+        /* 错误状态 */
+        .overlay-error {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 12px;
+          background: linear-gradient(135deg, rgba(139, 90, 43, 0.08) 0%, rgba(196, 133, 63, 0.05) 100%);
+        }
+        
+        .overlay-error-icon {
+          font-size: 36px;
+          opacity: 0.6;
+        }
+        
+        .overlay-error-text {
+          font-size: 12px;
+          color: #8b5a2b;
+          letter-spacing: 2px;
+        }
+
+        /* 占位符 */
+        .overlay-placeholder {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: linear-gradient(135deg, #f5f0e6 0%, #e8dcc8 100%);
+        }
+        
+        .overlay-placeholder-icon {
+          font-size: 48px;
+          opacity: 0.3;
+        }
+
+        /* 右侧三个按键 */
+        .right-actions {
+          position: fixed;
+          right: 40px;
+          top: 50%;
+          transform: translateY(-50%) translateX(20px);
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+          z-index: 100;
+          opacity: 0;
+          transition: all 0.7s ease;
+        }
+        .right-actions.visible {
+          opacity: 1;
+          transform: translateY(-50%) translateX(0);
+          transition-delay: 0.3s;
+        }
+        .right-action-btn {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 6px;
+          padding: 14px 18px;
+          background: rgba(255, 252, 245, 0.92);
+          backdrop-filter: blur(12px);
+          border: 1px solid rgba(139, 90, 43, 0.25);
+          border-radius: 12px;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+        }
+        .right-action-btn:hover {
+          background: rgba(139, 90, 43, 0.12);
+          border-color: #8b5a2b;
+          transform: scale(1.05);
+          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+        }
+        .right-action-icon {
+          font-size: 22px;
+        }
+        .right-action-text {
+          font-size: 12px;
+          color: #8b5a2b;
+          letter-spacing: 2px;
+          font-family: inherit;
+        }
+        .right-action-primary {
+          background: linear-gradient(135deg, #8b5a2b, #a06830);
+          border-color: #8b5a2b;
+        }
+        .right-action-primary:hover {
+          background: linear-gradient(135deg, #a06830, #b07838);
+          border-color: #a06830;
+        }
+        .right-action-primary .right-action-text {
+          color: #fff;
+        }
+        .right-action-spinner {
+          width: 22px;
+          height: 22px;
+          border: 2px solid rgba(255, 255, 255, 0.3);
+          border-top-color: #fff;
+          border-radius: 50%;
+          animation: spin 1s linear infinite;
         }
 
         /* 导航 */
@@ -532,6 +822,34 @@ export default function DishDetailPage() {
           background: rgba(160,0,0,0.88); color: #fff;
           padding: 5px 12px; font-size: 11px; letter-spacing: 2px;
           border-radius: 3px;
+        }
+
+        /* AI 生成图片样式 */
+        .ai-generating {
+          position: absolute; inset: 0;
+          display: flex; flex-direction: column;
+          align-items: center; justify-content: center; gap: 16px;
+          background: linear-gradient(135deg, #f5f0e6 0%, #e8dcc8 100%);
+          z-index: 2;
+        }
+        .generating-spinner {
+          width: 48px; height: 48px;
+          border: 3px solid rgba(139,90,43,0.15);
+          border-top-color: #8b5a2b;
+          border-radius: 50%;
+          animation: spin 1s linear infinite;
+        }
+        .generating-text {
+          font-size: 14px; color: #8b5a2b;
+          letter-spacing: 3px;
+          animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes spin {
+          to { transform: rotate(360deg); }
+        }
+        @keyframes pulse {
+          0%, 100% { opacity: 0.5; }
+          50% { opacity: 1; }
         }
 
         /* 右侧：菜品信息区域 */
@@ -649,9 +967,7 @@ export default function DishDetailPage() {
           position: fixed;
           bottom: 0; left: 0; right: 0;
           padding: 20px 60px;
-          background: rgba(255,252,245,0.95);
-          backdrop-filter: blur(16px);
-          border-top: 1px solid rgba(139,90,43,0.15);
+          background: transparent;
           display: flex;
           justify-content: center;
           gap: 20px;

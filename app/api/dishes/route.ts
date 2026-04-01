@@ -22,7 +22,7 @@ export async function GET(request: Request) {
           `SELECT id, dish_name AS name, modern_translation AS desc,
                  taste_tags AS tags, main_ingredients AS ingredients,
                  image_url AS image, geo_factors AS origin, cultural_story AS history,
-                 original_text, modern_method
+                 original_text, modern_method, longitude, latitude
           FROM unified_recipes
           WHERE processed = true`
         );
@@ -36,7 +36,9 @@ export async function GET(request: Request) {
           origin: dish.origin,
           history: dish.history,
           originalText: dish.original_text || "",
-          modernMethod: dish.modern_method || ""
+          modernMethod: dish.modern_method || "",
+          longitude: dish.longitude,
+          latitude: dish.latitude
         }));
       } catch (dbError) {
         console.log('[API] Database unavailable, using backup data');
@@ -60,7 +62,7 @@ export async function GET(request: Request) {
         `SELECT id, dish_name AS name, modern_translation AS desc,
                taste_tags AS tags, main_ingredients AS ingredients,
                image_url AS image, geo_factors AS origin, cultural_story AS history,
-               original_text, modern_method
+               original_text, modern_method, longitude, latitude
         FROM unified_recipes
         WHERE processed = true
         AND (
@@ -71,17 +73,25 @@ export async function GET(request: Request) {
         )`,
         [`%${search}%`]
       );
-      dishes = result.rows.map(dish => ({ ...dish, originalText: dish.original_text || "", modernMethod: dish.modern_method || "" }));
+      dishes = result.rows.map(dish => ({ 
+        ...dish, 
+        originalText: dish.original_text || "", 
+        modernMethod: dish.modern_method || "" 
+      }));
     } else {
       const result = await pool.query(
         `SELECT id, dish_name AS name, modern_translation AS desc,
                taste_tags AS tags, main_ingredients AS ingredients,
                image_url AS image, geo_factors AS origin, cultural_story AS history,
-               original_text, modern_method
+               original_text, modern_method, longitude, latitude
         FROM unified_recipes
         WHERE processed = true`
       );
-      dishes = result.rows.map(dish => ({ ...dish, originalText: dish.original_text || "", modernMethod: dish.modern_method || "" }));
+      dishes = result.rows.map(dish => ({ 
+        ...dish, 
+        originalText: dish.original_text || "", 
+        modernMethod: dish.modern_method || "" 
+      }));
     }
 
     return NextResponse.json({ dishes, fromBackup: false });

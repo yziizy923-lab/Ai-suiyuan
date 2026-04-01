@@ -187,76 +187,200 @@ export default function DishDetailPage() {
     console.log('[Mapbox] Token prefix:', accessToken?.substring(0, 10) || 'none');
     if (!accessToken) {
       console.error('[Mapbox] NEXT_PUBLIC_MAPBOX_TOKEN is not set');
+      // 设置备用背景
+      if (mapContainerRef.current) {
+        mapContainerRef.current.style.backgroundImage = 
+          'radial-gradient(circle at 50% 50%, rgba(139, 90, 43, 0.1) 0%, transparent 60%)';
+      }
       return;
     }
 
-    mapboxgl.accessToken = accessToken;
+    try {
+      mapboxgl.accessToken = accessToken;
 
-    // 创建复古风格的地图背景
-    const map = new mapboxgl.Map({
-      container: mapContainerRef.current,
-      style: "mapbox://styles/mapbox/light-v11",
-      center: [108, 34],
-      zoom: 5.5,
-      interactive: false,
-      attributionControl: false,
-      logoPosition: 'bottom-right',
-      projection: "mercator",
-      // 限制地图范围在中国境内
-      maxBounds: [
-        [73.5, 18.0],
-        [135.0, 54.0],
-      ],
-      minZoom: 3,
-      maxZoom: 10,
-    });
-
-    map.on('load', () => {
-      // 设置地图语言为中文
-      map.getStyle().layers?.forEach((layer: any) => {
-        if (layer.layout && layer.layout['text-field']) {
-          map.setLayoutProperty(layer.id, 'text-field', ['get', 'name_zh-Hans']);
-        }
+      // 创建复古风格的地图背景
+      const map = new mapboxgl.Map({
+        container: mapContainerRef.current,
+        style: "mapbox://styles/mapbox/light-v11",
+        center: [108, 34],
+        zoom: 5.5,
+        interactive: false,
+        attributionControl: false,
+        logoPosition: 'bottom-right',
+        projection: "mercator",
+        // 限制地图范围在中国境内
+        maxBounds: [
+          [73.5, 18.0],
+          [135.0, 54.0],
+        ],
+        minZoom: 3,
+        maxZoom: 10,
       });
 
-      // 你原来的背景色逻辑保留不变
-      map.getStyle().layers?.forEach((layer: any) => {
-        if (layer.type === 'background') {
-          map.setPaintProperty(layer.id, 'background-color', '#e8dcc8');
-        }
-      });
-    });
+      map.on('load', () => {
+        console.log('[Mapbox] Map loaded successfully');
 
-    map.on('error', (e) => {
-      console.error('[Mapbox] Map error:', e);
-    });
-
-    mapBgRef.current = map;
-
-    return () => {
-      map.remove();
-      mapBgRef.current = null;
-    };
-  }, [dish]);
-
-  // 地图定位到菜品产地
-  useEffect(() => {
-    if (!mapBgRef.current || !dish?.originCoords) return;
-
-    const waitForMap = () => {
-      if (mapBgRef.current?.isStyleLoaded()) {
-        mapBgRef.current.flyTo({
-          center: [dish.originCoords![0], dish.originCoords![1]],
-          zoom: 6,
-          duration: 3000,
+        // 设置地图语言为中文
+        map.getStyle().layers?.forEach((layer: any) => {
+          if (layer.layout && layer.layout['text-field']) {
+            map.setLayoutProperty(layer.id, 'text-field', ['get', 'name_zh-Hans']);
+          }
         });
-      } else {
-        setTimeout(waitForMap, 100);
-      }
-    };
 
-    waitForMap();
-  }, [dish?.originCoords]);
+        // 复古背景色逻辑
+        map.getStyle().layers?.forEach((layer: any) => {
+          if (layer.type === 'background') {
+            map.setPaintProperty(layer.id, 'background-color', '#e8dcc8');
+          }
+        });
+
+        // 如果有产地坐标，添加定位标记
+        if (dish?.originCoords) {
+          console.log('[Mapbox] Adding marker at:', dish.originCoords);
+
+          // 注入全局样式用于动态创建的标记元素
+          if (!document.getElementById('dish-marker-styles')) {
+            const styleEl = document.createElement('style');
+            styleEl.id = 'dish-marker-styles';
+            styleEl.textContent = `
+              .dish-location-marker {
+                cursor: pointer;
+                z-index: 10;
+              }
+              .marker-pin {
+                position: relative;
+                width: 32px;
+                height: 32px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+              }
+              .marker-dot {
+                width: 16px;
+                height: 16px;
+                background: linear-gradient(135deg, #d44444, #a83232);
+                border: 3px solid rgba(255,255,255,0.9);
+                border-radius: 50%;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+                position: relative;
+                z-index: 2;
+              }
+              .marker-pulse {
+                position: absolute;
+                width: 32px;
+                height: 32px;
+                background: rgba(212, 68, 68, 0.4);
+                border-radius: 50%;
+                animation: pulse-ring 2s ease-out infinite;
+              }
+              @keyframes pulse-ring {
+                0% {
+                  transform: scale(0.8);
+                  opacity: 0.8;
+                }
+                100% {
+                  transform: scale(2.5);
+                  opacity: 0;
+                }
+              }
+              .dish-popup .mapboxgl-popup-content {
+                background: linear-gradient(135deg, #2d2926, #3d3530) !important;
+                border-radius: 8px !important;
+                padding: 12px 16px !important;
+                box-shadow: 0 4px 16px rgba(0,0,0,0.3) !important;
+                min-width: 120px;
+              }
+              .dish-popup .mapboxgl-popup-tip {
+                border-top-color: #2d2926 !important;
+              }
+              .dish-popup .popup-content {
+                font-family: "Noto Serif SC", "SimSun", serif;
+              }
+              .dish-popup .popup-title {
+                color: #fff;
+                font-size: 14px;
+                font-weight: 600;
+                letter-spacing: 1px;
+                margin-bottom: 4px;
+              }
+              .dish-popup .popup-origin {
+                color: rgba(255,255,255,0.7);
+                font-size: 12px;
+              }
+            `;
+            document.head.appendChild(styleEl);
+          }
+
+          // 创建自定义定位标记元素
+          const markerElement = document.createElement('div');
+          markerElement.className = 'dish-location-marker';
+          markerElement.innerHTML = `
+            <div class="marker-pin">
+              <div class="marker-dot"></div>
+              <div class="marker-pulse"></div>
+            </div>
+          `;
+
+          // 创建弹出框
+          const popup = new mapboxgl.Popup({
+            offset: [0, -30],
+            closeButton: false,
+            closeOnClick: false,
+            className: 'dish-popup'
+          }).setHTML(`
+            <div class="popup-content">
+              <div class="popup-title">${dish.name}</div>
+              ${dish.origin ? `<div class="popup-origin">📍 ${dish.origin}</div>` : ''}
+            </div>
+          `);
+
+          // 创建标记
+          const marker = new mapboxgl.Marker({ element: markerElement })
+            .setLngLat([dish.originCoords[0], dish.originCoords[1]])
+            .setPopup(popup)
+            .addTo(map);
+
+          console.log('[Mapbox] Marker added successfully');
+
+          // 点击标记时聚焦到该位置
+          markerElement.addEventListener('click', () => {
+            map.flyTo({
+              center: [dish.originCoords![0], dish.originCoords![1]],
+              zoom: 7,
+              duration: 1500,
+              essential: true,
+            });
+            marker.togglePopup();
+          });
+
+          // 页面加载后默认飞向标记位置
+          setTimeout(() => {
+            map.flyTo({
+              center: [dish.originCoords![0], dish.originCoords![1]],
+              zoom: 6,
+              duration: 3000,
+              essential: true,
+            });
+          }, 500);
+        } else {
+          console.log('[Mapbox] No originCoords found for dish:', dish?.name);
+        }
+      });
+
+      map.on('error', (e) => {
+        console.error('[Mapbox] Map error:', e);
+      });
+
+      mapBgRef.current = map;
+
+      return () => {
+        map.remove();
+        mapBgRef.current = null;
+      };
+    } catch (err) {
+      console.error('[Mapbox] Failed to initialize map:', err);
+    }
+  }, [dish]);
 
   // AI 生成菜品图片
   useEffect(() => {
@@ -395,6 +519,7 @@ export default function DishDetailPage() {
 
       {/* 左侧绢轴背景 + 菜品图片叠加 */}
       <div className="left-bg-image">
+        {/* 图片容器 */}
         <div className="dish-image-overlay">
           {isGeneratingImage ? (
             <div className="overlay-generating">
@@ -402,9 +527,9 @@ export default function DishDetailPage() {
               <span className="overlay-text">画中寻味...</span>
             </div>
           ) : imageUrl ? (
-            <img 
-              src={imageUrl} 
-              alt={dish?.name} 
+            <img
+              src={imageUrl}
+              alt={dish?.name}
               className="overlay-dish-img"
               onError={() => setImgError(true)}
             />
@@ -414,9 +539,9 @@ export default function DishDetailPage() {
               <span className="overlay-error-text">{imageError}</span>
             </div>
           ) : dish?.image ? (
-            <img 
-              src={imgError ? `https://picsum.photos/seed/${dish.id}/400/500` : dish.image} 
-              alt={dish?.name} 
+            <img
+              src={imgError ? `https://picsum.photos/seed/${dish.id}/400/500` : dish.image}
+              alt={dish?.name}
               className="overlay-dish-img"
               onError={() => setImgError(true)}
             />
@@ -427,6 +552,31 @@ export default function DishDetailPage() {
           )}
           <div className="overlay-vignette" />
           <div className="overlay-frame" />
+        </div>
+        {/* 图片下方的文字信息 */}
+        <div className="dish-image-info">
+          {dish?.history && (
+            <div className="info-section origin-text">
+              <span className="info-label-tag">袁枚曰</span>
+              <p className="info-text">{dish.history}</p>
+            </div>
+          )}
+          {dish?.tags && dish.tags.length > 0 && (
+            <div className="info-section flavor-tags">
+              <span className="info-label-tag">口味</span>
+              <div className="tags-row">
+                {dish.tags.map((tag, idx) => (
+                  <span key={idx} className="flavor-tag">{tag}</span>
+                ))}
+              </div>
+            </div>
+          )}
+          {dish?.ingredients && dish.ingredients.length > 0 && (
+            <div className="info-section main-ingredients">
+              <span className="info-label-tag">主要食材</span>
+              <p className="info-text">{dish.ingredients.join('、')}</p>
+            </div>
+          )}
         </div>
       </div>
 
@@ -556,6 +706,26 @@ export default function DishDetailPage() {
           width: 100%;
           height: 100%;
           z-index: 0;
+          /* 备用背景色 - 复古宣纸色调 */
+          background-color: #e8dcc8;
+          background-image: 
+            radial-gradient(circle at 20% 30%, rgba(139, 90, 43, 0.08) 0%, transparent 50%),
+            radial-gradient(circle at 80% 70%, rgba(139, 90, 43, 0.06) 0%, transparent 40%);
+        }
+
+        /* 确保 Mapbox canvas 正确显示 */
+        :global(.map-bg .mapboxgl-canvas) {
+          outline: none;
+        }
+
+        :global(.map-bg .mapboxgl-map) {
+          width: 100% !important;
+          height: 100% !important;
+        }
+
+        /* 确保地图标记在内容上方可见 */
+        :global(.map-bg .mapboxgl-marker) {
+          z-index: 100 !important;
         }
 
         /* 左侧绢轴背景 */
@@ -564,26 +734,90 @@ export default function DishDetailPage() {
           top: 10%;
           left: 0;
           width: 40%;
-          height: 80%;
+          height: 85%;
           background-image: url('/juanzhou.PNG');
           background-size: 100% 100%;
           background-repeat: no-repeat;
           z-index: 2;
         }
 
-        /* 菜品图片叠加区域 - 相对于绢轴背景定位 */
+        /* 图片容器 - 独立定位 */
         .dish-image-overlay {
           position: absolute;
-          top: 15%;
-          left: 20%;
-          right: 20%;
-          bottom: 10%;
+          top: 8%;
+          left: 18%;
+          right: 18%;
+          height: 48%;
           border-radius: 12px;
           overflow: hidden;
-          box-shadow: 
-            0 20px 50px rgba(0, 0, 0, 0.25),
-            0 8px 20px rgba(0, 0, 0, 0.15),
-            inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+        }
+
+        /* 图片下方的文字信息容器 - 独立定位 */
+        .dish-image-info {
+          position: absolute;
+          top: 58%;
+          left:10%;
+          right: 12%;
+          bottom: 10%;
+          padding: 30px 20px;
+          border-radius: 12px;
+          overflow-y: auto;
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+        }
+
+        .info-section {
+          display: flex;
+          align-items: flex-start;
+          gap: 8px;
+        }
+
+        .info-section .info-icon {
+          font-size: 16px;
+          flex-shrink: 0;
+          margin-top: 20px;
+        }
+
+        .info-label-tag {
+          font-size: 16px;
+          color: #8b5a2b;
+          letter-spacing: 2px;
+          font-weight: 600;
+          white-space: nowrap;
+          margin-right: 6px;
+        }
+
+        .info-text {
+          color: #3a3430;
+          line-height: 1.6;
+          margin: 0;
+          flex: 1;
+        }
+
+        .origin-text .info-text {
+          font-size: 14px;
+          color: #5a4a3a;
+        }
+
+        .tags-row {
+          display: flex;
+          gap: 6px;
+          flex-wrap: wrap;
+          flex: 1;
+        }
+
+        .flavor-tag {
+          background: linear-gradient(135deg, rgba(139,90,43,0.15), rgba(196,133,63,0.1));
+          color: #6b4423;
+          padding: 3px 10px;
+          border-radius: 12px;
+          font-size: 14px;
+          border: 1px solid rgba(139,90,43,0.2);
+        }
+
+        .main-ingredients .info-text {
+          font-size: 14px;
         }
         
         .overlay-dish-img {
@@ -593,32 +827,13 @@ export default function DishDetailPage() {
           display: block;
           filter: sepia(5%) contrast(1.05);
           transition: transform 0.6s ease, filter 0.4s ease;
+          mask-image: radial-gradient(circle at center, black 70%, transparent 100%);
+          -webkit-mask-image: radial-gradient(circle at center, black 70%, transparent 100%);
         }
         
         .dish-image-overlay:hover .overlay-dish-img {
           transform: scale(1.03);
           filter: sepia(3%) contrast(1.08);
-        }
-
-        /* 渐变暗角 */
-        .overlay-vignette {
-          position: absolute;
-          inset: 0;
-          background: 
-            linear-gradient(to bottom, transparent 60%, rgba(45, 41, 38, 0.2) 100%),
-            linear-gradient(to right, transparent 85%, rgba(45, 41, 38, 0.1) 100%),
-            linear-gradient(to top, rgba(45, 41, 38, 0.08) 0%, transparent 20%);
-          pointer-events: none;
-        }
-
-        /* 复古边框 */
-        .overlay-frame {
-          position: absolute;
-          inset: 0;
-          border: 3px solid rgba(160, 0, 0, 0.25);
-          border-radius: 12px;
-          pointer-events: none;
-          box-shadow: inset 0 0 20px rgba(139, 90, 43, 0.1);
         }
 
         /* 加载中状态 */
@@ -1246,6 +1461,82 @@ export default function DishDetailPage() {
           width: 20px;
           border-radius: 3px;
           background: linear-gradient(90deg, #f4c542, #e6a91a);
+        }
+
+        /* 地图定位标记样式 */
+        .dish-location-marker {
+          cursor: pointer;
+          z-index: 10;
+        }
+
+        .marker-pin {
+          position: relative;
+          width: 32px;
+          height: 32px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .marker-dot {
+          width: 16px;
+          height: 16px;
+          background: linear-gradient(135deg, #d44444, #a83232);
+          border: 3px solid rgba(255,255,255,0.9);
+          border-radius: 50%;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+          position: relative;
+          z-index: 2;
+        }
+
+        .marker-pulse {
+          position: absolute;
+          width: 32px;
+          height: 32px;
+          background: rgba(212, 68, 68, 0.4);
+          border-radius: 50%;
+          animation: pulse-ring 2s ease-out infinite;
+        }
+
+        @keyframes pulse-ring {
+          0% {
+            transform: scale(0.8);
+            opacity: 0.8;
+          }
+          100% {
+            transform: scale(2.5);
+            opacity: 0;
+          }
+        }
+
+        /* 弹出框样式 - 使用 :global() 使 Mapbox 内置类样式生效 */
+        :global(.dish-popup .mapboxgl-popup-content) {
+          background: linear-gradient(135deg, #2d2926, #3d3530) !important;
+          border-radius: 8px !important;
+          padding: 12px 16px !important;
+          box-shadow: 0 4px 16px rgba(0,0,0,0.3) !important;
+          min-width: 120px;
+        }
+
+        :global(.dish-popup .mapboxgl-popup-tip) {
+          border-top-color: #2d2926 !important;
+        }
+
+        :global(.dish-popup .popup-content) {
+          font-family: "Noto Serif SC", "SimSun", serif;
+        }
+
+        :global(.dish-popup .popup-title) {
+          color: #fff;
+          font-size: 14px;
+          font-weight: 600;
+          letter-spacing: 1px;
+          margin-bottom: 4px;
+        }
+
+        :global(.dish-popup .popup-origin) {
+          color: rgba(255,255,255,0.7);
+          font-size: 12px;
         }
 
         /* 响应式 */

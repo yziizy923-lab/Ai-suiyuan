@@ -16,6 +16,9 @@ export interface DishSearchResult {
   originalText?: string;
   modernMethod?: string;
   matchReason?: string;
+  /** 数据库中的坐标字段 */
+  longitude?: number;
+  latitude?: number;
 }
 
 interface AIAnalysis {

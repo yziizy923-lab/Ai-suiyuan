@@ -25,6 +25,9 @@ export interface BackupDish {
   geo_factors?: string;
   cultural_story?: string;
   processed?: boolean;
+  /** 数据库中的坐标字段 */
+  longitude?: number;
+  latitude?: number;
 }
 
 interface RawBackupDish {
@@ -47,6 +50,9 @@ interface RawBackupDish {
   origin?: string;
   history?: string;
   image_url?: string;
+  /** 数据库坐标字段 */
+  longitude?: number;
+  latitude?: number;
 }
 
 let cachedBackup: BackupDish[] | null = null;
@@ -75,6 +81,8 @@ function transformToApiFormat(dish: RawBackupDish, index: number): BackupDish {
     geo_factors: dish.geo_factors,
     cultural_story: dish.cultural_story,
     processed: dish.processed,
+    longitude: dish.longitude,
+    latitude: dish.latitude,
   };
 }
 

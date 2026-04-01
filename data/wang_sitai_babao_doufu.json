@@ -1,0 +1,112 @@
+{
+  "dish_name": "王太守八宝豆腐",
+  "original_text": "用嫩片切粉碎，加香蕈屑、蘑菇屑、松子仁屑、瓜子仁屑、鸡屑、火腿屑，同入浓鸡汁中，炒滚起锅。用腐脑亦可。用瓢不用箸。孟亭太守云：\"此圣祖师赐徐健庵尚书方也。尚书取方时，御膳房费一千两。\"太守之祖楼村先生为尚书门生，故得之。",
+  "category": "杂素菜单",
+  "modern_translation": "将嫩鸡胸肉切成细末，加入香菇、蘑菇、松子仁、瓜子仁、鸡肉和火腿的碎末，一同放入浓鸡汤中翻炒至沸腾后立即起锅。也可用豆腐脑替代鸡肉。食用时用勺子不用筷子。",
+  "taste_tags": ["鲜美", "咸香", "浓郁"],
+  "main_ingredients": ["鸡肉", "香菇", "蘑菇", "松子仁", "瓜子仁", "火腿", "鸡汤"],
+  "modern_method": "将鸡胸肉和所有配料分别切末，鸡汤煮沸后放入所有食材碎末，快速翻炒至汤汁浓稠即可。注意火候不宜过长，保持食材鲜嫩。豆腐脑版本可直接拌入鸡汤中加热。",
+  "geo_factors": "此菜源于江南地区，因当地盛产香菇、蘑菇等菌类，且火腿多为金华火腿，体现了江南物产与宫廷烹饪的结合，反映了清代江南饮食文化的精致。",
+  "cultural_story": "据孟亭太守称，此菜为康熙皇帝赐予徐健庵尚书的秘方。徐尚书取方时，御膳房竟索价一千两白银。太守的祖父楼村先生是徐尚书的门生，故得此方流传。此菜可见清代宫廷饮食的奢华与文人饮食的雅致。",
+  "processed": true,
+  "dish_location": {
+    "name": "王太守八宝豆腐",
+    "origin": "江南地区（今江苏、浙江一带）",
+    "longitude": 120.15,
+    "latitude": 30.28,
+    "note": "源于清代江南，为康熙皇帝赐徐健庵尚书之御膳方，后经孟亭太守祖父楼村先生传入民间"
+  },
+  "ingredients_distribution": [
+    {
+      "ingredient": "鸡肉",
+      "category": "肉类",
+      "distribution_locations": [
+        { "name": "山东潍坊", "longitude": 119.40, "latitude": 36.72, "note": "肉鸡规模化养殖核心区，产量全国前列" },
+        { "name": "河南商丘", "longitude": 115.65, "latitude": 34.44, "note": "中原地区重要肉鸡养殖基地" },
+        { "name": "广东清远", "longitude": 113.05, "latitude": 23.68, "note": "清远麻鸡国家地理标志，品质优良" },
+        { "name": "四川成都", "longitude": 104.07, "latitude": 30.67, "note": "四川盆地肉鸡养殖区" },
+        { "name": "江苏南通", "longitude": 120.86, "latitude": 31.98, "note": "长三角优质草鸡产区" },
+        { "name": "吉林四平", "longitude": 124.35, "latitude": 43.17, "note": "东北地区肉鸡养殖重要基地" },
+        { "name": "辽宁鞍山", "longitude": 122.99, "latitude": 41.11, "note": "东北白羽肉鸡主产区" }
+      ]
+    },
+    {
+      "ingredient": "香菇",
+      "category": "菌菇类",
+      "distribution_locations": [
+        { "name": "浙江丽水庆元", "longitude": 119.07, "latitude": 27.63, "note": "世界香菇发源地之一，浙江香菇核心产区，国家地理标志" },
+        { "name": "河南泌阳", "longitude": 113.33, "latitude": 32.73, "note": "长江以北最大香菇交易集散地，国家香菇生产重要基地" },
+        { "name": "湖北随州", "longitude": 113.38, "latitude": 31.69, "note": "华中香菇主产区，花菇品质优良" },
+        { "name": "陕西汉中", "longitude": 107.03, "latitude": 33.07, "note": "陕南秦巴山区香菇产区" },
+        { "name": "四川广元青川", "longitude": 105.24, "latitude": 32.59, "note": "川北高山香菇产区，生态优越" },
+        { "name": "福建古田", "longitude": 118.74, "latitude": 26.66, "note": "闽东食用菌产业核心区，银耳与香菇并重" }
+      ]
+    },
+    {
+      "ingredient": "蘑菇",
+      "category": "菌菇类",
+      "distribution_locations": [
+        { "name": "福建漳州南靖", "longitude": 117.35, "latitude": 24.52, "note": "中国白蘑菇（双孢菇）工厂化生产核心区，产量大" },
+        { "name": "江苏徐州铜山", "longitude": 117.20, "latitude": 34.26, "note": "黄淮海地区双孢菇主产区" },
+        { "name": "山东聊城阳谷", "longitude": 115.78, "latitude": 36.12, "note": "华北重要双孢菇工厂化种植基地" },
+        { "name": "河南郑州中牟", "longitude": 113.97, "latitude": 34.72, "note": "中原双孢菇产区，供应北方市场" },
+        { "name": "四川成都金堂", "longitude": 104.45, "latitude": 30.86, "note": "西南地区双孢菇与姬菇重要产区" }
+      ]
+    },
+    {
+      "ingredient": "松子仁",
+      "category": "坚果类",
+      "distribution_locations": [
+        { "name": "吉林延边长白山", "longitude": 128.04, "latitude": 41.93, "note": "红松籽核心产区，长白山原始森林，松子品质最佳" },
+        { "name": "黑龙江伊春", "longitude": 128.90, "latitude": 47.73, "note": "东北红松林带，伊春红松籽国家地理标志" },
+        { "name": "云南大理", "longitude": 100.27, "latitude": 25.59, "note": "云南松子（落水松）产区，产量较大" },
+        { "name": "四川甘孜", "longitude": 101.96, "latitude": 30.05, "note": "川西高山松林，松子资源丰富" }
+      ]
+    },
+    {
+      "ingredient": "瓜子仁",
+      "category": "坚果类",
+      "distribution_locations": [
+        { "name": "内蒙古巴彦淖尔五原", "longitude": 108.27, "latitude": 41.09, "note": "向日葵主产区，瓜子产量全国第一，瓜子仁重要加工地" },
+        { "name": "甘肃武威民勤", "longitude": 103.09, "latitude": 38.62, "note": "河西走廊向日葵产区，瓜子仁品质优良" },
+        { "name": "新疆昌吉", "longitude": 87.31, "latitude": 44.01, "note": "新疆向日葵主产区，光照充足，瓜子饱满" },
+        { "name": "吉林白城", "longitude": 122.84, "latitude": 45.62, "note": "东北向日葵产区，瓜子仁供应东北市场" }
+      ]
+    },
+    {
+      "ingredient": "火腿",
+      "category": "腌制肉类",
+      "distribution_locations": [
+        { "name": "浙江金华", "longitude": 119.65, "latitude": 29.09, "note": "金华火腿国家地理标志，中国火腿之源，此菜传统用金华火腿" },
+        { "name": "云南宣威", "longitude": 104.10, "latitude": 26.22, "note": "宣威火腿国家地理标志，云腿代表，香气浓郁" },
+        { "name": "江苏如皋", "longitude": 120.56, "latitude": 32.37, "note": "如皋火腿，江淮地区传统腌腊肉制品" },
+        { "name": "四川冕宁", "longitude": 102.18, "latitude": 28.55, "note": "川西火腿产区，彝族特色腌肉" },
+        { "name": "贵州盘州", "longitude": 104.47, "latitude": 25.71, "note": "黔腿产区，火腿品质优良" }
+      ]
+    },
+    {
+      "ingredient": "鸡汤",
+      "category": "汤底",
+      "distribution_locations": [
+        { "name": "山东潍坊", "longitude": 119.40, "latitude": 36.72, "note": "肉鸡主产区，鸡源充足" },
+        { "name": "广东清远", "longitude": 113.05, "latitude": 23.68, "note": "清远鸡熬制清远鸡汤品质上乘" },
+        { "name": "四川成都", "longitude": 104.07, "latitude": 30.67, "note": "川式炖汤传统浓郁" },
+        { "name": "江苏苏州", "longitude": 120.62, "latitude": 31.30, "note": "苏式吊汤技法精湛，代表江南风味" },
+        { "name": "浙江杭州", "longitude": 120.19, "latitude": 30.25, "note": "杭帮鸡汤，体现本帮菜特色" }
+      ]
+    }
+  ],
+  "ingredients_summary": {
+    "total_ingredient_types": 7,
+    "total_distribution_points": 28,
+    "main_regions": [
+      "浙江（香菇、瓜子仁区域）",
+      "吉林/黑龙江（松子仁）",
+      "云南（宣威火腿）",
+      "山东/河南（鸡肉主产区）",
+      "福建/江苏（蘑菇）",
+      "内蒙古/甘肃（瓜子仁）",
+      "江南地区（鸡汤传统技法区）"
+    ]
+  }
+}

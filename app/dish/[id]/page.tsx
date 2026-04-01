@@ -595,8 +595,25 @@ export default function DishDetailPage() {
           <span className="right-action-icon">📤</span>
           <span className="right-action-text">分享</span>
         </button>
-        <button className="right-action-btn right-action-primary" title="制作">
-          <span className="right-action-icon">🍳</span>
+        <button
+          className="right-action-btn"
+          title="地图探索"
+          onClick={() => router.push("/dish/wang-sitai-babao-doufu")}
+        >
+          <span className="right-action-icon">🗺️</span>
+          <span className="right-action-text">探索</span>
+        </button>
+        <button
+          className="right-action-btn right-action-primary"
+          title="制作"
+          onClick={loadCookingSteps}
+          disabled={loadingSteps}
+        >
+          {loadingSteps ? (
+            <span className="right-action-icon right-action-spinner" />
+          ) : (
+            <span className="right-action-icon">🍳</span>
+          )}
           <span className="right-action-text">制作</span>
         </button>
       </div>

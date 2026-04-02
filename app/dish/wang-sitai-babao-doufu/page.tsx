@@ -32,6 +32,76 @@ const DISH_CENTER_LAT = 30.28;
 
 type ActiveTab = "geo" | "culture" | "ingredients" | "flavor";
 
+type GeoCauseTarget = {
+  ingredient: string;
+  placeName: string;
+  lng: number;
+  lat: number;
+};
+
+type GeoPreset = {
+  id: "gaoyou" | "jinhua" | "qingyuan" | "yichun" | "nanjing";
+  flyTo: { center: [number, number]; zoom: number };
+  rivers: string[];
+  terrain: string[];
+  climate: string[];
+  notes?: string[];
+};
+
+function getGeoPreset(placeName: string): GeoPreset | null {
+  if (placeName.includes("高邮")) {
+    return {
+      id: "gaoyou",
+      flyTo: { center: [119.45, 32.78], zoom: 7.2 },
+      rivers: ["京杭大运河", "长江下游水系"],
+      terrain: ["里下河平原", "湖荡与圩田"],
+      climate: ["江淮湿润季风"],
+      notes: ["水网密、湿度高，利于家禽养殖与鲜味积累"],
+    };
+  }
+  if (placeName.includes("金华")) {
+    return {
+      id: "jinhua",
+      flyTo: { center: [119.65, 29.09], zoom: 7.6 },
+      rivers: ["钱塘江水系（婺江）"],
+      terrain: ["金衢盆地（示意）"],
+      climate: ["亚热带湿润季风", "冬季相对干冷时段（利于腌制风干）"],
+      notes: ["盆地通风与冬季干燥期，常被用于腌腊风干工艺的形成"],
+    };
+  }
+  if (placeName.includes("庆元")) {
+    return {
+      id: "qingyuan",
+      flyTo: { center: [119.07, 27.63], zoom: 7.6 },
+      rivers: ["瓯江上游支流（示意）"],
+      terrain: ["浙南山地", "林地覆盖"],
+      climate: ["湿润多雨", "昼夜温差（山地）"],
+      notes: ["林下湿润与温差更利于食用菌栽培环境稳定"],
+    };
+  }
+  if (placeName.includes("伊春")) {
+    return {
+      id: "yichun",
+      flyTo: { center: [128.9, 47.73], zoom: 6.9 },
+      rivers: ["松花江水系（示意）"],
+      terrain: ["小兴安岭山地林海"],
+      climate: ["寒温带季风", "夏季昼长、光照足"],
+      notes: ["森林生态与冷凉气候，常与坚果类成熟和风味形成相关"],
+    };
+  }
+  if (placeName.includes("南京")) {
+    return {
+      id: "nanjing",
+      flyTo: { center: [118.78, 32.06], zoom: 7.2 },
+      rivers: ["长江", "秦淮河（示意）"],
+      terrain: ["宁镇丘陵与滨江平原"],
+      climate: ["江淮湿润季风"],
+      notes: ["大江水系与城市饮食吊汤传统相互促成"],
+    };
+  }
+  return null;
+}
+
 export default function WangSitaiPage() {
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<mapboxgl.Map | null>(null);
@@ -42,6 +112,13 @@ export default function WangSitaiPage() {
   const [showContent, setShowContent] = useState(false);
   const markersRef = useRef<mapboxgl.Marker[]>([]);
   const dishMarkerRef = useRef<mapboxgl.Marker | null>(null);
+  const [geoTarget, setGeoTarget] = useState<GeoCauseTarget | null>(null);
+  const [geoCauseOpen, setGeoCauseOpen] = useState(false);
+  const [geoCauseLoading, setGeoCauseLoading] = useState(false);
+  const [geoCauseText, setGeoCauseText] = useState<string>("");
+  const [geoCauseError, setGeoCauseError] = useState<string>("");
+  const geoCauseCacheRef = useRef<Map<string, string>>(new Map());
+  const flowAnimRef = useRef<number | null>(null);
 
   const ingredientPoints: IngredientPoint[] = (
     dishData.ingredients_distribution as Array<{
@@ -102,6 +179,129 @@ export default function WangSitaiPage() {
       color: FLAVOR_COLORS[flavorMap[ing.ingredient] || "鲜"],
     }));
   });
+
+  const runFlowAnimation = useCallback((map: mapboxgl.Map, layerId: string) => {
+    if (flowAnimRef.current) cancelAnimationFrame(flowAnimRef.current);
+    let t = 0;
+    const tick = () => {
+      t = (t + 1) % 200;
+      // 让 dash 位移产生“流动”错觉
+      const a = 1 + (t % 20) * 0.1;
+      const b = 2 + ((t + 7) % 20) * 0.1;
+      try {
+        map.setPaintProperty(layerId, "line-dasharray", [a, b]);
+      } catch {
+        // ignore (map may be gone)
+      }
+      flowAnimRef.current = requestAnimationFrame(tick);
+    };
+    flowAnimRef.current = requestAnimationFrame(tick);
+  }, []);
+
+  const stopFlowAnimation = useCallback(() => {
+    if (flowAnimRef.current) cancelAnimationFrame(flowAnimRef.current);
+    flowAnimRef.current = null;
+  }, []);
+
+  const applyGeoHighlight = useCallback(
+    (preset: GeoPreset | null) => {
+      const map = mapRef.current;
+      if (!map) return;
+      const id = preset?.id;
+
+      // fly to region
+      if (preset) {
+        map.flyTo({ center: preset.flyTo.center, zoom: preset.flyTo.zoom, duration: 1200, essential: true });
+      }
+
+      // filters
+      const riverHL = "wst-rivers-highlight";
+      const basinHL = "wst-basins-outline";
+      const climateHL = "wst-climate-highlight";
+      const terrainBase = "wst-terrain";
+
+      try {
+        map.setFilter(riverHL, id ? ["==", ["get", "place"], id] : ["==", ["get", "place"], "__none__"]);
+        map.setFilter(basinHL, id ? ["==", ["get", "place"], id] : ["==", ["get", "place"], "__none__"]);
+        map.setFilter(climateHL, id ? ["==", ["get", "place"], id] : ["==", ["get", "place"], "__none__"]);
+        map.setPaintProperty(terrainBase, "fill-opacity", 0);
+      } catch {
+        // layers may not exist yet
+      }
+
+      // flow animation on highlighted river
+      if (preset) runFlowAnimation(map, riverHL);
+      else stopFlowAnimation();
+
+      // climate flash
+      if (preset) {
+        try {
+          map.setPaintProperty(climateHL, "fill-opacity", 0.22);
+          window.setTimeout(() => {
+            try {
+              map.setPaintProperty(climateHL, "fill-opacity", 0.12);
+            } catch {
+              // ignore
+            }
+          }, 520);
+        } catch {
+          // ignore
+        }
+      }
+    },
+    [runFlowAnimation, stopFlowAnimation]
+  );
+
+  const openGeoCause = useCallback(
+    async (target: GeoCauseTarget) => {
+      setGeoTarget(target);
+      setGeoCauseOpen(true);
+      setGeoCauseError("");
+
+      const preset = getGeoPreset(target.placeName);
+      applyGeoHighlight(preset);
+
+      const cacheKey = `${dishData.dish_name}::${target.ingredient}::${target.placeName}`;
+      const cached = geoCauseCacheRef.current.get(cacheKey);
+      if (cached) {
+        setGeoCauseText(cached);
+        return;
+      }
+
+      setGeoCauseLoading(true);
+      setGeoCauseText("");
+      try {
+        const res = await fetch("/api/geo-cause", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            dish: dishData.dish_name,
+            ingredient: target.ingredient,
+            placeName: target.placeName,
+            lng: target.lng,
+            lat: target.lat,
+            context: {
+              rivers: preset?.rivers ?? [],
+              terrain: preset?.terrain ?? [],
+              climate: preset?.climate ?? [],
+              notes: preset?.notes ?? [],
+            },
+          }),
+        });
+        const data = await res.json();
+        if (!data?.success || !data?.content) {
+          throw new Error(data?.error || "生成失败");
+        }
+        geoCauseCacheRef.current.set(cacheKey, data.content);
+        setGeoCauseText(data.content);
+      } catch (e: any) {
+        setGeoCauseError(e?.message || "生成失败");
+      } finally {
+        setGeoCauseLoading(false);
+      }
+    },
+    [applyGeoHighlight]
+  );
 
   const buildMarkers = useCallback(
     (map: mapboxgl.Map) => {
@@ -227,6 +427,15 @@ export default function WangSitaiPage() {
 
         el.addEventListener("mouseenter", () => marker.getPopup()?.addTo(map));
         el.addEventListener("mouseleave", () => marker.getPopup()?.remove());
+        el.addEventListener("click", (ev) => {
+          ev.stopPropagation();
+          openGeoCause({
+            ingredient: pt.ingredient,
+            placeName: pt.name,
+            lng: pt.lng,
+            lat: pt.lat,
+          });
+        });
 
         markersRef.current.push(marker);
       });
@@ -272,7 +481,7 @@ export default function WangSitaiPage() {
         duration: 2000,
       });
     },
-    [ingredientPoints]
+    [ingredientPoints, openGeoCause]
   );
 
   // Init map
@@ -319,6 +528,389 @@ export default function WangSitaiPage() {
         }
       });
 
+      // --- 地理成因：面状/线状标注图层（示意） ---
+      // 水系（示意）
+      if (!map.getSource("wst-rivers")) {
+        map.addSource("wst-rivers", {
+          type: "geojson",
+          data: {
+            type: "FeatureCollection",
+            features: [
+              // 南京：长江（示意线）
+              {
+                type: "Feature",
+                properties: { place: "nanjing", kind: "river", name: "长江" },
+                geometry: {
+                  type: "LineString",
+                  coordinates: [
+                    [116.8, 31.6],
+                    [118.2, 31.9],
+                    [118.78, 32.06],
+                    [119.6, 32.2],
+                    [121.2, 31.4],
+                  ],
+                },
+              },
+              // 高邮：大运河（示意线）
+              {
+                type: "Feature",
+                properties: { place: "gaoyou", kind: "canal", name: "京杭大运河" },
+                geometry: {
+                  type: "LineString",
+                  coordinates: [
+                    [118.9, 33.2],
+                    [119.1, 32.95],
+                    [119.45, 32.78],
+                    [119.6, 32.5],
+                    [119.9, 32.2],
+                  ],
+                },
+              },
+              // 金华：婺江（示意线）
+              {
+                type: "Feature",
+                properties: { place: "jinhua", kind: "river", name: "婺江" },
+                geometry: {
+                  type: "LineString",
+                  coordinates: [
+                    [118.7, 29.0],
+                    [119.2, 29.08],
+                    [119.65, 29.09],
+                    [120.0, 29.25],
+                    [120.5, 29.3],
+                  ],
+                },
+              },
+              // 庆元：浙南山溪（示意线）
+              {
+                type: "Feature",
+                properties: { place: "qingyuan", kind: "river", name: "瓯江上游支流" },
+                geometry: {
+                  type: "LineString",
+                  coordinates: [
+                    [118.6, 27.4],
+                    [118.85, 27.55],
+                    [119.07, 27.63],
+                    [119.35, 27.8],
+                    [119.6, 27.95],
+                  ],
+                },
+              },
+              // 伊春：松花江水系（示意线）
+              {
+                type: "Feature",
+                properties: { place: "yichun", kind: "river", name: "松花江水系" },
+                geometry: {
+                  type: "LineString",
+                  coordinates: [
+                    [126.2, 47.2],
+                    [127.3, 47.45],
+                    [128.9, 47.73],
+                    [130.2, 47.85],
+                    [131.0, 47.7],
+                  ],
+                },
+              },
+            ],
+          },
+        });
+      }
+
+      if (!map.getLayer("wst-rivers-base")) {
+        map.addLayer({
+          id: "wst-rivers-base",
+          type: "line",
+          source: "wst-rivers",
+          paint: {
+            "line-color": "rgba(60,140,220,0.45)",
+            "line-width": 2,
+            "line-opacity": 0.22,
+          },
+        });
+      }
+      if (!map.getLayer("wst-rivers-highlight")) {
+        map.addLayer({
+          id: "wst-rivers-highlight",
+          type: "line",
+          source: "wst-rivers",
+          filter: ["==", ["get", "place"], "__none__"],
+          paint: {
+            "line-color": "rgba(214,170,72,0.98)",
+            "line-width": 3.5,
+            "line-opacity": 0.92,
+            "line-dasharray": [1, 2],
+          },
+        });
+      }
+
+      // 地形（示意：低海拔浅色、高海拔深色）
+      if (!map.getSource("wst-terrain")) {
+        map.addSource("wst-terrain", {
+          type: "geojson",
+          data: {
+            type: "FeatureCollection",
+            features: [
+              // 东部低海拔（示意）
+              {
+                type: "Feature",
+                properties: { elev: 120 },
+                geometry: {
+                  type: "Polygon",
+                  coordinates: [
+                    [
+                      [108.0, 20.0],
+                      [123.0, 20.0],
+                      [123.0, 35.5],
+                      [108.0, 35.5],
+                      [108.0, 20.0],
+                    ],
+                  ],
+                },
+              },
+              // 东北山地/林海（示意）
+              {
+                type: "Feature",
+                properties: { elev: 620 },
+                geometry: {
+                  type: "Polygon",
+                  coordinates: [
+                    [
+                      [122.0, 41.0],
+                      [135.0, 41.0],
+                      [135.0, 53.0],
+                      [122.0, 53.0],
+                      [122.0, 41.0],
+                    ],
+                  ],
+                },
+              },
+              // 西部高海拔（示意）
+              {
+                type: "Feature",
+                properties: { elev: 2400 },
+                geometry: {
+                  type: "Polygon",
+                  coordinates: [
+                    [
+                      [73.5, 18.0],
+                      [108.0, 18.0],
+                      [108.0, 54.0],
+                      [73.5, 54.0],
+                      [73.5, 18.0],
+                    ],
+                  ],
+                },
+              },
+            ],
+          },
+        });
+      }
+      if (!map.getLayer("wst-terrain")) {
+        map.addLayer({
+          id: "wst-terrain",
+          type: "fill",
+          source: "wst-terrain",
+          paint: {
+            "fill-color": [
+              "interpolate",
+              ["linear"],
+              ["get", "elev"],
+              0,
+              "rgba(210,230,210,0.75)",
+              800,
+              "rgba(200,210,230,0.75)",
+              3000,
+              "rgba(210,200,230,0.75)",
+            ],
+            "fill-opacity": 0,
+          },
+        });
+      }
+
+      // 盆地范围（示意：金衢盆地）
+      if (!map.getSource("wst-basins")) {
+        map.addSource("wst-basins", {
+          type: "geojson",
+          data: {
+            type: "FeatureCollection",
+            features: [
+              {
+                type: "Feature",
+                properties: { place: "jinhua", name: "金衢盆地（示意）" },
+                geometry: {
+                  type: "Polygon",
+                  coordinates: [
+                    [
+                      [118.9, 28.7],
+                      [120.3, 28.7],
+                      [120.3, 29.6],
+                      [118.9, 29.6],
+                      [118.9, 28.7],
+                    ],
+                  ],
+                },
+              },
+            ],
+          },
+        });
+      }
+      if (!map.getLayer("wst-basins-fill")) {
+        map.addLayer({
+          id: "wst-basins-fill",
+          type: "fill",
+          source: "wst-basins",
+          paint: {
+            "fill-color": "rgba(140,200,140,0.7)",
+            "fill-opacity": 0,
+          },
+        });
+      }
+      if (!map.getLayer("wst-basins-outline")) {
+        map.addLayer({
+          id: "wst-basins-outline",
+          type: "line",
+          source: "wst-basins",
+          filter: ["==", ["get", "place"], "__none__"],
+          paint: {
+            "line-color": "rgba(214,170,72,0.9)",
+            "line-width": 2,
+            "line-opacity": 0.8,
+          },
+        });
+      }
+
+      // 气候示意（湿润 vs 干燥，粗略分区）
+      if (!map.getSource("wst-climate")) {
+        map.addSource("wst-climate", {
+          type: "geojson",
+          data: {
+            type: "FeatureCollection",
+            features: [
+              {
+                type: "Feature",
+                properties: { zone: "humid", place: "jinhua" },
+                geometry: {
+                  type: "Polygon",
+                  coordinates: [
+                    [
+                      [105.0, 22.0],
+                      [123.5, 22.0],
+                      [123.5, 32.5],
+                      [105.0, 32.5],
+                      [105.0, 22.0],
+                    ],
+                  ],
+                },
+              },
+              {
+                type: "Feature",
+                properties: { zone: "humid", place: "qingyuan" },
+                geometry: {
+                  type: "Polygon",
+                  coordinates: [
+                    [
+                      [105.0, 22.0],
+                      [123.5, 22.0],
+                      [123.5, 32.5],
+                      [105.0, 32.5],
+                      [105.0, 22.0],
+                    ],
+                  ],
+                },
+              },
+              {
+                type: "Feature",
+                properties: { zone: "humid", place: "gaoyou" },
+                geometry: {
+                  type: "Polygon",
+                  coordinates: [
+                    [
+                      [105.0, 22.0],
+                      [123.5, 22.0],
+                      [123.5, 32.5],
+                      [105.0, 32.5],
+                      [105.0, 22.0],
+                    ],
+                  ],
+                },
+              },
+              {
+                type: "Feature",
+                properties: { zone: "humid", place: "nanjing" },
+                geometry: {
+                  type: "Polygon",
+                  coordinates: [
+                    [
+                      [105.0, 22.0],
+                      [123.5, 22.0],
+                      [123.5, 32.5],
+                      [105.0, 32.5],
+                      [105.0, 22.0],
+                    ],
+                  ],
+                },
+              },
+              {
+                type: "Feature",
+                properties: { zone: "dry", place: "yichun" },
+                geometry: {
+                  type: "Polygon",
+                  coordinates: [
+                    [
+                      [100.0, 33.0],
+                      [135.0, 33.0],
+                      [135.0, 54.0],
+                      [100.0, 54.0],
+                      [100.0, 33.0],
+                    ],
+                  ],
+                },
+              },
+            ],
+          },
+        });
+      }
+
+      if (!map.getLayer("wst-climate-base")) {
+        map.addLayer({
+          id: "wst-climate-base",
+          type: "fill",
+          source: "wst-climate",
+          paint: {
+            "fill-color": [
+              "match",
+              ["get", "zone"],
+              "humid",
+              "rgba(100,200,120,0.75)",
+              "dry",
+              "rgba(230,210,90,0.75)",
+              "rgba(200,200,200,0.5)",
+            ],
+            "fill-opacity": 0,
+          },
+        });
+      }
+      if (!map.getLayer("wst-climate-highlight")) {
+        map.addLayer({
+          id: "wst-climate-highlight",
+          type: "fill",
+          source: "wst-climate",
+          filter: ["==", ["get", "place"], "__none__"],
+          paint: {
+            "fill-color": [
+              "match",
+              ["get", "zone"],
+              "humid",
+              "rgba(100,200,120,0.9)",
+              "dry",
+              "rgba(230,210,90,0.9)",
+              "rgba(200,200,200,0.6)",
+            ],
+            "fill-opacity": 0.12,
+          },
+        });
+      }
+
       buildMarkers(map);
     });
 
@@ -326,6 +918,7 @@ export default function WangSitaiPage() {
     setTimeout(() => setShowContent(true), 300);
 
     return () => {
+      stopFlowAnimation();
       map.remove();
       mapRef.current = null;
     };
@@ -335,6 +928,16 @@ export default function WangSitaiPage() {
   useEffect(() => {
     if (activeTab === "geo") {
       setParticleVisible(true);
+      setFlavorParticleVisible(false);
+      markersRef.current.forEach((m) => {
+        const el = m.getElement();
+        if (el) el.classList.add("hidden");
+      });
+      dishMarkerRef.current?.getElement().classList.add("hidden");
+      setGeoCauseOpen(false);
+      applyGeoHighlight(null);
+    } else if (activeTab === "ingredients") {
+      setParticleVisible(false);
       setFlavorParticleVisible(false);
       markersRef.current.forEach((m) => {
         const el = m.getElement();
@@ -357,8 +960,10 @@ export default function WangSitaiPage() {
         if (el) el.classList.add("hidden");
       });
       dishMarkerRef.current?.getElement().classList.add("hidden");
+      setGeoCauseOpen(false);
+      applyGeoHighlight(null);
     }
-  }, [activeTab]);
+  }, [activeTab, applyGeoHighlight]);
 
   return (
     <div
@@ -650,6 +1255,118 @@ export default function WangSitaiPage() {
         onTabChange={(tab) => setActiveTab(tab)}
         ingredientColors={INGREDIENT_COLORS}
       />
+
+      {/* 地理成因浮动卡片（点击产地出现） */}
+      {activeTab === "ingredients" && geoCauseOpen && geoTarget && (
+        <div
+          style={{
+            position: "fixed",
+            top: 96,
+            right: 22,
+            zIndex: 520,
+            width: 360,
+            maxWidth: "calc(100vw - 44px)",
+            background: "rgba(255,252,245,0.72)",
+            backdropFilter: "blur(14px)",
+            border: "1px solid rgba(139,90,43,0.28)",
+            borderRadius: 12,
+            boxShadow: "0 10px 30px rgba(0,0,0,0.18)",
+            overflow: "hidden",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 10,
+              padding: "12px 14px",
+              borderBottom: "1px solid rgba(139,90,43,0.18)",
+              background: "linear-gradient(180deg, rgba(45,38,32,0.10), rgba(45,38,32,0))",
+            }}
+          >
+            <div style={{ minWidth: 0 }}>
+              <div
+                style={{
+                  fontSize: 13,
+                  fontWeight: 700,
+                  letterSpacing: "1px",
+                  color: "#5a3b1f",
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                }}
+                title={`${geoTarget.ingredient} · ${geoTarget.placeName}`}
+              >
+                {geoTarget.ingredient} · {geoTarget.placeName}
+              </div>
+              <div style={{ fontSize: 11, color: "rgba(90,59,31,0.7)", letterSpacing: "2px", marginTop: 2 }}>
+                地理成因 · 为什么是这里
+              </div>
+            </div>
+            <button
+              onClick={() => {
+                setGeoCauseOpen(false);
+                stopFlowAnimation();
+                applyGeoHighlight(null);
+              }}
+              style={{
+                marginLeft: "auto",
+                background: "rgba(45,38,32,0.06)",
+                border: "1px solid rgba(139,90,43,0.25)",
+                color: "rgba(90,59,31,0.9)",
+                borderRadius: 8,
+                padding: "6px 10px",
+                cursor: "pointer",
+                letterSpacing: "2px",
+                fontSize: 12,
+              }}
+            >
+              关闭
+            </button>
+          </div>
+
+          <div style={{ padding: "12px 14px 14px" }}>
+            {geoCauseLoading ? (
+              <div style={{ color: "rgba(58,52,48,0.75)", fontSize: 13, lineHeight: 1.9, letterSpacing: "0.5px" }}>
+                正在推演此地山川水脉与风土……
+              </div>
+            ) : geoCauseError ? (
+              <div style={{ color: "#8b2b2b", fontSize: 13, lineHeight: 1.9 }}>
+                {geoCauseError}
+                <div style={{ marginTop: 10 }}>
+                  <button
+                    onClick={() => openGeoCause(geoTarget)}
+                    style={{
+                      background: "rgba(139,90,43,0.12)",
+                      border: "1px solid rgba(139,90,43,0.25)",
+                      color: "#8b5a2b",
+                      borderRadius: 8,
+                      padding: "6px 10px",
+                      cursor: "pointer",
+                      letterSpacing: "2px",
+                      fontSize: 12,
+                    }}
+                  >
+                    重试
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div
+                style={{
+                  color: "rgba(58,52,48,0.92)",
+                  fontSize: 13,
+                  lineHeight: 2,
+                  letterSpacing: "0.6px",
+                  fontFamily: '"Noto Serif SC", "SimSun", serif',
+                }}
+              >
+                {geoCauseText || "点击任一产地光点，即可生成地理成因解释。"}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* Ensure map canvas fills correctly */}
       <style>{`

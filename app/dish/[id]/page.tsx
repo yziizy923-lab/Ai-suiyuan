@@ -587,9 +587,9 @@ export default function DishDetailPage() {
 
       {/* 右侧三个按键 */}
       <div className={`right-actions ${showContent ? 'visible' : ''}`}>
-        <button className="right-action-btn" title="收藏">
-          <span className="right-action-icon">⭐</span>
-          <span className="right-action-text">收藏</span>
+        <button className="right-action-btn" title="古今对比" onClick={() => router.push(`/dish/${dishId}/compare`)}>
+          <span className="right-action-icon">🔄</span>
+          <span className="right-action-text">古今对比</span>
         </button>
         <button className="right-action-btn" title="分享">
           <span className="right-action-icon">📤</span>

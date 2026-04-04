@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 type Tab = "geo" | "culture" | "ingredients" | "flavor";
 
@@ -16,6 +17,7 @@ export default function FloatingDialog({
   ingredientColors,
 }: FloatingDialogProps) {
   const [collapsed, setCollapsed] = useState(false);
+  const router = useRouter();
 
   const tabs: { id: Tab; label: string; icon: string }[] = [
     { id: "geo", label: "地理分布", icon: "🗺️" },
@@ -172,6 +174,44 @@ export default function FloatingDialog({
         {/* Content */}
         {!collapsed && (
           <div style={{ padding: "14px 18px", flex: 1 }}>
+            {/* 古今对比入口 */}
+            <button
+              onClick={() => router.push("/dish/wang-sitai-babao-doufu/kitchen")}
+              style={{
+                width: "100%",
+                padding: "10px 14px",
+                marginBottom: 14,
+                borderRadius: 10,
+                border: "1px solid rgba(244,197,66,0.5)",
+                background: "linear-gradient(135deg, rgba(139,90,43,0.35), rgba(92,45,10,0.45))",
+                color: "rgba(244,197,66,0.95)",
+                fontSize: 13,
+                cursor: "pointer",
+                letterSpacing: "2px",
+                fontFamily: '"Noto Serif SC", "SimSun", serif',
+                fontWeight: 600,
+                transition: "all 0.25s ease",
+                boxShadow: "0 4px 14px rgba(139,90,43,0.25)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 8,
+              }}
+              onMouseEnter={(e) => {
+                (e.currentTarget as HTMLElement).style.background =
+                  "linear-gradient(135deg, rgba(139,90,43,0.55), rgba(92,45,10,0.65))";
+                (e.currentTarget as HTMLElement).style.transform = "translateY(-1px)";
+              }}
+              onMouseLeave={(e) => {
+                (e.currentTarget as HTMLElement).style.background =
+                  "linear-gradient(135deg, rgba(139,90,43,0.35), rgba(92,45,10,0.45))";
+                (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
+              }}
+            >
+              <span style={{ fontSize: 14 }}>🍳</span>
+              <span>古今对比 · 随园烹饪</span>
+            </button>
+
             {activeTab === "geo" && (
               <div>
                 <p

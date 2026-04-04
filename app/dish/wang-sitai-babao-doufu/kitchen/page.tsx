@@ -1,189 +1,310 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence, PanInfo } from "framer-motion";
+import React, { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
-// 辅助函数
 function cn(...inputs: (string | undefined | null | false)[]) {
   return twMerge(clsx(inputs));
 }
 
-// 1. 食材配置：在这里修改你的图片路径
+// 食材配置：图层顺序从下到上是 鸡汤、豆腐、香菇、蘑菇、松子、瓜子、鸡肉、火腿
 const INGREDIENTS = [
-  {
-    id: "tofu",
-    name: "豆腐",
-    ancientIcon: "/images/ancient/tofu_icon.png",
-    modernIcon: "/images/modern/tofu_icon.png",
-    ancientInPot: "/images/ancient/tofu_sliced.png", // 锅内状态（切开/平面）
-    modernInPot: "/images/modern/tofu_sliced.png",
-  },
-  {
-    id: "ham",
-    name: "火腿",
-    ancientIcon: "/images/ancient/ham_icon.png",
-    modernIcon: "/images/modern/ham_icon.png",
-    ancientInPot: "/images/ancient/ham_sliced.png",
-    modernInPot: "/images/modern/ham_sliced.png",
-  },
-  // ... 你可以继续添加其他 6 宝
+  { id: "chicken-soup", name: "鸡汤", zIndex: 1 },
+  { id: "tofu", name: "豆腐", zIndex: 2 },
+  { id: "shiitake", name: "香菇", zIndex: 3 },
+  { id: "mushroom", name: "蘑菇", zIndex: 4 },
+  { id: "pine-nut", name: "松子", zIndex: 5 },
+  { id: "watermelon-seed", name: "瓜子", zIndex: 6 },
+  { id: "chicken", name: "鸡肉", zIndex: 7 },
+  { id: "ham", name: "火腿", zIndex: 8 },
 ];
 
-const FINAL_RESULTS = {
-  ancient: "/images/ancient/final_dish.png",
-  modern: "/images/modern/final_dish.png",
+// 根据食材ID获取对应的图片路径
+const getIngredientImage = (id: string, isAncient: boolean) => {
+  const imageMap: Record<string, { ancient: string; modern: string }> = {
+    "chicken-soup": {
+      ancient: "/images/ancient/pot/古代-鸡汤.png",
+      modern: "/images/modern/pot/现代-鸡汤.png",
+    },
+    "tofu": {
+      ancient: "/images/ancient/pot/古代-豆腐.png",
+      modern: "/images/modern/pot/现代-豆腐.png",
+    },
+    "shiitake": {
+      ancient: "/images/ancient/pot/古代-香菇.png",
+      modern: "/images/modern/pot/现代-香菇.png",
+    },
+    "mushroom": {
+      ancient: "/images/ancient/pot/古代-蘑菇.png",
+      modern: "/images/modern/pot/现代-蘑菇.png",
+    },
+    "pine-nut": {
+      ancient: "/images/ancient/pot/古代-松子.png",
+      modern: "/images/modern/pot/现代-松子.png",
+    },
+    "watermelon-seed": {
+      ancient: "/images/ancient/pot/古代-瓜子.png",
+      modern: "/images/modern/pot/现代-瓜子.png",
+    },
+    "chicken": {
+      ancient: "/images/ancient/pot/古代-鸡肉.png",
+      modern: "/images/modern/pot/现代-鸡肉.png",
+    },
+    "ham": {
+      ancient: "/images/ancient/pot/古代-火腿.png",
+      modern: "/images/modern/pot/现代-火腿.png",
+    },
+  };
+  const images = imageMap[id] || { ancient: "", modern: "" };
+  return isAncient ? images.ancient : images.modern;
 };
 
+// 根据ID获取zIndex
+const getZIndex = (id: string) => {
+  const ingredient = INGREDIENTS.find((i) => i.id === id);
+  return ingredient?.zIndex || 1;
+};
+
+// 按zIndex排序的食材列表
+const sortedIngredients = [...INGREDIENTS].sort((a, b) => a.zIndex - b.zIndex);
+
+const FINAL_ANCIENT = "/images/ancient/pot/古代.png";
+const FINAL_MODERN = "/images/modern/pot/现代.png";
+
+/** 与 3306×3306 素材一致的正方形视口；内层圆形 overflow-hidden 防止图层溢出到锅外 */
+const POT_VIEWPORT_CLASS =
+  "relative w-[min(92vmin,min(46vw,520px))] aspect-square max-w-full shrink-0";
+
+function PotStack({
+  isAncient,
+  inPotIds,
+}: {
+  isAncient: boolean;
+  inPotIds: string[];
+}) {
+  const sortedIds = [...inPotIds].sort((a, b) => getZIndex(a) - getZIndex(b));
+
+  return (
+    <div className={POT_VIEWPORT_CLASS}>
+      <div
+        className={cn(
+          "relative h-full w-full overflow-hidden rounded-full",
+          isAncient
+            ? "bg-stone-100/90 ring-[3px] ring-amber-600/40 shadow-xl shadow-amber-900/30"
+            : "bg-stone-100/90 ring-[3px] ring-stone-400/40 shadow-xl shadow-black/20"
+        )}
+      >
+        {sortedIds.length === 0 ? (
+          <div className="flex h-full w-full flex-col items-center justify-center px-4 text-center">
+            <p
+              className={cn(
+                "text-sm font-medium",
+                isAncient ? "text-amber-900/80" : "text-stone-700/80"
+              )}
+            >
+              空锅待烹
+            </p>
+          </div>
+        ) : (
+          <div className="relative h-full w-full p-[2.5%]">
+            {sortedIds.map((id) => (
+              <motion.img
+                key={`${isAncient ? "a" : "m"}-${id}`}
+                src={getIngredientImage(id, isAncient)}
+                alt={INGREDIENTS.find((i) => i.id === id)?.name ?? ""}
+                className="pointer-events-none absolute inset-0 h-full w-full max-h-full max-w-full select-none object-contain object-center"
+                style={{ zIndex: getZIndex(id) }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.35, ease: "easeOut" }}
+                draggable={false}
+              />
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 export default function SuiyuanCookingPage() {
-  const [inPotIds, setInPotIds] = useState<string[]>([]); // 已经在锅里的食材 ID
+  const [inPotIds, setInPotIds] = useState<string[]>([]);
   const [isFinished, setIsFinished] = useState(false);
+  const leftRailRef = useRef<HTMLDivElement>(null);
+  const rightRailRef = useRef<HTMLDivElement>(null);
+  const syncScrollLock = useRef(false);
+
+  const handleRailScroll = (source: "left" | "right") => {
+    if (syncScrollLock.current) return;
+    const left = leftRailRef.current;
+    const right = rightRailRef.current;
+    if (!left || !right) return;
+    const top = source === "left" ? left.scrollTop : right.scrollTop;
+    syncScrollLock.current = true;
+    if (source === "left") {
+      right.scrollTop = top;
+    } else {
+      left.scrollTop = top;
+    }
+    requestAnimationFrame(() => {
+      syncScrollLock.current = false;
+    });
+  };
 
   // 检查是否完成（八宝齐聚）
   useEffect(() => {
     if (inPotIds.length === INGREDIENTS.length && INGREDIENTS.length > 0) {
-      setTimeout(() => setIsFinished(true), 800);
+      setTimeout(() => setIsFinished(true), 1000);
     }
   }, [inPotIds]);
 
-  // 处理拖拽松手逻辑
-  const handleDragEnd = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo, ingredientId: string) => {
-    // 简单的碰撞检测：如果松手位置在屏幕中心区域（锅的位置）
-    // 你可以根据实际布局微调这个阈值
-    const isOverPot = info.point.x > window.innerWidth / 2 - 100 && 
-                     info.point.x < window.innerWidth / 2 + 100;
-
-    if (isOverPot && !inPotIds.includes(ingredientId)) {
+  // 处理拖拽松手 - 添加食材到两个锅
+  const handleDragEnd = (ingredientId: string) => {
+    if (!inPotIds.includes(ingredientId)) {
       setInPotIds((prev) => [...prev, ingredientId]);
     }
   };
 
+  // 重置
+  const handleReset = () => {
+    setInPotIds([]);
+    setIsFinished(false);
+  };
+
   return (
-    <div className="relative w-full h-screen overflow-hidden bg-slate-900 flex">
-      
-      {/* 1. 左半部分：古代 */}
-      <div className="relative flex-1 h-full border-r border-white/10 bg-[url('/images/ancient_bg.jpg')] bg-cover bg-center">
-        <div className="absolute inset-0 bg-blue-900/20 backdrop-blur-sm" /> {/* 遮罩层 */}
-        
-        <h2 className="absolute top-10 left-10 text-amber-200 text-2xl font-serif">随园古境</h2>
-        
-        {/* 古代桌子与锅 */}
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="relative w-96 h-96">
-            <img src="/images/ancient/table.png" alt="古桌" className="absolute inset-0 object-contain" />
-            <img src="/images/ancient/pot.png" alt="古锅" className="absolute inset-0 object-contain z-10" />
-            
-            {/* 古代锅内食材分布 */}
-            <div className="absolute inset-0 z-20 flex items-center justify-center">
-              {inPotIds.map((id, index) => {
-                const item = INGREDIENTS.find(i => i.id === id);
-                if (!item) return null;
-                return (
-                  <motion.img
-                    key={`ancient-${id}`}
-                    initial={{ opacity: 0, scale: 0.5, y: -50 }}
-                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                    src={item.ancientInPot}
-                    className="absolute w-24 h-24 object-contain"
-                    style={{ rotate: index * 45 }} // 让食材错开排布
-                  />
-                );
-              })}
-            </div>
-          </div>
-        </div>
+    <div
+      className="relative flex w-full h-screen overflow-hidden"
+      style={{
+        background: "#fdf6e3",
+        backgroundImage: `
+          radial-gradient(circle at 20% 20%, rgba(139,90,43,0.06) 0%, transparent 50%),
+          radial-gradient(circle at 80% 80%, rgba(139,90,43,0.06) 0%, transparent 50%),
+          repeating-linear-gradient(
+            45deg, transparent, transparent 40px,
+            rgba(139,90,43,0.018) 40px, rgba(139,90,43,0.018) 41px
+          )
+        `,
+        fontFamily: '"Noto Serif SC", "Source Han Serif CN", serif',
+      }}
+    >
+      {/* 左半部分：古代 */}
+      <div className="relative flex-1 h-full border-r border-r-amber-700/20 flex items-center justify-center">
+        <h2 className="absolute top-10 left-10 text-amber-900 text-2xl font-serif">古</h2>
 
-        {/* 古代食材陈列 (镜像感应，不可直接拖拽) */}
-        <div className="absolute left-6 top-1/4 flex flex-col gap-4">
-          {INGREDIENTS.map((item) => (
-            <div key={`side-ancient-${item.id}`} className="relative w-16 h-16 grayscale opacity-50">
-              <img src={item.ancientIcon} className="w-full h-full object-contain" />
-              {inPotIds.includes(item.id) && (
-                <motion.div layoutId={`fly-ancient-${item.id}`} className="absolute inset-0 bg-amber-500/20 rounded-full" />
-              )}
-            </div>
-          ))}
-        </div>
-      </div>
+        <PotStack isAncient inPotIds={inPotIds} />
 
-      {/* 2. 右半部分：现代 */}
-      <div className="relative flex-1 h-full bg-[url('/images/modern_bg.jpg')] bg-cover bg-center">
-        <h2 className="absolute top-10 right-10 text-white text-2xl font-sans">现代实验室</h2>
-        
-        {/* 现代桌子与锅 */}
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="relative w-96 h-96">
-            <img src="/images/modern/table.png" alt="现代桌" className="absolute inset-0 object-contain" />
-            <img src="/images/modern/pot.png" alt="现代锅" className="absolute inset-0 object-contain z-10" />
-            
-            {/* 现代锅内食材分布 */}
-            <div className="absolute inset-0 z-20 flex items-center justify-center">
-              {inPotIds.map((id, index) => {
-                const item = INGREDIENTS.find(i => i.id === id);
-                if (!item) return null;
-                return (
-                  <motion.img
-                    key={`modern-${id}`}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    src={item.modernInPot}
-                    className="absolute w-24 h-24 object-contain"
-                    style={{ x: (index % 3 - 1) * 30, y: (Math.floor(index / 3) - 1) * 30 }}
-                  />
-                );
-              })}
-            </div>
-          </div>
-        </div>
-
-        {/* 现代食材陈列 (可拖拽源) */}
-        <div className="absolute right-6 top-1/4 flex flex-col gap-4 z-50">
-          {INGREDIENTS.map((item) => (
-            <motion.div
-              key={`side-modern-${item.id}`}
-              drag
-              dragSnapToOrigin
-              onDragEnd={(e, info) => handleDragEnd(e, info, item.id)}
-              whileHover={{ scale: 1.1 }}
-              whileDrag={{ scale: 1.2, zIndex: 100 }}
-              className={cn(
-                "w-16 h-16 cursor-grab active:cursor-grabbing bg-white/10 rounded-xl p-2 backdrop-blur-md border border-white/20",
-                inPotIds.includes(item.id) && "opacity-20 pointer-events-none"
-              )}
-            >
-              <img src={item.modernIcon} className="w-full h-full object-contain" />
-            </motion.div>
-          ))}
+        {/* 古代食材陈列 - 与右侧同步滚动 */}
+        <div
+          ref={leftRailRef}
+          onScroll={() => handleRailScroll("left")}
+          className="absolute left-4 top-24 bottom-6 flex max-w-[4.5rem] flex-col gap-2 overflow-y-auto z-50
+            overscroll-y-contain
+            [&::-webkit-scrollbar]:w-1.5
+            [&::-webkit-scrollbar-track]:bg-transparent
+            [&::-webkit-scrollbar-thumb]:bg-amber-400/40
+            [&::-webkit-scrollbar-thumb]:rounded-full"
+        >
+          {sortedIngredients.map((item) => {
+            const isInPot = inPotIds.includes(item.id);
+            return (
+              <motion.div
+                key={`side-ancient-${item.id}`}
+                drag={!isInPot}
+                dragSnapToOrigin
+                dragElastic={0.5}
+                onDragEnd={() => handleDragEnd(item.id)}
+                whileHover={!isInPot ? { scale: 1.08 } : {}}
+                whileDrag={!isInPot ? { scale: 1.18, zIndex: 100 } : {}}
+                className={cn(
+                  "h-14 w-14 shrink-0 cursor-grab active:cursor-grabbing rounded-lg border flex items-center justify-center text-center text-[11px] leading-tight font-serif font-medium shadow-md",
+                  isInPot
+                    ? "opacity-40 border-amber-700/30 bg-amber-100/50 text-amber-800/50"
+                    : "border-amber-600/50 bg-amber-50/90 text-amber-900 hover:bg-amber-100/95"
+                )}
+              >
+                {item.name}
+              </motion.div>
+            );
+          })}
         </div>
       </div>
 
-      {/* 3. 成品大图覆盖层 */}
+      {/* 右半部分：现代 */}
+      <div className="relative flex-1 h-full flex items-center justify-center">
+        <h2 className="absolute top-10 right-10 text-stone-800 text-2xl font-sans">今</h2>
+
+        <PotStack isAncient={false} inPotIds={inPotIds} />
+
+        {/* 现代食材陈列 - 与左侧同步滚动 */}
+        <div
+          ref={rightRailRef}
+          onScroll={() => handleRailScroll("right")}
+          className="absolute right-4 top-24 bottom-6 flex max-w-[4.5rem] flex-col gap-2 overflow-y-auto z-50
+            overscroll-y-contain
+            [&::-webkit-scrollbar]:w-1.5
+            [&::-webkit-scrollbar-track]:bg-transparent
+            [&::-webkit-scrollbar-thumb]:bg-stone-400/40
+            [&::-webkit-scrollbar-thumb]:rounded-full"
+        >
+          {sortedIngredients.map((item) => {
+            const isInPot = inPotIds.includes(item.id);
+            return (
+              <motion.div
+                key={`side-modern-${item.id}`}
+                drag={!isInPot}
+                dragSnapToOrigin
+                dragElastic={0.5}
+                onDragEnd={() => handleDragEnd(item.id)}
+                whileHover={!isInPot ? { scale: 1.08 } : {}}
+                whileDrag={!isInPot ? { scale: 1.18, zIndex: 100 } : {}}
+                className={cn(
+                  "h-14 w-14 shrink-0 cursor-grab active:cursor-grabbing rounded-lg border flex items-center justify-center text-center text-[11px] leading-tight font-medium shadow-md",
+                  isInPot
+                    ? "opacity-40 border-stone-500/30 bg-stone-100/50 text-stone-600/70"
+                    : "border-stone-500/45 bg-stone-50/90 text-stone-800 hover:bg-stone-100/95"
+                )}
+              >
+                {item.name}
+              </motion.div>
+            );
+          })}
+        </div>
+
+      </div>
+
+      {/* 成品大图覆盖层 */}
       <AnimatePresence>
         {isFinished && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="absolute inset-0 z-[100] flex"
+            className="absolute inset-0 z-[100] flex items-center justify-center bg-amber-950/60 backdrop-blur-sm"
           >
-            <div className="flex-1 h-full bg-black/80 flex flex-col items-center justify-center p-10">
-              <motion.img 
-                initial={{ y: 50 }} animate={{ y: 0 }}
-                src={FINAL_RESULTS.ancient} 
-                className="max-w-full max-h-[70%] object-contain shadow-2xl shadow-amber-900/50" 
-              />
-              <h3 className="mt-8 text-amber-200 text-3xl font-serif">王太守八宝豆腐 · 古法还原</h3>
-            </div>
-            <div className="flex-1 h-full bg-black/80 flex flex-col items-center justify-center p-10 border-l border-white/20">
-              <motion.img 
-                initial={{ y: 50 }} animate={{ y: 0 }}
-                src={FINAL_RESULTS.modern} 
-                className="max-w-full max-h-[70%] object-contain shadow-2xl shadow-blue-900/50" 
-              />
-              <h3 className="mt-8 text-white text-3xl font-sans">王太守八宝豆腐 · 现代转化</h3>
-              <button 
-                onClick={() => {setInPotIds([]); setIsFinished(false);}}
-                className="mt-10 px-6 py-2 bg-white text-black rounded-full hover:bg-amber-200 transition-colors"
+            <div className="text-center">
+              <h2 className="text-4xl font-serif text-amber-100 mb-8">王太守八宝豆腐 · 烹饪完成</h2>
+              <div className="flex gap-16 justify-center">
+                <div className="flex flex-col items-center">
+                  <img
+                    src={FINAL_ANCIENT}
+                    alt="古法成品"
+                    className="max-h-[min(55vh,420px)] w-auto max-w-[min(42vw,380px)] object-contain"
+                  />
+                  <p className="mt-4 text-amber-200 text-xl font-serif">古法还原</p>
+                </div>
+                <div className="flex flex-col items-center">
+                  <img
+                    src={FINAL_MODERN}
+                    alt="现代成品"
+                    className="max-h-[min(55vh,420px)] w-auto max-w-[min(42vw,380px)] object-contain"
+                  />
+                  <p className="mt-4 text-stone-200 text-xl font-sans">现代转化</p>
+                </div>
+              </div>
+              <button
+                onClick={handleReset}
+                className="mt-10 px-8 py-3 bg-amber-700 text-amber-50 rounded-full hover:bg-amber-600 transition-colors text-lg shadow-lg shadow-amber-900/30"
               >
                 再次烹饪
               </button>

@@ -45,7 +45,7 @@ export default function Home() {
   const rotRef = useRef(0);
 
   useEffect(() => {
-    setMounted(true);
+    setTimeout(() => setMounted(true), 0);
     const t = setTimeout(() => {
       setSpeaking(true);
       setSpeechText("欢迎来到随园，且听我道来今日佳肴……");

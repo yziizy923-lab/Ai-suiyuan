@@ -256,6 +256,7 @@ export default function FlavorDiffusionCanvas({
     });
 
     animFrameRef.current = requestAnimationFrame(draw);
+    // eslint-disable-next-line react-hooks/immutability
   }, [mapRef, visible, ingredientData, spawnDiffusion, containerRef]);
 
   useEffect(() => {

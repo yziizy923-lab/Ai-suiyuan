@@ -66,6 +66,23 @@ export default function ComparePage() {
 
   const dishId = Number(params.id);
 
+  // 更新滑块位置的函数 - 必须在 useEffect 之前声明
+  const updateSliderPosition = (clientX: number) => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const x = clientX - rect.left;
+    const percentage = Math.max(0, Math.min(100, (x / rect.width) * 100));
+    setSliderPosition(percentage);
+  };
+
+  const updateSliderPositionFromTrack = (clientX: number) => {
+    if (!sliderTrackRef.current) return;
+    const rect = sliderTrackRef.current.getBoundingClientRect();
+    const x = clientX - rect.left;
+    const percentage = Math.max(0, Math.min(100, (x / rect.width) * 100));
+    setSliderPosition(percentage);
+  };
+
   useEffect(() => {
     async function loadDish() {
       setLoading(true);
@@ -116,22 +133,6 @@ export default function ComparePage() {
     if (sliderTrackRef.current) {
       updateSliderPositionFromTrack(e.clientX);
     }
-  };
-
-  const updateSliderPosition = (clientX: number) => {
-    if (!containerRef.current) return;
-    const rect = containerRef.current.getBoundingClientRect();
-    const x = clientX - rect.left;
-    const percentage = Math.max(0, Math.min(100, (x / rect.width) * 100));
-    setSliderPosition(percentage);
-  };
-
-  const updateSliderPositionFromTrack = (clientX: number) => {
-    if (!sliderTrackRef.current) return;
-    const rect = sliderTrackRef.current.getBoundingClientRect();
-    const x = clientX - rect.left;
-    const percentage = Math.max(0, Math.min(100, (x / rect.width) * 100));
-    setSliderPosition(percentage);
   };
 
   if (loading) {

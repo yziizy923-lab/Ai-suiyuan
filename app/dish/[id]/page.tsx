@@ -17,6 +17,15 @@ type Dish = {
   history?: string;
 };
 
+type CookingStep = {
+  step: number;
+  stepNumber?: number;
+  title: string;
+  desc: string;
+  imageBase64?: string;
+  success?: boolean;
+};
+
 async function fetchDishFromAPI(id: number): Promise<Dish | null> {
   try {
     const response = await fetch(`/api/dishes/${id}`);
@@ -65,7 +74,7 @@ export default function DishDetailPage() {
   const [showContent, setShowContent] = useState(false);
   const [imgError, setImgError] = useState(false); // 用于 fallback
   const [showCookingSteps, setShowCookingSteps] = useState(false);
-  const [cookingSteps, setCookingSteps] = useState<any[]>([]);
+  const [cookingSteps, setCookingSteps] = useState<CookingStep[]>([]);
   const [loadingSteps, setLoadingSteps] = useState(false);
   // AI 图片生成状态
   const [imageUrl, setImageUrl] = useState<string | null>(null);
@@ -113,7 +122,7 @@ export default function DishDetailPage() {
           setCookingSteps((prev) =>
             prev.map((step) => {
               const generated = batchData.steps.find(
-                (s: any) => s.stepNumber === step.step
+                (s: { stepNumber: number }) => s.stepNumber === step.step
               );
               return generated?.success
                 ? { ...step, imageBase64: generated.imageBase64 }
@@ -221,14 +230,14 @@ export default function DishDetailPage() {
         console.log('[Mapbox] Map loaded successfully');
 
         // 设置地图语言为中文
-        map.getStyle().layers?.forEach((layer: any) => {
+        map.getStyle().layers?.forEach((layer: mapboxgl.Layer) => {
           if (layer.layout && layer.layout['text-field']) {
             map.setLayoutProperty(layer.id, 'text-field', ['get', 'name_zh-Hans']);
           }
         });
 
         // 复古背景色逻辑
-        map.getStyle().layers?.forEach((layer: any) => {
+        map.getStyle().layers?.forEach((layer: mapboxgl.Layer) => {
           if (layer.type === 'background') {
             map.setPaintProperty(layer.id, 'background-color', '#e8dcc8');
           }
@@ -646,7 +655,7 @@ export default function DishDetailPage() {
             {/* 横向时间轴 - 直接点击图片切换 */}
             <div className="anim-timeline" role="region" aria-label="制作步骤时间轴">
               <div className="anim-track">
-                {cookingSteps.map((s: any, i: number) => {
+                {cookingSteps.map((s: CookingStep, i: number) => {
                   const isActive = i === currentStep;
                   const isPast = i < currentStep;
                   return (
@@ -686,7 +695,7 @@ export default function DishDetailPage() {
 
             {/* 底部进度点 */}
             <div className="anim-progress-row" aria-hidden>
-              {cookingSteps.map((_: any, i: number) => (
+              {cookingSteps.map((_: CookingStep, i: number) => (
                 <div
                   key={i}
                   className={`anim-dot ${i === currentStep ? 'anim-dot-active' : ''} ${i < currentStep ? 'anim-dot-past' : ''}`}

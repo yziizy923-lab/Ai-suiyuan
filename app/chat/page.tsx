@@ -25,7 +25,7 @@ async function fetchDishesFromAPI(search?: string): Promise<Dish[]> {
     const response = await fetch(url);
     if (!response.ok) throw new Error("Failed to fetch dishes");
     const data = await response.json();
-    return data.dishes.map((dish: any) => ({
+    return data.dishes.map((dish: { id: number; name: string; desc?: string; image?: string; tags?: string[]; ingredients?: string[] | string; origin?: string; history?: string; originalText?: string; original_text?: string; modernMethod?: string; modern_method?: string }) => ({
       id: dish.id,
       name: dish.name,
       desc: dish.desc || "",
@@ -64,12 +64,16 @@ function SearchResultsContent() {
   useEffect(() => {
     const query = searchParams.get("query");
     if (query) {
-      setSearchQuery(query);
-      setLoading(true);
+      const timer1 = setTimeout(() => setSearchQuery(query), 0);
+      const timer2 = setTimeout(() => setLoading(true), 0);
       fetchDishesFromAPI(query).then((results) => {
         setDishes(results);
         setLoading(false);
       });
+      return () => {
+        clearTimeout(timer1);
+        clearTimeout(timer2);
+      };
     } else {
       setLoading(false);
     }

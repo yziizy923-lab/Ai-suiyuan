@@ -47,9 +47,6 @@ interface ParticleCanvasProps {
   containerRef: React.RefObject<HTMLDivElement | null>;
 }
 
-const SPAWN_DURATION = 80;
-const SPAWN_END_RATIO = 0.38;
-const PARTICLE_SPAWN_INTERVAL = 500;
 const PARTICLE_LIFE = 220;
 
 export default function ParticleCanvas({
@@ -273,6 +270,7 @@ export default function ParticleCanvas({
 
       animFrameRef.current = requestAnimationFrame(draw);
     },
+    // eslint-disable-next-line react-hooks/immutability
     [visible, ingredientPoints, dishCenterLng, dishCenterLat, mapRef, spawnParticle]
   );
 

@@ -375,7 +375,7 @@ export default function FloatingDialog({
                       letterSpacing: "0.5px",
                     }}
                   >
-                    "此圣祖师赐徐健庵尚书方也。尚书取方时，御膳房费一千两。"
+                    &quot;此圣祖师赐徐健庵尚书方也。尚书取方时，御膳房费一千两。&quot;
                     <br />
                     <span
                       style={{

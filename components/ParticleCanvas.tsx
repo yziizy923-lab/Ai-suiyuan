@@ -48,6 +48,8 @@ interface ParticleCanvasProps {
 }
 
 const PARTICLE_LIFE = 220;
+const PARTICLE_SPAWN_INTERVAL = 100;
+const SPAWN_END_RATIO = 0.25;
 
 export default function ParticleCanvas({
   ingredientPoints,

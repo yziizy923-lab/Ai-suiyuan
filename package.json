@@ -20,6 +20,7 @@
     "zhipuai": "^2.0.0"
   },
   "devDependencies": {
+    "@netlify/plugin-nextjs": "^5.15.9",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20.19.37",
     "@types/pg": "^8.20.0",

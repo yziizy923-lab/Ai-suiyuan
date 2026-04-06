@@ -106,13 +106,12 @@ export default function FloatingDialog({
             padding: collapsed ? "12px 0" : "14px 18px",
             display: "flex",
             alignItems: "center",
-            justifyContent: "space-between",
+            justifyContent: collapsed ? "center" : "space-between",
             borderBottom:
               !collapsed && activeTab !== "geo" && activeTab !== "flavor"
                 ? "1px solid rgba(139,90,43,0.2)"
                 : "none",
             minHeight: 48,
-            justifyContent: collapsed ? "center" : "space-between",
           }}
         >
           {collapsed ? (

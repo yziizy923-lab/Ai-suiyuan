@@ -16,9 +16,12 @@ interface DishCardProps {
   dish: Dish;
   index: number;
   onClick: () => void;
+  /** 搜索结果页中等卡片 */
+  variant?: "default" | "medium";
 }
 
-export function DishCard({ dish, index, onClick }: DishCardProps) {
+export function DishCard({ dish, index, onClick, variant = "default" }: DishCardProps) {
+  const medium = variant === "medium";
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -60,9 +63,9 @@ export function DishCard({ dish, index, onClick }: DishCardProps) {
 
   return (
     <>
-      <div 
-        className="dish-card" 
-        style={{ animationDelay: `${index * 0.1}s` }} 
+      <div
+        className={`dish-card ${medium ? "dish-card-medium" : ""}`}
+        style={{ animationDelay: `${index * 0.08}s` }}
         onClick={onClick}
       >
         <div className="dish-media">
@@ -79,7 +82,7 @@ export function DishCard({ dish, index, onClick }: DishCardProps) {
               <div className="loading-spinner" />
             </div>
           )}
-          <div className="corner-tag">随园秘藏</div>
+          <div className="corner-tag">随园秘籍</div>
         </div>
         <div className="dish-info">
           <h3 className="dish-name">{dish.name}</h3>
@@ -95,24 +98,25 @@ export function DishCard({ dish, index, onClick }: DishCardProps) {
       <style jsx>{`
         .dish-card {
           background: #fff;
-          border: 1px solid #eee;
-          border-radius: 8px;
+          border: 1px solid rgba(139, 90, 43, 0.1);
+          border-radius: 10px;
           overflow: hidden;
           cursor: pointer;
           transition: all 0.3s ease;
           opacity: 0;
           animation: fadeInUp 0.6s ease forwards;
+          box-shadow: 0 3px 14px rgba(45, 41, 38, 0.06);
         }
 
         .dish-card:hover {
-          box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+          box-shadow: 0 6px 20px rgba(45, 41, 38, 0.1);
           transform: translateY(-2px);
         }
 
         .dish-media {
           position: relative;
           width: 100%;
-          padding-top: 75%;
+          padding-top: 60%;
           overflow: hidden;
           background: #f0f0f0;
         }
@@ -135,13 +139,21 @@ export function DishCard({ dish, index, onClick }: DishCardProps) {
           position: absolute;
           top: 10px;
           left: 10px;
-          border: 1px solid #a00;
-          color: #a00;
+          border: 1px solid #c41e3a;
+          color: #c41e3a;
           font-size: 10px;
           padding: 2px 6px;
-          background: rgba(255,255,255,0.9);
+          background: rgba(255, 255, 255, 0.95);
           letter-spacing: 1px;
           font-family: "Noto Serif SC", serif;
+        }
+
+        .dish-card-large .corner-tag {
+          top: 14px;
+          left: 14px;
+          font-size: 11px;
+          padding: 4px 10px;
+          border-radius: 2px;
         }
 
         .image-loading {
@@ -183,12 +195,23 @@ export function DishCard({ dish, index, onClick }: DishCardProps) {
           padding: 14px 16px;
         }
 
+        .dish-card-large .dish-info {
+          padding: 18px 20px 20px;
+        }
+
         .dish-name {
           margin: 0 0 6px;
           font-size: 16px;
           font-weight: 600;
           color: #333;
           font-family: "Noto Serif SC", serif;
+        }
+
+        .dish-card-large .dish-name {
+          font-size: 18px;
+          margin-bottom: 10px;
+          color: #1e1a17;
+          letter-spacing: 1px;
         }
 
         .dish-desc {
@@ -202,10 +225,22 @@ export function DishCard({ dish, index, onClick }: DishCardProps) {
           overflow: hidden;
         }
 
+        .dish-card-large .dish-desc {
+          font-size: 14px;
+          line-height: 1.65;
+          color: #5c534c;
+          -webkit-line-clamp: 3;
+          margin-bottom: 14px;
+        }
+
         .dish-tags {
           display: flex;
           flex-wrap: wrap;
           gap: 6px;
+        }
+
+        .dish-card-large .dish-tags {
+          gap: 8px;
         }
 
         .tag {
@@ -216,6 +251,15 @@ export function DishCard({ dish, index, onClick }: DishCardProps) {
           font-size: 11px;
           border-radius: 4px;
           border: 1px solid #fecaca;
+        }
+
+        .dish-card-large .tag {
+          padding: 4px 12px;
+          font-size: 12px;
+          border-radius: 6px;
+          background: #fff5f5;
+          color: #b91c1c;
+          border-color: #fecaca;
         }
 
         @keyframes fadeInUp {

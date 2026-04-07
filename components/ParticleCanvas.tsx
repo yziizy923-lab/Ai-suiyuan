@@ -292,11 +292,18 @@ export default function ParticleCanvas({
   }, [containerRef]);
 
   useEffect(() => {
+    console.log('[ParticleCanvas] Props changed:', {
+      ingredientPointsCount: ingredientPoints.length,
+      visible,
+      hasMap: !!mapRef.current,
+      dishCenter: `${dishCenterLng}, ${dishCenterLat}`,
+    });
+
     if (visible) {
       lastSpawnTimeRef.current = 0; // reset so first batch spawns immediately
       particlesRef.current = [];
     }
-  }, [visible]);
+  }, [visible, ingredientPoints, mapRef, dishCenterLng, dishCenterLat]);
 
   useEffect(() => {
     animFrameRef.current = requestAnimationFrame(draw);
@@ -313,7 +320,7 @@ export default function ParticleCanvas({
         width: "100%",
         height: "100%",
         pointerEvents: "none",
-        zIndex: 20,
+        zIndex: 2, // 在地图(0)和关闭按钮(10)之下，内容层(3)之上
         opacity: visible ? 1 : 0,
         transition: "opacity 0.8s ease",
       }}

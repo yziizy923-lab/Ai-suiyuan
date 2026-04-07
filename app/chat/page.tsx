@@ -1,8 +1,9 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState, useEffect, Suspense, useRef } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { DishCard } from "@/components/DishCard";
+import DishDetailModal from "@/components/DishDetailModal";
 
 type Dish = {
   id: number;
@@ -12,9 +13,12 @@ type Dish = {
   tags: string[];
   ingredients: string[];
   origin?: string;
+  originCoords?: [number, number];
   history?: string;
   originalText?: string;
   modernMethod?: string;
+  longitude?: number;
+  latitude?: number;
 };
 
 async function fetchDishesFromAPI(search?: string): Promise<Dish[]> {
@@ -25,21 +29,25 @@ async function fetchDishesFromAPI(search?: string): Promise<Dish[]> {
     const response = await fetch(url);
     if (!response.ok) throw new Error("Failed to fetch dishes");
     const data = await response.json();
-    return data.dishes.map((dish: { id: number; name: string; desc?: string; image?: string; tags?: string[]; ingredients?: string[] | string; origin?: string; history?: string; originalText?: string; original_text?: string; modernMethod?: string; modern_method?: string }) => ({
-      id: dish.id,
-      name: dish.name,
-      desc: dish.desc || "",
-      image: dish.image || `https://picsum.photos/seed/${dish.id}/400/400`,
-      tags: Array.isArray(dish.tags) ? dish.tags : [],
+    return data.dishes.map((dish: Record<string, unknown>) => ({
+      id: dish.id as number,
+      name: dish.name as string,
+      desc: (dish.desc as string) || "",
+      image: (dish.image as string) || `https://picsum.photos/seed/${dish.id}/400/400`,
+      tags: Array.isArray(dish.tags) ? (dish.tags as string[]) : [],
       ingredients: Array.isArray(dish.ingredients)
-        ? dish.ingredients
+        ? (dish.ingredients as string[])
         : typeof dish.ingredients === "string"
-          ? dish.ingredients.split(/[,，]/).map((s: string) => s.trim()).filter(Boolean)
+          ? (dish.ingredients as string).split(/[,，]/).map((s: string) => s.trim()).filter(Boolean)
           : [],
-      origin: dish.origin,
-      history: dish.history,
-      originalText: dish.originalText || dish.original_text || "",
-      modernMethod: dish.modernMethod || dish.modern_method || "",
+      origin: dish.origin as string | undefined,
+      history: dish.history as string | undefined,
+      originalText: (dish.originalText as string) || (dish.original_text as string) || "",
+      modernMethod: (dish.modernMethod as string) || (dish.modern_method as string) || "",
+      // 转换 longitude/latitude 到 originCoords
+      originCoords: (dish.longitude && dish.latitude)
+        ? [dish.longitude as number, dish.latitude as number]
+        : (dish.originCoords as [number, number] | undefined),
     }));
   } catch (error) {
     console.error("API fetch error:", error);
@@ -47,149 +55,122 @@ async function fetchDishesFromAPI(search?: string): Promise<Dish[]> {
   }
 }
 
-// 便签的几种背景色，循环使用
-const NOTE_COLORS = ["#fff9e6", "#f0f8e8", "#fff0f0", "#eef4ff", "#f8f0ff"];
-const NOTE_ROTATIONS = [-1.5, 1.2, -0.8, 1.8, -1.2, 0.5];
-
 function SearchResultsContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
+
   const [dishes, setDishes] = useState<Dish[]>([]);
   const [loading, setLoading] = useState(true);
-  const [searchQuery, setSearchQuery] = useState("");
-  // 历史提问便签
-  const [chatHistory, setChatHistory] = useState<string[]>([]);
-  const chatInputRef = useRef<HTMLInputElement>(null);
+  const [selectedDish, setSelectedDish] = useState<Dish | null>(null);
+  const [searchInput, setSearchInput] = useState("");
+
+  const query = searchParams.get("query") || "";
 
   useEffect(() => {
-    const query = searchParams.get("query");
+    setSearchInput(query);
+  }, [query]);
+
+  useEffect(() => {
     if (query) {
-      const timer1 = setTimeout(() => setSearchQuery(query), 0);
-      const timer2 = setTimeout(() => setLoading(true), 0);
+      setLoading(true);
       fetchDishesFromAPI(query).then((results) => {
         setDishes(results);
         setLoading(false);
       });
-      return () => {
-        clearTimeout(timer1);
-        clearTimeout(timer2);
-      };
     } else {
+      setDishes([]);
       setLoading(false);
     }
-  }, [searchParams]);
-
-  const handleSendChat = () => {
-    const val = chatInputRef.current?.value.trim();
-    if (!val) return;
-    // 加入便签历史
-    setChatHistory((prev) => [...prev, val]);
-    // 清空输入框
-    if (chatInputRef.current) chatInputRef.current.value = "";
-    // 跳转
-    router.push(`/chat?query=${encodeURIComponent(val)}`);
-  };
-
-  const handleCardClick = (dish: Dish) => {
-    router.push(`/dish/${dish.id}`);
-  };
+  }, [query]);
 
   const handleBack = () => {
     router.push("/");
   };
 
+  /** 输入：用户输入；输出：跳转带 query 的列表页并重新拉取菜品 */
+  const handleAskSubmit = () => {
+    const q = searchInput.trim();
+    if (!q) return;
+    router.push(`/chat?query=${encodeURIComponent(q)}`);
+  };
+
   return (
     <div className="garden-container">
-      <nav className="top-nav">
-        <button onClick={handleBack} className="back-link">
+      {/* Top bar: back link only */}
+      <header className="results-top">
+        <button type="button" onClick={handleBack} className="back-link">
           「 返回随园 」
         </button>
-      </nav>
+      </header>
+
+      <div className="results-divider" />
+
+      {/* Ask section — right aligned, full row padding */}
+      <div className={`ask-area${selectedDish ? " ask-area--compact" : ""}`}>
+        <div className="ask-panel">
+          <div className="ask-head">
+            <div className="yuanmei-avatar" aria-hidden>枚</div>
+            <p className="ask-greeting">袁子在此，有何疑问尽管道来。</p>
+          </div>
+          <div className="ask-bar">
+            <input
+              type="text"
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") handleAskSubmit();
+              }}
+              placeholder="例：想吃清淡一点的，或者有没有素菜推荐..."
+              className="ask-input"
+              aria-label="向袁子提问"
+            />
+            <button type="button" className="ask-btn" onClick={handleAskSubmit}>
+              询问
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Result count + cards — below ask, same side padding */}
+      <div className="results-meta">
+        {!loading && query && (
+          <p className="results-count">
+            共寻得 <span className="results-count-num">{dishes.length}</span> 道佳肴
+          </p>
+        )}
+      </div>
 
       <main className="main-content">
         {loading ? (
-          <div className="loading-section">
-            <div className="yuanmei-avatar-large">枚</div>
-            <p className="loading-text">袁子正在为你翻阅《食单》...</p>
-          </div>
+          <LoadingView />
+        ) : !query ? (
+          <EmptyView message="请输入关键词，向袁子询问想寻的佳肴。" />
+        ) : dishes.length === 0 ? (
+          <EmptyView message="随园中暂无此味，不如换个说法问问袁子？" />
         ) : (
-          <>
-            {/* 问答区：便签列 + 输入框 */}
-            <div className="chat-area">
-              {/* 左侧便签列，只在有历史时显示 */}
-              {chatHistory.length > 0 && (
-                <div className="notes-col">
-                  <p className="notes-label">问过的问题</p>
-                  {chatHistory.map((q, i) => (
-                    <div
-                      key={i}
-                      className="sticky-note"
-                      style={{
-                        background: NOTE_COLORS[i % NOTE_COLORS.length],
-                        transform: `rotate(${NOTE_ROTATIONS[i % NOTE_ROTATIONS.length]}deg)`,
-                        zIndex: chatHistory.length - i,
-                        marginBottom: i < chatHistory.length - 1 ? "-10px" : "0",
-                      }}
-                    >
-                      <span className="note-index">问 {`${"①②③④⑤⑥⑦⑧⑨⑩"[i] ?? i + 1}`}</span>
-                      <span className="note-text">{q}</span>
-                    </div>
-                  ))}
-                </div>
-              )}
-
-              {/* 右侧：袁子头像 + 输入框 */}
-              <div className="chat-box-wrapper">
-                <div className="yuanmei-intro">
-                  <div className="yuanmei-avatar-small">枚</div>
-                  <span className="yuanmei-intro-text">袁子在此，有何疑问尽管道来。</span>
-                </div>
-                <div className="chat-input-box">
-                  <input
-                    ref={chatInputRef}
-                    type="text"
-                    placeholder="例：想吃清淡一点的，或者有没有素菜推荐..."
-                    className="chat-input-field"
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") handleSendChat();
-                    }}
-                  />
-                  <button className="chat-send-btn" onClick={handleSendChat}>
-                    询问
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <p className="results-count">
-              共寻得 <span className="count-number">{dishes.length}</span> 道佳肴
-            </p>
-
-            {dishes.length > 0 ? (
-              <div className="dish-grid">
-                {dishes.map((dish, i) => (
-                  <DishCard
-                    key={dish.id}
-                    dish={dish}
-                    index={i}
-                    onClick={() => handleCardClick(dish)}
-                  />
-                ))}
-              </div>
-            ) : (
-              <div className="empty-state">
-                <div className="empty-icon">无</div>
-                <p className="empty-text">随园中暂无此味，不如问问别的？</p>
-                {/* 已删除返回按钮 */}
-              </div>
-            )}
-          </>
+          <div className="dish-grid">
+            {dishes.map((dish, i) => (
+              <DishCard
+                key={dish.id}
+                dish={dish}
+                index={i}
+                variant="medium"
+                onClick={() => setSelectedDish(dish)}
+              />
+            ))}
+          </div>
         )}
       </main>
+
+      {selectedDish && (
+        <DishDetailModal dish={selectedDish} onClose={() => setSelectedDish(null)} />
+      )}
 
       <style jsx>{`
         .garden-container {
           min-height: 100vh;
+          display: flex;
+          flex-direction: column;
           background-color: #f2ede1;
           background-image: repeating-linear-gradient(
             0deg,
@@ -200,56 +181,256 @@ function SearchResultsContent() {
           );
           font-family: "Noto Serif SC", "Source Han Serif CN", "SimSun", "STSong", serif;
           color: #2d2926;
-          display: flex;
-          flex-direction: column;
+          overflow-x: hidden;
         }
 
-        .top-nav {
-          padding: 20px 60px;
+        .results-top {
           display: flex;
-          justify-content: space-between;
           align-items: center;
-          position: sticky;
-          top: 0;
-          background: rgba(242, 237, 225, 0.95);
-          backdrop-filter: blur(8px);
-          z-index: 100;
-          border-bottom: 1px solid rgba(139, 90, 43, 0.1);
+          justify-content: space-between;
+          padding: 24px 80px 20px;
+          flex-shrink: 0;
         }
 
         .back-link {
+          flex-shrink: 0;
           background: none;
           border: 1px solid #8b5a2b;
           color: #8b5a2b;
-          padding: 6px 18px;
+          padding: 10px 24px;
           border-radius: 2px;
           cursor: pointer;
           transition: all 0.3s;
           font-family: inherit;
+          font-size: 15px;
+          letter-spacing: 2px;
         }
         .back-link:hover {
           background: #8b5a2b;
           color: #fff;
         }
 
-        .main-content {
-          flex: 1;
-          max-width: 1200px;
+        .results-divider {
           width: 100%;
-          margin: 0 auto;
-          padding: 40px 60px 60px;
+          height: 1px;
+          background: linear-gradient(
+            to right,
+            transparent,
+            rgba(139, 90, 43, 0.12) 10%,
+            rgba(139, 90, 43, 0.12) 90%,
+            transparent
+          );
+          flex-shrink: 0;
         }
 
-        .loading-section {
+        /* Ask area — right aligned, with side padding */
+        .ask-area {
+          display: flex;
+          justify-content: flex-end;
+          padding: 24px 15vw 0;
+          flex-shrink: 0;
+        }
+
+        /* Compact mode when dish modal is open */
+        .ask-area--compact {
+          width: 100%;
+          padding-right: 0;
+        }
+
+        .ask-panel {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-end;
+          gap: 10px;
+          flex-shrink: 0;
+        }
+
+        .ask-area--compact .ask-panel {
+          width: 30%;
+          align-items: flex-start;
+        }
+
+        .ask-area--compact .ask-bar {
+          min-width: 0;
+          width: 100%;
+        }
+
+        .ask-area--compact .ask-input {
+          font-size: 13px;
+        }
+
+        .ask-area--compact .ask-btn {
+          padding: 7px 16px;
+          font-size: 13px;
+        }
+
+        .ask-area--compact .ask-greeting {
+          font-size: 13px;
+        }
+
+        .ask-area--compact .yuanmei-avatar {
+          width: 30px;
+          height: 30px;
+          font-size: 13px;
+        }
+
+        .ask-head {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        }
+
+        .yuanmei-avatar {
+          width: 36px;
+          height: 36px;
+          border-radius: 50%;
+          background: linear-gradient(135deg, #8b5a2b, #c4853f);
+          color: #fff;
+          font-size: 15px;
+          font-weight: 700;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+          box-shadow: 0 2px 8px rgba(139, 90, 43, 0.25);
+        }
+
+        .ask-greeting {
+          margin: 0;
+          font-size: 14px;
+          color: #a0774f;
+          letter-spacing: 2px;
+        }
+
+        .ask-bar {
+          display: flex;
+          align-items: center;
+          background: #fffcf4;
+          border-radius: 15px;
+          border: 1px solid rgba(139, 90, 43, 0.15);
+          padding: 6px 6px 6px 20px;
+          box-shadow: 0 4px 16px rgba(45, 41, 38, 0.06);
+          gap: 0;
+          min-width: 500px;
+        }
+
+        .ask-input {
+          flex: 1;
+          border: none;
+          background: transparent;
+          font-family: inherit;
+          font-size: 14px;
+          color: #332c28;
+          outline: none;
+          min-width: 0;
+          padding: 6px 8px;
+        }
+        .ask-input::placeholder {
+          color: #b0a098;
+          letter-spacing: 0.5px;
+        }
+
+        .ask-btn {
+          flex-shrink: 0;
+          border: none;
+          background: linear-gradient(135deg, #8b5a2b, #a06830);
+          color: #fff;
+          padding: 9px 24px;
+          border-radius: 999px;
+          font-family: inherit;
+          font-size: 14px;
+          letter-spacing: 3px;
+          cursor: pointer;
+          transition: transform 0.2s, box-shadow 0.2s;
+          box-shadow: 0 2px 8px rgba(139, 90, 43, 0.28);
+        }
+        .ask-btn:hover {
+          transform: translateY(-1px);
+          box-shadow: 0 4px 14px rgba(139, 90, 43, 0.35);
+        }
+
+        /* Result count — below ask, left aligned, with side padding */
+        .results-meta {
+          padding: 32px 15vw 24px;
+          flex-shrink: 0;
+        }
+
+        .results-count {
+          margin: 0;
+          font-size: 14px;
+          color: #8b5a2b;
+          letter-spacing: 2px;
+        }
+
+        .results-count-num {
+          font-size: 26px;
+          font-weight: 700;
+          color: #b82f2d;
+          margin: 0 4px;
+          vertical-align: -2px;
+        }
+
+        .main-content {
+          flex: 1;
+          overflow-y: auto;
+          padding: 0 15vw 48px;
+        }
+
+        .dish-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 20px;
+        }
+
+        @media (max-width: 1300px) {
+          .dish-grid {
+            grid-template-columns: repeat(3, 1fr);
+          }
+        }
+
+        @media (max-width: 960px) {
+          .dish-grid {
+            grid-template-columns: repeat(2, 1fr);
+          }
+        }
+
+        @media (max-width: 680px) {
+          .results-top {
+            padding: 16px 5vw 12px;
+          }
+          .ask-area {
+            padding: 16px 5vw 0;
+          }
+          .ask-panel {
+            align-items: stretch;
+            width: 100%;
+          }
+          .ask-bar {
+            min-width: 0;
+            width: 100%;
+          }
+          .results-meta {
+            padding: 24px 5vw 18px;
+          }
+          .main-content {
+            padding: 0 5vw 32px;
+          }
+          .dish-grid {
+            grid-template-columns: 1fr;
+            gap: 16px;
+          }
+        }
+
+        .loading-view,
+        .empty-view {
           display: flex;
           flex-direction: column;
           align-items: center;
           justify-content: center;
-          padding: 100px 20px;
-          animation: fadeIn 0.6s ease;
+          min-height: 240px;
+          gap: 16px;
         }
-
-        .yuanmei-avatar-large {
+        .loading-view .yuanmei-avatar-large {
           width: 60px;
           height: 60px;
           border-radius: 50%;
@@ -260,244 +441,41 @@ function SearchResultsContent() {
           display: flex;
           align-items: center;
           justify-content: center;
-          margin-bottom: 20px;
         }
-
-        .loading-text {
-          color: #8b5a2b;
-          letter-spacing: 3px;
-          font-size: 15px;
-          opacity: 0.8;
-        }
-
-        /* ====== 核心新增：横向布局容器 ====== */
-        .chat-area {
-          display: flex;
-          align-items: flex-start;
-          gap: 24px;
-          margin-bottom: 40px;
-          animation: fadeInUp 0.4s ease;
-        }
-
-        /* 便签列 */
-        .notes-col {
-          display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-          flex-shrink: 0;
-          min-width: 140px;
-          max-width: 180px;
-        }
-
-        .notes-label {
-          font-size: 11px;
+        .loading-view p,
+        .empty-view p {
           color: #8b5a2b;
           letter-spacing: 2px;
-          opacity: 0.55;
-          margin-bottom: 12px;
-        }
-
-        .sticky-note {
-          width: 100%;
-          padding: 10px 14px;
-          border: 1px solid rgba(180, 140, 60, 0.22);
-          border-radius: 2px;
-          box-shadow: 2px 3px 0 rgba(180, 140, 60, 0.1);
-          display: flex;
-          flex-direction: column;
-          gap: 4px;
-          transition: transform 0.25s, box-shadow 0.25s;
-          cursor: default;
-          position: relative;
-        }
-
-        .sticky-note:hover {
-          transform: rotate(0deg) translateY(-5px) !important;
-          box-shadow: 3px 6px 12px rgba(139, 90, 43, 0.18);
-          z-index: 20 !important;
-        }
-
-        .note-index {
-          font-size: 10px;
-          color: #b89060;
-          letter-spacing: 1px;
-        }
-
-        .note-text {
-          font-size: 12px;
-          color: #4a3318;
-          letter-spacing: 0.5px;
-          line-height: 1.6;
-          word-break: break-all;
-        }
-
-        /* 输入区靠右 */
-        .chat-box-wrapper {
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          align-items: flex-end;
-        }
-
-        .yuanmei-intro {
-          display: flex;
-          align-items: center;
-          gap: 12px;
-          margin-bottom: 14px;
-        }
-
-        .yuanmei-avatar-small {
-          width: 32px;
-          height: 32px;
-          border-radius: 50%;
-          background: linear-gradient(135deg, #8b5a2b, #c4853f);
-          color: #fff;
           font-size: 14px;
-          font-weight: bold;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-
-        .yuanmei-intro-text {
-          color: #8b5a2b;
-          font-size: 14px;
-          letter-spacing: 2px;
-          opacity: 0.8;
-        }
-
-        .chat-input-box {
-          display: flex;
-          gap: 12px;
-          max-width: 520px;
-          width: 100%;
-          padding: 12px 20px;
-          background: rgba(255, 252, 245, 0.98);
-          border-radius: 16px;
-          border: 1px solid rgba(139, 90, 43, 0.2);
-          box-shadow: 0 8px 32px rgba(139, 90, 43, 0.1);
-        }
-
-        .chat-input-field {
-          flex: 1;
-          background: transparent;
-          border: none;
-          font-family: inherit;
-          font-size: 14px;
-          color: #332c28;
-          outline: none;
-          padding: 6px 0;
-          letter-spacing: 0.5px;
-        }
-
-        .chat-input-field::placeholder {
-          color: #bbb;
-          font-size: 13px;
-          letter-spacing: 1px;
-        }
-
-        .chat-send-btn {
-          background: linear-gradient(135deg, #8b5a2b, #a0692e);
-          color: #fff;
-          border: none;
-          padding: 8px 20px;
-          border-radius: 20px;
-          cursor: pointer;
-          font-family: inherit;
-          font-size: 13px;
-          letter-spacing: 2px;
-          transition: all 0.3s;
-          box-shadow: 0 4px 12px rgba(139, 90, 43, 0.25);
-          white-space: nowrap;
-        }
-
-        .chat-send-btn:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 6px 16px rgba(139, 90, 43, 0.35);
-        }
-
-        /* ====== 其余原有样式 ====== */
-        .results-count {
-          font-size: 14px;
-          color: #8b5a2b;
-          letter-spacing: 2px;
-          opacity: 0.8;
-          margin-bottom: 28px;
-        }
-
-        .count-number {
-          font-size: 20px;
-          font-weight: bold;
-          color: #a00;
-        }
-
-        .dish-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-          gap: 24px;
-        }
-
-        .empty-state {
+          opacity: 0.85;
+          margin: 0;
           text-align: center;
-          padding: 80px 20px;
-          background: #fffcf5;
-          border-radius: 12px;
-          border: 1px dashed rgba(139, 90, 43, 0.2);
-          animation: fadeIn 0.6s ease;
+          max-width: 360px;
+          line-height: 1.8;
         }
-
-        .empty-icon {
+        .empty-view .empty-icon {
           font-size: 48px;
           color: rgba(139, 90, 43, 0.2);
-          margin-bottom: 16px;
-        }
-
-        .empty-text {
-          font-size: 16px;
-          color: #8b5a2b;
-          letter-spacing: 2px;
-          opacity: 0.7;
-          margin: 0;
-        }
-
-        .retry-btn {
-          background: linear-gradient(135deg, #8b5a2b, #a0692e);
-          color: #fff;
-          border: none;
-          padding: 12px 28px;
-          border-radius: 24px;
-          cursor: pointer;
-          font-family: inherit;
-          font-size: 14px;
-          letter-spacing: 2px;
-          transition: all 0.3s;
-        }
-
-        .retry-btn:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 6px 16px rgba(139, 90, 43, 0.4);
-        }
-
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(10px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes fadeInUp {
-          from { opacity: 0; transform: translateY(20px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-
-        @media (max-width: 768px) {
-          .top-nav { padding: 16px 24px; }
-          .main-content { padding: 24px 16px 40px; }
-          .chat-area { flex-direction: column; align-items: stretch; }
-          .notes-col { flex-direction: row; flex-wrap: wrap; max-width: 100%; }
-          .sticky-note { width: auto; min-width: 100px; margin-bottom: 0 !important; }
-          .chat-box-wrapper { align-items: stretch; }
-          .dish-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; }
         }
       `}</style>
+    </div>
+  );
+}
+
+function LoadingView() {
+  return (
+    <div className="loading-view">
+      <div className="yuanmei-avatar-large">枚</div>
+      <p>袁子正在为你翻阅《食单》...</p>
+    </div>
+  );
+}
+
+function EmptyView({ message }: { message: string }) {
+  return (
+    <div className="empty-view">
+      <div className="empty-icon">无</div>
+      <p>{message}</p>
     </div>
   );
 }
@@ -534,9 +512,7 @@ export default function SearchResultsPage() {
             >
               枚
             </div>
-            <p style={{ color: "#8b5a2b", letterSpacing: 3, fontSize: 15 }}>
-              袁子正在为你翻阅《食单》...
-            </p>
+            <p style={{ color: "#8b5a2b", letterSpacing: 3, fontSize: 15 }}>袁子正在为你翻阅《食单》...</p>
           </div>
         </div>
       }

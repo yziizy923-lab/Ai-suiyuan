@@ -1,12 +1,25 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import ParticleCanvas, { type IngredientPoint } from "@/components/ParticleCanvas";
 import FlavorDiffusionCanvas, { type FlavorType, type ImportanceLevel } from "@/components/FlavorDiffusionCanvas";
 import FloatingDialog from "@/components/FloatingDialog";
 import dishData from "@/data/wang_sitai_babao_doufu.json";
+
+// 烹饪模式：八宝食材配置
+const COOKING_INGREDIENTS = [
+  { id: "tofu", name: "豆腐脑", emoji: "🧈" },
+  { id: "chicken", name: "鸡肉", emoji: "🍗" },
+  { id: "shiitake", name: "香菇", emoji: "🍄" },
+  { id: "mushroom", name: "蘑菇", emoji: "🥣" },
+  { id: "pine_nut", name: "松子仁", emoji: "🌰" },
+  { id: "sunflower", name: "瓜子仁", emoji: "🥜" },
+  { id: "ham", name: "火腿", emoji: "🥓" },
+  { id: "soup", name: "鸡汤", emoji: "🍲" },
+];
 
 const INGREDIENT_COLORS: Record<string, string> = {
   "鸡肉": "#FF6B6B",
@@ -119,6 +132,40 @@ export default function WangSitaiPage() {
   const [geoCauseError, setGeoCauseError] = useState<string>("");
   const geoCauseCacheRef = useRef<Map<string, string>>(new Map());
   const flowAnimRef = useRef<number | null>(null);
+
+  // 烹饪模式状态
+  const [cookingMode, setCookingMode] = useState(false);
+  const [inPotIds, setInPotIds] = useState<string[]>([]);
+  const [isFinished, setIsFinished] = useState(false);
+
+  // 烹饪完成检测
+  useEffect(() => {
+    if (inPotIds.length === COOKING_INGREDIENTS.length && COOKING_INGREDIENTS.length > 0) {
+      setTimeout(() => setIsFinished(true), 800);
+    }
+  }, [inPotIds]);
+
+  // 烹饪拖拽结束处理
+  const handleCookingDragEnd = useCallback(
+    (ingredientId: string, clientX: number, clientY: number) => {
+      const isOverPot = clientX > window.innerWidth / 2 - 180 &&
+                       clientX < window.innerWidth / 2 + 180 &&
+                       clientY > window.innerHeight / 2 - 180 &&
+                       clientY < window.innerHeight / 2 + 180;
+
+      if (isOverPot && !inPotIds.includes(ingredientId)) {
+        setInPotIds((prev) => [...prev, ingredientId]);
+      }
+    },
+    [inPotIds]
+  );
+
+  // 重置烹饪状态
+  const resetCooking = useCallback(() => {
+    setInPotIds([]);
+    setIsFinished(false);
+    setCookingMode(false);
+  }, []);
 
   const ingredientPoints: IngredientPoint[] = (
     dishData.ingredients_distribution as Array<{
@@ -1367,6 +1414,456 @@ export default function WangSitaiPage() {
           </div>
         </div>
       )}
+
+      {/* 古今对比烹饪弹窗 */}
+      <AnimatePresence>
+        {cookingMode && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            style={{
+              position: "fixed",
+              inset: 0,
+              zIndex: 1000,
+              overflow: "hidden",
+              fontFamily: '"Noto Serif SC", "SimSun", serif',
+            }}
+          >
+            {/* 左半边：随园古境 */}
+            <div
+              style={{
+                position: "absolute",
+                inset: 0,
+                left: 0,
+                right: "50%",
+                background: "linear-gradient(135deg, #1a1510 0%, #2d2318 50%, #3d3025 100%)",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <h2
+                style={{
+                  position: "absolute",
+                  top: 40,
+                  left: 40,
+                  color: "#f4c542",
+                  fontSize: 24,
+                  fontFamily: '"Noto Serif SC", serif',
+                  letterSpacing: "4px",
+                }}
+              >
+                随园古境
+              </h2>
+
+              {/* 古风锅 */}
+              <div
+                style={{
+                  position: "relative",
+                  width: 320,
+                  height: 320,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                {/* 锅轮廓 */}
+                <div
+                  style={{
+                    position: "absolute",
+                    width: 280,
+                    height: 280,
+                    borderRadius: "50% 50% 45% 45% / 60% 60% 40% 40%",
+                    background: "radial-gradient(ellipse at 30% 20%, #8B6914, #5C4510)",
+                    boxShadow: "inset 0 -20px 40px rgba(0,0,0,0.4), 0 10px 40px rgba(0,0,0,0.5)",
+                    border: "4px solid #6B4E0A",
+                  }}
+                />
+                {/* 锅内汤汁 */}
+                <div
+                  style={{
+                    position: "absolute",
+                    width: 220,
+                    height: 220,
+                    borderRadius: "50%",
+                    background: "radial-gradient(ellipse at 40% 40%, #D4A574, #8B6914)",
+                    boxShadow: "inset 0 0 30px rgba(139,105,20,0.6)",
+                    opacity: 0.85,
+                  }}
+                />
+
+                {/* 锅内食材 */}
+                <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  {inPotIds.map((id, index) => {
+                    const item = COOKING_INGREDIENTS.find((i) => i.id === id);
+                    if (!item) return null;
+                    const angle = (index / COOKING_INGREDIENTS.length) * Math.PI * 2;
+                    const radius = 60;
+                    const x = Math.cos(angle) * radius;
+                    const y = Math.sin(angle) * radius;
+                    return (
+                      <motion.div
+                        key={`ancient-${id}`}
+                        initial={{ opacity: 0, scale: 0.5, y: -50 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        style={{
+                          position: "absolute",
+                          fontSize: 32,
+                          filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.4))",
+                          transform: `translate(${x}px, ${y}px)`,
+                        }}
+                      >
+                        {item.emoji}
+                      </motion.div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* 古境提示 */}
+              <p
+                style={{
+                  marginTop: 40,
+                  color: "rgba(244,197,66,0.5)",
+                  fontSize: 13,
+                  letterSpacing: "2px",
+                  fontFamily: '"Noto Serif SC", serif',
+                }}
+              >
+                感应镜像 · 静待烹饪
+              </p>
+
+              {/* 左侧已放入的食材 */}
+              <div
+                style={{
+                  position: "absolute",
+                  left: 30,
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 12,
+                }}
+              >
+                {COOKING_INGREDIENTS.map((item) => {
+                  const isInPot = inPotIds.includes(item.id);
+                  return (
+                    <div
+                      key={`ancient-side-${item.id}`}
+                      style={{
+                        width: 56,
+                        height: 56,
+                        background: isInPot ? "rgba(139,90,43,0.3)" : "rgba(139,90,43,0.1)",
+                        borderRadius: 12,
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        opacity: isInPot ? 0.6 : 0.3,
+                        border: "1px solid rgba(139,90,43,0.2)",
+                        transition: "all 0.3s ease",
+                      }}
+                    >
+                      <span style={{ fontSize: 24 }}>{item.emoji}</span>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* 右半边：现代实验室 */}
+            <div
+              style={{
+                position: "absolute",
+                inset: 0,
+                left: "50%",
+                right: 0,
+                background: "linear-gradient(135deg, #1a2030 0%, #1e2a3a 50%, #252f40 100%)",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <h2
+                style={{
+                  position: "absolute",
+                  top: 40,
+                  right: 40,
+                  color: "#ffffff",
+                  fontSize: 24,
+                  letterSpacing: "4px",
+                  fontWeight: 300,
+                }}
+              >
+                现代实验室
+              </h2>
+
+              {/* 现代锅 */}
+              <div
+                style={{
+                  position: "relative",
+                  width: 320,
+                  height: 320,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                {/* 现代锅体 */}
+                <div
+                  style={{
+                    position: "absolute",
+                    width: 260,
+                    height: 260,
+                    borderRadius: "50%",
+                    background: "linear-gradient(145deg, #3a4555, #252f3d)",
+                    boxShadow: "inset 0 0 40px rgba(0,0,0,0.3), 0 8px 30px rgba(0,0,0,0.4)",
+                    border: "3px solid #4a5568",
+                  }}
+                />
+                {/* 现代汤汁 */}
+                <div
+                  style={{
+                    position: "absolute",
+                    width: 200,
+                    height: 200,
+                    borderRadius: "50%",
+                    background: "radial-gradient(ellipse at 40% 40%, #FFD700, #D4A574)",
+                    boxShadow: "inset 0 0 25px rgba(212,165,116,0.5)",
+                    opacity: 0.8,
+                  }}
+                />
+
+                {/* 现代食材 */}
+                <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  {inPotIds.map((id, index) => {
+                    const item = COOKING_INGREDIENTS.find((i) => i.id === id);
+                    if (!item) return null;
+                    const angle = (index / COOKING_INGREDIENTS.length) * Math.PI * 2;
+                    const radius = 60;
+                    const x = Math.cos(angle) * radius;
+                    const y = Math.sin(angle) * radius;
+                    return (
+                      <motion.div
+                        key={`modern-${id}`}
+                        initial={{ opacity: 0, scale: 0.5 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        style={{
+                          position: "absolute",
+                          fontSize: 32,
+                          filter: "drop-shadow(0 2px 8px rgba(100,200,255,0.4))",
+                          transform: `translate(${x}px, ${y}px)`,
+                        }}
+                      >
+                        {item.emoji}
+                      </motion.div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* 可拖拽食材列表 */}
+              <div
+                style={{
+                  position: "absolute",
+                  right: 40,
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 12,
+                  zIndex: 10,
+                }}
+              >
+                {COOKING_INGREDIENTS.map((item) => {
+                  const isInPot = inPotIds.includes(item.id);
+                  return (
+                    <motion.div
+                      key={`drag-${item.id}`}
+                      drag={!isInPot}
+                      dragSnapToOrigin
+                      onDragEnd={(e, info) => {
+                        const point = (info as unknown as { point: { x: number; y: number } }).point;
+                        handleCookingDragEnd(item.id, point.x, point.y);
+                      }}
+                      whileHover={!isInPot ? { scale: 1.1 } : {}}
+                      whileDrag={!isInPot ? { scale: 1.2, zIndex: 100 } : {}}
+                      style={{
+                        width: 64,
+                        height: 64,
+                        background: isInPot ? "rgba(255,255,255,0.05)" : "rgba(255,255,255,0.12)",
+                        borderRadius: 16,
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        opacity: isInPot ? 0.3 : 1,
+                        cursor: isInPot ? "default" : "grab",
+                        border: isInPot ? "1px solid rgba(255,255,255,0.1)" : "1px solid rgba(100,200,255,0.3)",
+                        backdropFilter: "blur(12px)",
+                        boxShadow: isInPot ? "none" : "0 4px 20px rgba(100,200,255,0.15)",
+                        pointerEvents: isInPot ? "none" : "auto",
+                      }}
+                    >
+                      <span style={{ fontSize: 28 }}>{item.emoji}</span>
+                      <span style={{ fontSize: 10, color: "rgba(255,255,255,0.6)", marginTop: 2 }}>{item.name}</span>
+                    </motion.div>
+                  );
+                })}
+              </div>
+
+              {/* 进度指示 */}
+              <div
+                style={{
+                  position: "absolute",
+                  bottom: 80,
+                  left: "50%",
+                  transform: "translateX(-50%)",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 12,
+                }}
+              >
+                <div style={{ display: "flex", gap: 6 }}>
+                  {COOKING_INGREDIENTS.map((item) => (
+                    <div
+                      key={`dot-${item.id}`}
+                      style={{
+                        width: 10,
+                        height: 10,
+                        borderRadius: "50%",
+                        background: inPotIds.includes(item.id) ? "#FFD700" : "rgba(255,255,255,0.2)",
+                        boxShadow: inPotIds.includes(item.id) ? "0 0 8px #FFD700" : "none",
+                        transition: "all 0.3s ease",
+                      }}
+                    />
+                  ))}
+                </div>
+                <span style={{ color: "rgba(255,255,255,0.5)", fontSize: 12, letterSpacing: "2px" }}>
+                  {inPotIds.length} / {COOKING_INGREDIENTS.length}
+                </span>
+              </div>
+            </div>
+
+            {/* 关闭按钮 */}
+            <button
+              onClick={() => setCookingMode(false)}
+              style={{
+                position: "fixed",
+                top: 20,
+                left: "50%",
+                transform: "translateX(-50%)",
+                zIndex: 1001,
+                background: "rgba(255,255,255,0.1)",
+                backdropFilter: "blur(12px)",
+                border: "1px solid rgba(255,255,255,0.2)",
+                color: "rgba(255,255,255,0.8)",
+                padding: "10px 24px",
+                borderRadius: 24,
+                fontSize: 13,
+                letterSpacing: "3px",
+                cursor: "pointer",
+                transition: "all 0.25s ease",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "rgba(255,255,255,0.2)";
+                e.currentTarget.style.borderColor = "rgba(255,255,255,0.4)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "rgba(255,255,255,0.1)";
+                e.currentTarget.style.borderColor = "rgba(255,255,255,0.2)";
+              }}
+            >
+              ✕ 关闭
+            </button>
+
+            {/* 完成覆盖层 */}
+            {isFinished && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                style={{
+                  position: "fixed",
+                  inset: 0,
+                  background: "rgba(0,0,0,0.85)",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  zIndex: 1002,
+                }}
+              >
+                <motion.div
+                  initial={{ scale: 0.8, y: 50 }}
+                  animate={{ scale: 1, y: 0 }}
+                  transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+                  style={{
+                    background: "linear-gradient(135deg, rgba(139,90,43,0.3), rgba(92,45,10,0.4))",
+                    border: "2px solid rgba(244,197,66,0.5)",
+                    borderRadius: 20,
+                    padding: "40px 60px",
+                    textAlign: "center",
+                    backdropFilter: "blur(20px)",
+                    boxShadow: "0 20px 60px rgba(0,0,0,0.5)",
+                  }}
+                >
+                  <div style={{ fontSize: 64, marginBottom: 20 }}>🍲</div>
+                  <h3
+                    style={{
+                      color: "#f4c542",
+                      fontSize: 28,
+                      fontFamily: '"Noto Serif SC", serif',
+                      letterSpacing: "6px",
+                      marginBottom: 16,
+                    }}
+                  >
+                    王太守八宝豆腐
+                  </h3>
+                  <p
+                    style={{
+                      color: "rgba(255,255,255,0.7)",
+                      fontSize: 14,
+                      letterSpacing: "3px",
+                      marginBottom: 30,
+                    }}
+                  >
+                    八宝齐聚 · 随园珍馐
+                  </p>
+                  <button
+                    onClick={resetCooking}
+                    style={{
+                      background: "linear-gradient(135deg, #8b5a2b, #a06830)",
+                      border: "1px solid rgba(244,197,66,0.5)",
+                      color: "#fff",
+                      padding: "12px 32px",
+                      borderRadius: 24,
+                      fontSize: 14,
+                      letterSpacing: "3px",
+                      cursor: "pointer",
+                      fontFamily: '"Noto Serif SC", serif',
+                      transition: "all 0.25s ease",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = "translateY(-2px)";
+                      e.currentTarget.style.boxShadow = "0 8px 24px rgba(139,90,43,0.4)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = "translateY(0)";
+                      e.currentTarget.style.boxShadow = "none";
+                    }}
+                  >
+                    返回地图
+                  </button>
+                </motion.div>
+              </motion.div>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Ensure map canvas fills correctly */}
       <style>{`

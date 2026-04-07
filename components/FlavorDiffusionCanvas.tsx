@@ -37,18 +37,27 @@ interface DiffusionParticle {
   maxRadius: number;
   alpha: number;
   maxAlpha: number;
-  phase: "expanding" | "stable" | "fading";
+  phase: "expanding" | "stable";
   rotation: number;
   rotationSpeed: number;
   pulsePhase: number;
 }
 
-const IMPORTANCE_PARAMS: Record<ImportanceLevel, { maxRadius: number; speed: number; pulseIntensity: number; maxAlpha: number }> = {
+// 重要性参数配置 - 保持旧版逻辑
+const IMPORTANCE_PARAMS: Record<ImportanceLevel, {
+  maxRadius: number;
+  speed: number;
+  pulseIntensity: number;
+  maxAlpha: number;
+}> = {
   "main": { maxRadius: 100, speed: 2000, pulseIntensity: 1, maxAlpha: 0.75 },
   "important": { maxRadius: 65, speed: 3000, pulseIntensity: 0.6, maxAlpha: 0.55 },
   "normal": { maxRadius: 40, speed: 4000, pulseIntensity: 0.3, maxAlpha: 0.35 },
 };
 
+// ============ 形状绘制函数 ============
+
+// 酸：锯齿状星形
 function drawStarShape(ctx: CanvasRenderingContext2D, cx: number, cy: number, spikes: number, outerRadius: number, innerRadius: number, rotation: number) {
   ctx.beginPath();
   for (let i = 0; i < spikes * 2; i++) {
@@ -62,6 +71,7 @@ function drawStarShape(ctx: CanvasRenderingContext2D, cx: number, cy: number, sp
   ctx.closePath();
 }
 
+// 苦：波浪形
 function drawWaveShape(ctx: CanvasRenderingContext2D, cx: number, cy: number, radius: number, waves: number, rotation: number) {
   ctx.beginPath();
   const points = 64;
@@ -77,6 +87,7 @@ function drawWaveShape(ctx: CanvasRenderingContext2D, cx: number, cy: number, ra
   ctx.closePath();
 }
 
+// 辣：火焰形
 function drawFlameShape(ctx: CanvasRenderingContext2D, cx: number, cy: number, radius: number, rotation: number) {
   ctx.beginPath();
   const flames = 6;
@@ -98,6 +109,7 @@ function drawFlameShape(ctx: CanvasRenderingContext2D, cx: number, cy: number, r
   }
 }
 
+// 咸：方形
 function drawSquareShape(ctx: CanvasRenderingContext2D, cx: number, cy: number, radius: number, rotation: number) {
   ctx.save();
   ctx.translate(cx, cy);
@@ -107,6 +119,7 @@ function drawSquareShape(ctx: CanvasRenderingContext2D, cx: number, cy: number, 
   ctx.restore();
 }
 
+// 鲜：水滴形
 function drawDropletShape(ctx: CanvasRenderingContext2D, cx: number, cy: number, radius: number, rotation: number) {
   ctx.save();
   ctx.translate(cx, cy);
@@ -127,7 +140,6 @@ export default function FlavorDiffusionCanvas({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const particlesRef = useRef<DiffusionParticle[]>([]);
   const animFrameRef = useRef<number>(0);
-  const lastSpawnTimeRef = useRef<number>(0);
   const spawnedRef = useRef<boolean>(false);
 
   const spawnDiffusion = useCallback((data: FlavorIngredientData) => {
@@ -161,7 +173,10 @@ export default function FlavorDiffusionCanvas({
   const draw = useCallback(() => {
     const canvas = canvasRef.current;
     const map = mapRef.current;
-    if (!canvas || !map) return;
+    if (!canvas || !map) {
+      animFrameRef.current = requestAnimationFrame(draw);
+      return;
+    }
 
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
@@ -174,10 +189,14 @@ export default function FlavorDiffusionCanvas({
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    if (!visible) return;
+    if (!visible) {
+      animFrameRef.current = requestAnimationFrame(draw);
+      return;
+    }
 
     const timestamp = Date.now();
 
+    // 初始化时生成粒子
     if (!spawnedRef.current && timestamp > 2000) {
       spawnedRef.current = true;
       ingredientData.forEach((data) => {
@@ -187,14 +206,18 @@ export default function FlavorDiffusionCanvas({
       });
     }
 
+    // 更新和绘制粒子
     particlesRef.current = particlesRef.current.filter((p) => {
+      // 更新位置以跟随地图
       const projected = map.project([p.lng, p.lat]);
       p.x = projected.x;
       p.y = projected.y;
 
       const params = IMPORTANCE_PARAMS[p.importance];
 
+      // 动画状态更新
       if (p.phase === "expanding") {
+        // 扩展阶段
         p.radius += (p.maxRadius / params.speed) * 16;
         p.alpha = Math.min(p.alpha + 0.03, p.maxAlpha);
         p.pulsePhase += 0.08;
@@ -205,43 +228,52 @@ export default function FlavorDiffusionCanvas({
           p.radius = p.maxRadius;
         }
       } else if (p.phase === "stable") {
+        // 稳定阶段 - 脉冲呼吸
         p.pulsePhase += 0.05 * params.pulseIntensity;
         p.rotation += p.rotationSpeed * 0.5;
         const pulse = Math.sin(p.pulsePhase);
         p.alpha = p.maxAlpha * (0.7 + 0.3 * pulse);
       }
 
+      // 计算当前半径（带脉冲效果）
       const currentRadius = p.radius * (1 + Math.sin(p.pulsePhase) * 0.1 * params.pulseIntensity);
       const color = p.color || "#FFD700";
-      const alphaHex = Math.round(p.alpha * 255).toString(16).padStart(2, "0");
 
       ctx.save();
 
+      // 柔和的径向渐变
       const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, currentRadius);
-      gradient.addColorStop(0, color + alphaHex);
+      gradient.addColorStop(0, color + Math.round(p.alpha * 255).toString(16).padStart(2, "0"));
       gradient.addColorStop(0.5, color + Math.round(p.alpha * 0.5 * 255).toString(16).padStart(2, "0"));
       gradient.addColorStop(1, color + "00");
 
       ctx.fillStyle = gradient;
 
+      // 根据风味类型绘制形状
       switch (p.flavor) {
         case "酸":
+          // 锯齿状星形 - 8个尖刺
           drawStarShape(ctx, p.x, p.y, 8, currentRadius, currentRadius * 0.5, p.rotation);
           break;
         case "甜":
+          // 平滑圆形
           ctx.beginPath();
           ctx.arc(p.x, p.y, currentRadius, 0, Math.PI * 2);
           break;
         case "苦":
+          // 波浪形 - 5个波峰
           drawWaveShape(ctx, p.x, p.y, currentRadius, 5, p.rotation);
           break;
         case "辣":
+          // 火焰形
           drawFlameShape(ctx, p.x, p.y, currentRadius, p.rotation);
           break;
         case "咸":
+          // 方形
           drawSquareShape(ctx, p.x, p.y, currentRadius, p.rotation);
           break;
         case "鲜":
+          // 水滴形
           drawDropletShape(ctx, p.x, p.y, currentRadius, p.rotation);
           break;
         default:
@@ -256,14 +288,15 @@ export default function FlavorDiffusionCanvas({
     });
 
     animFrameRef.current = requestAnimationFrame(draw);
-    // eslint-disable-next-line react-hooks/immutability
   }, [mapRef, visible, ingredientData, spawnDiffusion, containerRef]);
 
+  // 启动动画循环
   useEffect(() => {
     animFrameRef.current = requestAnimationFrame(draw);
     return () => cancelAnimationFrame(animFrameRef.current);
   }, [draw]);
 
+  // 控制显示/隐藏
   useEffect(() => {
     if (!visible) {
       particlesRef.current = [];

@@ -19,7 +19,9 @@
     "cultural_story": "袁枚在《随园食单》中推崇此法，认为烹饪应独善其身，不加他物。文人雅士常以此菜佐酒，寓意专注本心，不随波逐流，暗合江南文人的清雅品格。",
     "processed": true,
     "longitude": 116.63,
-    "latitude": 23.66
+    "latitude": 23.66,
+    "image_url": "/images/dishes/1_牛肉_1775551676.png",
+    "image_generated_at": "2026-04-07 16:47:56"
   },
   {
     "dish_name": "牛舌 ",
@@ -41,7 +43,9 @@
     "cultural_story": "清代袁枚在《随园食单》中推崇此菜，认为其风味堪比火腿。文人雅士常以牛舌入馔，既显食材之精，又含节俭之道。相传袁枚曾以此菜宴客，赞其“煨得极烂，入口即化”，成为文人宴席雅谈。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/2_牛舌__1775551683.png",
+    "image_generated_at": "2026-04-07 16:48:04"
   },
   {
     "dish_name": "羊头",
@@ -64,7 +68,9 @@
     "cultural_story": "袁枚在《随园食单》中强调食材本味，此菜讲究羊头的处理与鸡汤的搭配，体现其“一物献一味”的烹饪理念。清代文人雅士常以羊头宴客，既显家常又不失雅致，成为文人饮食文化的代表之一。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/3_羊头_1775551694.png",
+    "image_generated_at": "2026-04-07 16:48:14"
   },
   {
     "dish_name": "羊蹄",
@@ -87,7 +93,9 @@
     "cultural_story": "袁枚在《随园食单》中推崇本味烹饪，煨羊蹄体现了他对食材本味的尊重。清代文人常以羊蹄佐酒，认为其滋补养生，与江南文人的清淡饮食形成有趣对比。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/4_羊蹄_1775551702.png",
+    "image_generated_at": "2026-04-07 16:48:22"
   },
   {
     "dish_name": "羊羹 ",
@@ -111,7 +119,9 @@
     "cultural_story": "袁枚在《随园食单》中推崇此菜，认为羊肉配山菌笋丁能平衡油腻，体现文人雅士对食材本味的追求。清代文人常以羊肉炖品待客，象征生活富足与品味。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/5_羊羹__1775551709.png",
+    "image_generated_at": "2026-04-07 16:48:30"
   },
   {
     "dish_name": "羊肚羹",
@@ -132,7 +142,9 @@
     "modern_method": "羊肚用盐和面粉反复搓洗去异味，冷水下锅加姜葱焯水，捞出后改刀细丝。锅中放原汤，下羊肚丝小火慢煨20分钟，加盐、胡椒粉调味，出锅前淋少许醋提香。",
     "geo_factors": "羊肚菜源于北方游牧民族饮食，以华北地区羊肉品质最佳。北方气候寒冷，人们喜食温补羊肉，且炒制技术讲究火候，使羊肚脆嫩，体现北方饮食的粗犷与精细结合。",
     "cultural_story": "清代钱王与沙方伯家以锅烧羊肉闻名，袁枚在《随园食单》中特别提及，可见其技艺精湛。羊肚在古代被视为珍贵食材，文人雅士常以羊肚宴客，象征生活富足，也体现了清代饮食文化的精致追求。",
-    "processed": true
+    "processed": true,
+    "image_url": "/images/dishes/6_羊肚羹_1775553400.png",
+    "image_generated_at": "2026-04-07 17:16:40"
   },
   {
     "dish_name": "红煨羊肉 ",
@@ -154,7 +166,9 @@
     "cultural_story": "清代袁枚在《随园食单》中记载此菜，推崇古法烹饪。相传文人雅士宴饮时，喜以核桃佐酒，认为其能清心醒脑。刺眼（可能为某种香料或药材）的加入，则体现了中医食疗的智慧。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/7_红煨羊肉__1775553407.png",
+    "image_generated_at": "2026-04-07 17:16:47"
   },
   {
     "dish_name": "炒羊肉丝 ",
@@ -175,7 +189,9 @@
     "cultural_story": "随园主人袁枚在《随园食单》中强调烹饪的细节，此菜虽简单，却体现了“大道至简”的饮食哲学。文人雅士常以家常菜款待宾客，认为真味在平淡中见真章。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/8_炒羊肉丝__1775553414.png",
+    "image_generated_at": "2026-04-07 17:16:55"
   },
   {
     "dish_name": "烧羊肉",
@@ -194,7 +210,9 @@
     "modern_method": "选用带骨羊肉5-7斤，切成大块。用铁叉固定羊肉，明火慢烤至表面焦黄，内部熟透。烤制过程中可刷少许油和香料，保持肉质多汁，外皮酥脆。",
     "geo_factors": "此菜源于北方游牧民族烹饪方式，适合北方寒冷气候。北方草原羊肉质紧实肥美，适合直接明火烤制，体现当地物产与气候特点。",
     "cultural_story": "相传宋仁宗深夜思念家乡美食，御厨烤制此菜。羊肉在火上烤制时香气四溢，缓解了皇帝的思乡之情。此菜成为宫廷御膳，体现了古代文人雅士对美食与情感的关联。",
-    "processed": true
+    "processed": true,
+    "image_url": "/images/dishes/9_烧羊肉_1775553422.png",
+    "image_generated_at": "2026-04-07 17:17:02"
   },
   {
     "dish_name": "全羊",
@@ -214,7 +232,9 @@
     "cultural_story": "清代袁枚在《随园食单》中详述此菜，感叹其技艺之精妙。相传乾隆年间宫廷御厨曾以全羊宴招待使节，将羊头、羊尾等部位烹制成形似龙凤的菜肴，象征吉祥，彰显中华饮食文化的包容与创新。",
     "processed": true,
     "longitude": 105.0,
-    "latitude": 38.0
+    "latitude": 38.0,
+    "image_url": "/images/dishes/10_全羊_1775553429.png",
+    "image_generated_at": "2026-04-07 17:17:09"
   },
   {
     "dish_name": "鹿肉",
@@ -234,7 +254,9 @@
     "cultural_story": "清代文人袁枚在《随园食单》中盛赞鹿肉，认为其珍贵胜过獐肉。古代鹿肉常为宫廷贡品，文人雅士也以鹿肉宴客为雅事，象征身份与品味，如《红楼梦》中亦有鹿肉入馔的描写。",
     "processed": true,
     "longitude": 125.0,
-    "latitude": 45.0
+    "latitude": 45.0,
+    "image_url": "/images/dishes/11_鹿肉_1775553437.png",
+    "image_generated_at": "2026-04-07 17:17:17"
   },
   {
     "dish_name": "鹿筋二法",
@@ -259,7 +281,9 @@
     "cultural_story": "袁枚在《随园食单》中强调“物尽其用”，煨鹿筋的繁琐工序体现文人饮食的精致追求。清代文人常以鹿筋喻君子坚韧，煨制过程如修身养性。白色版的简约与红色版的丰盛，暗合文人“淡中求味、浓中求雅”的饮食哲学。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/12_鹿筋二法_1775553447.png",
+    "image_generated_at": "2026-04-07 17:17:27"
   },
   {
     "dish_name": "獐肉",
@@ -279,7 +303,9 @@
     "cultural_story": "袁枚在《随园食单》中特别提及獐肉，反映清代文人饮食的精致追求。獐肉脯曾是文人雅士佐酒佳品，其制作工艺也体现了古人对食材特性的细腻观察与烹饪智慧。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/13_獐肉_1775553454.png",
+    "image_generated_at": "2026-04-07 17:17:34"
   },
   {
     "dish_name": "果子狸",
@@ -301,7 +327,9 @@
     "cultural_story": "清代袁枚在《随园食单》中记载此菜，反映文人饮食的精致追求。相传袁枚曾以此菜宴请文人墨客，赞其“肥而不腻，入口即化”，成为江南文人宴席上的雅致名品。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/14_果子狸_1775553461.png",
+    "image_generated_at": "2026-04-07 17:17:42"
   },
   {
     "dish_name": "假牛乳",
@@ -322,7 +350,9 @@
     "cultural_story": "随园主人袁枚在《随园食单》中记载此菜，体现了清代文人追求精致生活的雅趣。蜜酒酿蒸蛋清不仅是家常甜品，更因其“嫩腻如月”的意境，成为文人宴席上的清雅点缀，展现了饮食与文化的交融。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/15_假牛乳_1775553469.png",
+    "image_generated_at": "2026-04-07 17:17:49"
   },
   {
     "dish_name": "鹿尾",
@@ -343,7 +373,9 @@
     "cultural_story": "清代名臣尹文端公推崇鹿尾为至味，袁枚随园食单中记载此菜，体现文人饮食的精致追求。鹿尾在古代为宫廷贡品，象征地位，袁枚以家常手法烹制，展现“大味至淡”的饮食哲学。",
     "processed": true,
     "longitude": 125.0,
-    "latitude": 45.0
+    "latitude": 45.0,
+    "image_url": "/images/dishes/16_鹿尾_1775553476.png",
+    "image_generated_at": "2026-04-07 17:17:56"
   },
   {
     "dish_name": "笋脯",
@@ -365,7 +397,9 @@
     "cultural_story": "清代文人袁枚在《随园食单》中推崇笋脯，称其“家园所烘为第一”。古人常以笋脯佐酒，因其能解腻增香。宋代诗人陆游曾赞“笋脯胜熊蹯”，可见其地位之高，是文人雅士餐桌上的清雅之味。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/17_笋脯_1775553483.png",
+    "image_generated_at": "2026-04-07 17:18:04"
   },
   {
     "dish_name": "天目笋",
@@ -385,7 +419,9 @@
     "cultural_story": "清代文人袁枚在《随园食单》中特别推崇天目笋，认为其“集腋成裘”般的选材方式体现了对食材的极致追求，成为江南文人宴席上的雅致佳肴。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/18_天目笋_1775553491.png",
+    "image_generated_at": "2026-04-07 17:18:11"
   },
   {
     "dish_name": "玉兰片",
@@ -407,7 +443,9 @@
     "cultural_story": "清代文人袁枚在《随园食单》中特别提到此菜，称赞其做法精致。苏州孙春杨家的版本尤为出名，体现了江南文人饮食追求清雅、注重本味的审美趣味。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/19_玉兰片_1775553498.png",
+    "image_generated_at": "2026-04-07 17:18:19"
   },
   {
     "dish_name": "素火腿",
@@ -428,7 +466,9 @@
     "cultural_story": "清代袁枚在《随园食单》中提及此菜，称其'素火腿'之名，体现了文人雅士对素食的推崇。笋脯作为山珍，曾是文人宴席上的清雅之选，象征隐逸自然的生活情趣。",
     "processed": true,
     "longitude": 100.24,
-    "latitude": 26.87
+    "latitude": 26.87,
+    "image_url": "/images/dishes/20_素火腿_1775553506.png",
+    "image_generated_at": "2026-04-07 17:18:26"
   },
   {
     "dish_name": "宣城笋脯",
@@ -446,7 +486,9 @@
     "modern_method": "选用新鲜宣城笋尖，去壳后切段，焯水去涩。可清炒或与腊肉同焖，保留笋的鲜嫩，突出其肥厚口感，调味以盐、糖为主，突出本味。",
     "geo_factors": "宣城地处皖南山区，气候湿润，竹林茂盛，盛产优质竹笋。当地土壤肥沃，雨量充沛，为笋尖的生长提供了得天独厚的自然条件，使其肉质肥厚，品质上乘。",
     "cultural_story": "清代袁枚在《随园食单》中盛赞宣城笋尖，称其与天目笋齐名。文人雅士常以笋尖入诗，赞其清雅。宣城笋尖也曾作为贡品，深受皇室喜爱，成为江南饮食文化中的珍品。",
-    "processed": true
+    "processed": true,
+    "image_url": "/images/dishes/21_宣城笋脯_1775553513.png",
+    "image_generated_at": "2026-04-07 17:18:33"
   },
   {
     "dish_name": "人参笋",
@@ -467,7 +509,9 @@
     "cultural_story": "清代文人袁枚在《随园食单》中记载此菜，扬州文人雅士常以蜜水笋参待客，寓意吉祥。相传扬州八怪之一的郑板桥曾以此笋宴客，赞其“形如人参，味胜山珍”，成为文人宴席上的雅致小品。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/22_人参笋_1775553520.png",
+    "image_generated_at": "2026-04-07 17:18:40"
   },
   {
     "dish_name": "笋油",
@@ -488,7 +532,9 @@
     "cultural_story": "清代袁枚在《随园食单》中记载此菜，天台山僧人以笋油赠客，文人雅士视为珍品。笋油不仅是调味品，更承载着山居生活的清雅与禅意，成为文人饮食文化的象征。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/23_笋油_1775553527.png",
+    "image_generated_at": "2026-04-07 17:18:48"
   },
   {
     "dish_name": "虾油",
@@ -509,7 +555,9 @@
     "cultural_story": "随园主人袁枚在《随园食单》中推崇此菜，认为其“鲜味甚浓，可代酱油”。清代文人常以虾子油佐酒，视为雅致之趣，彰显文人饮食的细腻与讲究。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/24_虾油_1775553535.png",
+    "image_generated_at": "2026-04-07 17:18:55"
   },
   {
     "dish_name": "喇虎酱",
@@ -531,7 +579,9 @@
     "cultural_story": "随园主人袁枚在《随园食单》中记载此菜，清代文人喜以酱料佐酒。秦椒原为西域传入，清代广泛种植，与本土酱料结合，成为文人宴席中的开胃小菜，体现了饮食文化的融合与创新。",
     "processed": true,
     "longitude": 108.94,
-    "latitude": 34.34
+    "latitude": 34.34,
+    "image_url": "/images/dishes/25_喇虎酱_1775553542.png",
+    "image_generated_at": "2026-04-07 17:19:03"
   },
   {
     "dish_name": "熏鱼子",
@@ -553,7 +603,9 @@
     "cultural_story": "清代文人袁枚在《随园食单》中盛赞熏鱼子，称其“色如琥珀，愈新愈妙”。苏州孙春杨家因这道菜闻名，成为文人雅士宴客的必备佳肴，体现了江南饮食文化的精致与讲究。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/26_熏鱼子_1775553550.png",
+    "image_generated_at": "2026-04-07 17:19:10"
   },
   {
     "dish_name": "腌冬菜、黄芽菜",
@@ -575,7 +627,9 @@
     "cultural_story": "袁枚借此菜比喻人不可貌相，如同腌菜上半部分虽臭，下半部分却香美。文人雅士常以腌菜佐酒，清贫中见雅趣。清代文人李渔在《闲情偶寄》中亦提及腌菜，赞其‘愈陈愈香’，体现文人于平凡中品味生活的智慧。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/27_腌冬菜、黄芽菜_1775553557.png",
+    "image_generated_at": "2026-04-07 17:19:17"
   },
   {
     "dish_name": "莴苣",
@@ -597,7 +651,9 @@
     "cultural_story": "清代袁枚在《随园食单》中推崇清淡饮食，认为莴苣腌制后应保持本味。文人雅士常以莴苣佐酒，取其清脆爽口，寓意生活淡泊雅致。相传明代文人徐渭曾以腌莴苣配诗，赞其“脆如春笋，淡似秋云”。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/28_莴苣_1775553564.png",
+    "image_generated_at": "2026-04-07 17:19:24"
   },
   {
     "dish_name": "香干菜",
@@ -620,7 +676,9 @@
     "cultural_story": "随园主人袁枚推崇此菜，认为其“香脆可久”，常作为文人雅士佐酒小菜。清代文人喜以腌菜配茶，春芥心因工艺精细，成为士大夫阶层餐桌上的雅致点缀，象征闲适生活。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/29_香干菜_1775553572.png",
+    "image_generated_at": "2026-04-07 17:19:32"
   },
   {
     "dish_name": "冬芥",
@@ -642,7 +700,9 @@
     "cultural_story": "清代文人袁枚在《随园食单》中盛赞雪里红，称其“极鲜”。相传江南文人雅士常以雪里红煮鲫鱼，配以清酒，称为“雪中春色”，寓意冬日里的生机与雅趣，成为文人宴席上的经典搭配。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/30_冬芥_1775553580.png",
+    "image_generated_at": "2026-04-07 17:19:40"
   },
   {
     "dish_name": "春芥",
@@ -663,7 +723,9 @@
     "cultural_story": "清代袁枚在《随园食单》中记载此菜，文人雅士常将其作为佐酒小菜。相传文人墨客在冬日围炉夜话时，以挪菜配清茶，谈诗论画，成为文人生活闲适雅趣的体现。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/31_春芥_1775553587.png",
+    "image_generated_at": "2026-04-07 17:19:48"
   },
   {
     "dish_name": "芥头",
@@ -684,7 +746,9 @@
     "cultural_story": "清代文人袁枚在《随园食单》中记载此菜，体现其对食材本味的追求。芥根脯因其脆爽口感和保存方便，成为文人雅士佐酒小菜，象征清雅闲适的生活态度，也反映了江南地区对腌渍工艺的精湛掌握。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/32_芥头_1775553595.png",
+    "image_generated_at": "2026-04-07 17:19:55"
   },
   {
     "dish_name": "芝麻菜",
@@ -705,7 +769,9 @@
     "cultural_story": "清代袁枚在《随园食单》中特别提及此菜，称其‘老人所宜’，体现了古代文人对养生饮食的重视。芥菜在古代被视为‘长寿菜’，文人雅士常以简单食材烹制出养生佳肴，此菜正是清淡养生的典范。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/33_芝麻菜_1775553603.png",
+    "image_generated_at": "2026-04-07 17:20:03"
   },
   {
     "dish_name": "腐干丝",
@@ -727,7 +793,9 @@
     "cultural_story": "袁枚在《随园食单》中推崇此菜，认为其“简而精”。江南文人雅士常以清淡小菜佐茶，豆腐干丝的细腻与虾子的鲜香，体现了文人饮食的雅致与讲究。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/34_腐干丝_1775553610.png",
+    "image_generated_at": "2026-04-07 17:20:10"
   },
   {
     "dish_name": "风瘪菜",
@@ -746,7 +814,9 @@
     "modern_method": "选用新鲜冬菜心，洗净后风干至半干，加盐腌制数日，榨出卤汁装入消毒玻璃瓶，密封后冷藏保存，食用时取少量调味。",
     "geo_factors": "冬菜心源于北方冬季腌制菜的传统，北方冬季寒冷干燥，适合蔬菜风干保存，当地盛产大白菜，为冬菜心提供了优质原料。",
     "cultural_story": "清代袁枚在《随园食单》中记载此菜，文人雅士常以冬菜心佐酒，因其香气独特，被誉为“菜中珍品”。相传乾隆南巡时，曾品尝此菜，赞其“咸香扑鼻，回味悠长”。",
-    "processed": true
+    "processed": true,
+    "image_url": "/images/dishes/35_风瘪菜_1775553618.png",
+    "image_generated_at": "2026-04-07 17:20:18"
   },
   {
     "dish_name": "酸菜",
@@ -769,7 +839,9 @@
     "cultural_story": "随园主人袁枚在《随园食单》中记载此菜，文人雅士宴饮后常以小菜解酒醒脾，体现了清代文人饮食的精致与雅趣，也反映了江南饮食文化的细腻与讲究。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/36_酸菜_1775553626.png",
+    "image_generated_at": "2026-04-07 17:20:26"
   },
   {
     "dish_name": "台菜心",
@@ -791,7 +863,9 @@
     "cultural_story": "随园主人袁枚推崇时令食材，此菜体现“不时不食”理念。文人雅士常以腌菜佐酒，清代《随园食单》记载其“夏日食之，可解暑气”，成为文人餐桌上的雅致小品。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/37_台菜心_1775553633.png",
+    "image_generated_at": "2026-04-07 17:20:34"
   },
   {
     "dish_name": "大头菜",
@@ -812,7 +886,9 @@
     "cultural_story": "清代袁枚在《随园食单》中特别提及此菜，赞其“愈陈愈佳”。相传文人雅士常以陈年大头菜佐酒，认为其“能发鲜”的特性暗合文人追求的含蓄隽永之美。",
     "processed": true,
     "longitude": 118.78,
-    "latitude": 32.06
+    "latitude": 32.06,
+    "image_url": "/images/dishes/38_大头菜_1775553641.png",
+    "image_generated_at": "2026-04-07 17:20:41"
   },
   {
     "dish_name": "萝卜",
@@ -834,7 +910,9 @@
     "cultural_story": "清代文人袁枚在《随园食单》中记载此菜，提及侯师傅的巧思，可见当时饮食文化的精致。萝卜鲞作为家常菜被文人记录，反映了清代士人对日常饮食的细致观察与品味，也体现了“化平凡为神奇”的饮食哲学。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/39_萝卜_1775553649.png",
+    "image_generated_at": "2026-04-07 17:20:49"
   },
   {
     "dish_name": "乳腐",
@@ -856,7 +934,9 @@
     "cultural_story": "乳腐历史悠久，清代袁枚在《随园食单》中特别推崇苏州温将军庙前乳腐，认为其黑色而味鲜。文人雅士常以乳腐佐酒，视为清雅之物。王库官司家制乳腐亦被记载，反映古代民间饮食文化的精致与传承。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/40_乳腐_1775553656.png",
+    "image_generated_at": "2026-04-07 17:20:56"
   },
   {
     "dish_name": "酱炒三果",
@@ -879,7 +959,9 @@
     "cultural_story": "清代文人袁枚在《随园食单》中记载此菜，称其“香脆可口，佐酒最佳”。相传乾隆南巡时，随厨以此菜献上，乾隆赞其“妙手天成”，后成为江南文人雅士宴客的常见小食。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/41_酱炒三果_1775553664.png",
+    "image_generated_at": "2026-04-07 17:21:04"
   },
   {
     "dish_name": "酱石花",
@@ -900,7 +982,9 @@
     "cultural_story": "清代袁枚在《随园食单》中提及石花菜，称其“一名麒麟菜”，可见其稀有珍贵。文人雅士常将其作为清雅小菜，佐酒闲谈，寓意吉祥麒麟，体现了饮食文化的雅致与趣味。",
     "processed": true,
     "longitude": 118.3,
-    "latitude": 26.08
+    "latitude": 26.08,
+    "image_url": "/images/dishes/42_酱石花_1775553672.png",
+    "image_generated_at": "2026-04-07 17:21:12"
   },
   {
     "dish_name": "石花糕",
@@ -922,7 +1006,9 @@
     "cultural_story": "清代袁枚在《随园食单》中记载此菜，称其“色如蜜蜡，莹澈可爱”。文人雅士常以石花膏佐茶，因其清雅剔透，象征君子品格，成为文人宴席上的雅致甜品。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/43_石花糕_1775553679.png",
+    "image_generated_at": "2026-04-07 17:21:20"
   },
   {
     "dish_name": "小松菌",
@@ -944,7 +1030,9 @@
     "cultural_story": "袁枚在《随园食单》中记录此菜，体现其对食材本味的追求。松菌自古被视为山珍，文人雅士常以之入馔，此菜简洁却见匠心，暗合文人“大道至简”的饮食哲学。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/44_小松菌_1775553687.png",
+    "image_generated_at": "2026-04-07 17:21:27"
   },
   {
     "dish_name": "吐［虫失］",
@@ -966,7 +1054,9 @@
     "cultural_story": "清代袁枚在《随园食单》中记载泥螺，称其“以无泥为佳”，体现了文人雅士对食材本味的追求。泥螺曾是江南文人宴席上的雅致小菜，象征闲适的生活情趣。",
     "processed": true,
     "longitude": 118.8,
-    "latitude": 32.06
+    "latitude": 32.06,
+    "image_url": "/images/dishes/45_吐［虫失］_1775553695.png",
+    "image_generated_at": "2026-04-07 17:21:36"
   },
   {
     "dish_name": "海蛰",
@@ -988,7 +1078,9 @@
     "cultural_story": "袁枚在《随园食单》中推崇食材本味，此菜以简单手法突出海蛰的鲜美，体现文人雅士对清淡雅致饮食的追求。清代文人常以海鲜佐酒，海蛰因其爽脆口感成为宴席常见冷盘。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/46_海蛰_1775553703.png",
+    "image_generated_at": "2026-04-07 17:21:43"
   },
   {
     "dish_name": "虾子鱼",
@@ -1009,7 +1101,9 @@
     "cultural_story": "清代袁枚在《随园食单》中推崇此菜，认为其胜于鱼干，反映了文人雅士对食材本味的追求。苏州文人常以时令鲜鱼入诗，子鱼因“生食更美”的独特性成为江南饮食文化的象征。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/47_虾子鱼_1775553710.png",
+    "image_generated_at": "2026-04-07 17:21:50"
   },
   {
     "dish_name": "酱姜",
@@ -1032,7 +1126,9 @@
     "cultural_story": "袁枚在《随园食单》中记载此菜，可见清代文人饮食之精细。相传扬州盐商宴客，席间酱生姜佐酒，宾客赞其'脆若新笋，咸得古意'，成为文人雅士佐酒清谈的妙品。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/48_酱姜_1775553717.png",
+    "image_generated_at": "2026-04-07 17:21:57"
   },
   {
     "dish_name": "酱瓜",
@@ -1054,7 +1150,9 @@
     "cultural_story": "清代文人袁枚在《随园食单》中盛赞杭州放鲁箴家酱瓜，称其“皮薄而皱，上口脆”。酱瓜作为文人雅士佐酒小菜，常出现在文人宴席中，体现了江南饮食的精致与讲究。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/49_酱瓜_1775553724.png",
+    "image_generated_at": "2026-04-07 17:22:05"
   },
   {
     "dish_name": "新蚕豆",
@@ -1075,7 +1173,9 @@
     "cultural_story": "袁枚在《随园食单》中推崇此菜，体现了文人雅士对时令食材的珍视。清代文人常以蚕豆入诗，如“蚕豆初肥燕乳雏”，此菜亦成为文人餐桌上的时令雅味。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/50_新蚕豆_1775553731.png",
+    "image_generated_at": "2026-04-07 17:22:11"
   },
   {
     "dish_name": "腌蛋",
@@ -1096,7 +1196,9 @@
     "cultural_story": "清代文人袁枚在《随园食单》中盛赞高邮腌蛋，并提及高文端公（高士奇）对此蛋的喜爱。高士奇为康熙朝重臣，常以腌蛋待客，成为文人雅士宴席上的雅致点缀，体现了清代饮食文化的精致与讲究。",
     "processed": true,
     "longitude": 118.8,
-    "latitude": 32.06
+    "latitude": 32.06,
+    "image_url": "/images/dishes/51_腌蛋_1775553739.png",
+    "image_generated_at": "2026-04-07 17:22:19"
   },
   {
     "dish_name": "混套",
@@ -1118,7 +1220,9 @@
     "cultural_story": "清代袁枚在《随园食单》中记载此菜，称其“此味极鲜”。相传为文人雅士宴席上的巧思之作，以鸡蛋壳为器，既显厨艺之精妙，又寓“返璞归真”之意，体现了清代文人对饮食美学的追求。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/52_混套_1775553746.png",
+    "image_generated_at": "2026-04-07 17:22:27"
   },
   {
     "dish_name": "茭瓜脯",
@@ -1139,7 +1243,9 @@
     "cultural_story": "清代文人常以干菜佐酒，袁枚在《随园食单》中赞其“有笋脯之韵，更添瓜之清”，成为江南文人宴席上的雅致小菜，寓意风骨清雅。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/53_茭瓜脯_1775553754.png",
+    "image_generated_at": "2026-04-07 17:22:34"
   },
   {
     "dish_name": "牛首腐干",
@@ -1161,7 +1267,9 @@
     "cultural_story": "晓堂和尚为清代金陵名僧，精通素食制作。其豆腐干因选料考究、工艺精湛，成为文人雅士争相品尝的佳品，袁枚赞其“妙不可言”，成为随园宴客必备之品。",
     "processed": true,
     "longitude": 118.78,
-    "latitude": 32.06
+    "latitude": 32.06,
+    "image_url": "/images/dishes/54_牛首腐干_1775553762.png",
+    "image_generated_at": "2026-04-07 17:22:42"
   },
   {
     "dish_name": "酱王瓜",
@@ -1182,7 +1290,9 @@
     "cultural_story": "袁枚在《随园食单》中推崇此菜，认为其“脆而鲜”，体现了文人雅士对时令食材的精妙处理。清代文人常以酱腌小佐酒，视为清雅之物，与诗酒文化相得益彰。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/55_酱王瓜_1775553769.png",
+    "image_generated_at": "2026-04-07 17:22:49"
   },
   {
     "dish_name": "燕窝",
@@ -1205,7 +1315,9 @@
     "cultural_story": "清代袁枚在《随园食单》中批评当时燕窝宴的浮华之风，称其“真乞儿卖富”。他推崇广东“冬瓜燕窝”的清雅做法，主张以柔配柔、以清入清，反对过度加工。文人雅士视燕窝为清品，讲究本味，暗合文人淡泊名利的品格。",
     "processed": true,
     "longitude": 110.28,
-    "latitude": 25.28
+    "latitude": 25.28,
+    "image_url": "/images/dishes/56_燕窝_1775553778.png",
+    "image_generated_at": "2026-04-07 17:22:58"
   },
   {
     "dish_name": "海参三法",
@@ -1229,7 +1341,9 @@
     "cultural_story": "清代文人袁枚在《随园食单》中详细记载了海参的烹饪方法，提到钱观察家与蒋侍郎家的创新吃法。钱家夏日冷拌海参，蒋家以豆腐皮、鸡腿煨制，体现了清代士大夫对食材的讲究与饮食文化的精致追求。",
     "processed": true,
     "longitude": 122.0,
-    "latitude": 37.5
+    "latitude": 37.5,
+    "image_url": "/images/dishes/57_海参三法_1775553788.png",
+    "image_generated_at": "2026-04-07 17:23:08"
   },
   {
     "dish_name": "鱼翅二法",
@@ -1253,7 +1367,9 @@
     "cultural_story": "袁枚曾在郭耕礼家品尝到鱼翅炒菜，赞其“妙绝”，可惜未得其法。吴道士家独创只用上半原根鱼翅的做法，别具风味。这些轶事反映了清代文人雅士对饮食的讲究与传承。",
     "processed": true,
     "longitude": 114.17,
-    "latitude": 22.32
+    "latitude": 22.32,
+    "image_url": "/images/dishes/58_鱼翅二法_1775553798.png",
+    "image_generated_at": "2026-04-07 17:23:18"
   },
   {
     "dish_name": "鳆鱼",
@@ -1276,7 +1392,9 @@
     "cultural_story": "清代袁枚在《随园食单》中记载了杨中丞家的做法，庄大守则创新用大块鲍鱼煨整鸭，体现文人雅士对食材的精妙运用。鲍鱼需火煨三日才软烂，可见古人对烹饪火候的极致追求。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/59_鳆鱼_1775553806.png",
+    "image_generated_at": "2026-04-07 17:23:26"
   },
   {
     "dish_name": "淡菜",
@@ -1298,7 +1416,9 @@
     "cultural_story": "清代袁枚在《随园食单》中记载此菜，体现江南文人饮食的精致。淡菜性温，古人认为其能滋阴补肾，常被文人雅士视为养生佳品，与猪肉同煨，既滋补又不失雅致。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/60_淡菜_1775553814.png",
+    "image_generated_at": "2026-04-07 17:23:34"
   },
   {
     "dish_name": "海",
@@ -1319,7 +1439,9 @@
     "cultural_story": "清代袁枚在《随园食单》中记载此菜，可见其早在清代已是江南家常美味。文人雅士常以简单食材烹制佳肴，体现“大道至简”的饮食哲学。",
     "processed": true,
     "longitude": 122.0,
-    "latitude": 37.5
+    "latitude": 37.5,
+    "image_url": "/images/dishes/61_海_1775553821.png",
+    "image_generated_at": "2026-04-07 17:23:41"
   },
   {
     "dish_name": "乌鱼蛋",
@@ -1341,7 +1463,9 @@
     "cultural_story": "龚云若为清代文人，官至司马，精于饮食。其家厨擅制乌鱼蛋，以汤鲜味美著称。袁枚尝赞其“最精”，可见此菜在文人雅士中的地位，体现了清代江南文人对饮食美学的追求。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/62_乌鱼蛋_1775553828.png",
+    "image_generated_at": "2026-04-07 17:23:49"
   },
   {
     "dish_name": "江瑶柱",
@@ -1359,7 +1483,9 @@
     "modern_method": "将江瑶柱外壳敲开，取出柱肉，去除内脏和杂质。用清水轻轻冲洗，避免过度用力破坏肉质。可清蒸、煮汤或炒制，时间不宜过长，以保持其鲜脆口感。",
     "geo_factors": "宁波地处东海之滨，海域盛产江瑶柱等贝类，水质优良，为江瑶柱提供了理想的生长环境，使其肉质肥美鲜嫩。",
     "cultural_story": "清代袁枚在《随园食单》中特别提到江瑶柱的烹饪要点，强调其“鲜脆在柱”，体现了文人雅士对食材本味的追求。宁波文人常以江瑶柱入宴，象征清雅与品位。",
-    "processed": true
+    "processed": true,
+    "image_url": "/images/dishes/63_江瑶柱_1775553835.png",
+    "image_generated_at": "2026-04-07 17:23:55"
   },
   {
     "dish_name": "蛎黄",
@@ -1381,7 +1507,9 @@
     "cultural_story": "清代袁枚在《随园食单》中特别记载此菜，称其'别地所无'，可见其珍贵。古代文人常以海鲜入诗，牡蛎因其独特风味成为文人雅士餐桌上的佳品，象征着地方风物之美。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/64_蛎黄_1775553842.png",
+    "image_generated_at": "2026-04-07 17:24:02"
   },
   {
     "dish_name": "龙井茶",
@@ -1402,7 +1530,9 @@
     "cultural_story": "清代文人袁枚在《随园食单》中特别提到龙井茶，认为其清雅是富贵人家难以企及的。相传乾隆皇帝下江南时，曾在狮峰山下的胡公庙品饮龙井茶，赞不绝口，从此龙井茶声名大噪，成为文人雅士钟爱的饮品。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/65_龙井茶_1775553849.png",
+    "image_generated_at": "2026-04-07 17:24:10"
   },
   {
     "dish_name": "常州阳羡茶",
@@ -1422,7 +1552,9 @@
     "cultural_story": "阳羡茶在唐代就已闻名，陆羽在《茶经》中曾提及。清代文人袁枚在《随园食单》中盛赞其味浓，认为其形似雀舌，独具一格。历史上许多文人雅士常以阳羡茶待客，留下不少诗篇佳话。",
     "processed": true,
     "longitude": 118.8,
-    "latitude": 32.06
+    "latitude": 32.06,
+    "image_url": "/images/dishes/66_常州阳羡茶_1775553857.png",
+    "image_generated_at": "2026-04-07 17:24:17"
   },
   {
     "dish_name": "洞庭君山茶",
@@ -1442,7 +1574,9 @@
     "cultural_story": "君山银针自古为贡茶，清代袁枚在《随园食单》中盛赞其色味与龙井相同。传说唐代文成公主远嫁西藏时曾带此茶，被视为珍品。文人墨客常以君山茶入诗，如“君山银针金镶玉”，赞誉其形质兼美。",
     "processed": true,
     "longitude": 112.94,
-    "latitude": 28.23
+    "latitude": 28.23,
+    "image_url": "/images/dishes/67_洞庭君山茶_1775553864.png",
+    "image_generated_at": "2026-04-07 17:24:25"
   },
   {
     "dish_name": "金坛于酒",
@@ -1464,7 +1598,9 @@
     "cultural_story": "于文襄公即清代名臣于敏中，此酒为其家传秘酿。文人雅士常以松花酒佐餐，赞其“清彻骨，色若松花”，视为风雅之物。相传乾隆帝南巡时曾品尝此酒，赞不绝口。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/68_金坛于酒_1775553872.png",
+    "image_generated_at": "2026-04-07 17:24:32"
   },
   {
     "dish_name": "德州卢酒",
@@ -1486,7 +1622,9 @@
     "cultural_story": "卢雅雨为清代文人，善饮好客。此菜或为宴请宾客所创，以酒入馔，既显文人雅趣，又寓意转运吉祥，成为文人宴席上的雅致佳肴。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/69_德州卢酒_1775553879.png",
+    "image_generated_at": "2026-04-07 17:24:39"
   },
   {
     "dish_name": "四川郫筒酒",
@@ -1508,7 +1646,9 @@
     "cultural_story": "郫筒酒历史悠久，唐代即有记载。清代文人袁枚在《随园食单》中盛赞其品质，并提到杨笠湖刺史千里携酒的故事，体现了古代文人雅士对美酒的珍视与追求。",
     "processed": true,
     "longitude": 104.07,
-    "latitude": 30.67
+    "latitude": 30.67,
+    "image_url": "/images/dishes/70_四川郫筒酒_1775553886.png",
+    "image_generated_at": "2026-04-07 17:24:47"
   },
   {
     "dish_name": "绍兴酒",
@@ -1530,7 +1670,9 @@
     "cultural_story": "绍兴酒被誉为“酒中名士”，清代文人袁枚在《随园食单》中盛赞其品质。相传陆游晚年常饮绍兴酒，留下“红酥手，黄縢酒”的诗句。酒坊多藏于地下酒窖，酒香经年不散，成为文人雅士宴饮必备。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/71_绍兴酒_1775553894.png",
+    "image_generated_at": "2026-04-07 17:24:54"
   },
   {
     "dish_name": "湖州南浔酒",
@@ -1552,7 +1694,9 @@
     "cultural_story": "清代文人袁枚在《随园食单》中盛赞南浔酒，称其“清辣过之”，成为江南文人宴饮佳品。相传当地文人常以陈年南浔酒煮茶，称“酒茶”，雅致非凡。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/72_湖州南浔酒_1775553901.png",
+    "image_generated_at": "2026-04-07 17:25:01"
   },
   {
     "dish_name": "常州兰陵酒",
@@ -1574,7 +1718,9 @@
     "cultural_story": "此酒与唐代诗人李白结缘，其诗句“兰陵美酒郁金香”成为千古绝唱。清代袁枚在《随园食单》中记录了品尝陈酒的体验，感慨酒虽醇厚却失清雅，体现了文人追求自然本真的审美情趣。",
     "processed": true,
     "longitude": 119.97,
-    "latitude": 31.81
+    "latitude": 31.81,
+    "image_url": "/images/dishes/73_常州兰陵酒_1775553908.png",
+    "image_generated_at": "2026-04-07 17:25:08"
   },
   {
     "dish_name": "溧阳乌饭酒",
@@ -1596,7 +1742,9 @@
     "cultural_story": "袁枚在溧水叶北部家饮此酒，连饮十六杯仍意犹未尽。乌饭酒作为女儿红的一种，承载着江南地区对女儿成长的期许与祝福，是传统婚俗中不可或缺的喜庆之物，体现了江南文化的细腻与深情。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/74_溧阳乌饭酒_1775553916.png",
+    "image_generated_at": "2026-04-07 17:25:16"
   },
   {
     "dish_name": "苏州陈三白",
@@ -1618,7 +1766,9 @@
     "cultural_story": "三白酒在清代文人雅士中备受推崇，袁枚在《随园食单》中记录了与友人共饮此酒的轶事。此酒因色泽清澈如水，味甘醇似蜜，被誉为“酒中君子”，常用于文人雅集，体现了江南文人对精致生活的追求。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/75_苏州陈三白_1775553925.png",
+    "image_generated_at": "2026-04-07 17:25:25"
   },
   {
     "dish_name": "金华酒",
@@ -1640,7 +1790,9 @@
     "cultural_story": "清代文人袁枚在《随园食单》中盛赞金华酒，称其“有绍兴之清，无其涩；有女贞之甜，无其俗”。历史上，金华酒曾是文人雅士宴饮的首选，常与诗词书画相伴，体现了江南文人的雅致生活情趣。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/76_金华酒_1775553932.png",
+    "image_generated_at": "2026-04-07 17:25:33"
   },
   {
     "dish_name": "山西汾酒",
@@ -1663,7 +1815,9 @@
     "cultural_story": "清代文人袁枚在《随园食单》中盛赞汾酒，将其比作人中的光棍，县中的酷吏，言其劲烈霸道。童二树（清代画家）曾以汾酒配药材泡制，可见其文人雅趣。汾酒不仅是饮品，更承载着北方豪迈的饮食文化，与当地豪爽民风相得益彰。",
     "processed": true,
     "longitude": 112.55,
-    "latitude": 37.87
+    "latitude": 37.87,
+    "image_url": "/images/dishes/77_山西汾酒_1775553942.png",
+    "image_generated_at": "2026-04-07 17:25:42"
   },
   {
     "dish_name": "鳗面",
@@ -1687,7 +1841,9 @@
     "cultural_story": "随园主人袁枚推崇此菜，认为其“鳗之鲜，面之韧，汤之醇”三者合一。相传文人雅士常以此面佐酒，既享美味，又谈诗论画，成为江南文人宴席上的雅致佳肴。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/78_鳗面_1775553950.png",
+    "image_generated_at": "2026-04-07 17:25:50"
   },
   {
     "dish_name": "温面",
@@ -1709,7 +1865,9 @@
     "cultural_story": "随园主人袁枚在《随园食单》中推崇此菜，认为其“简而能精”。清代文人常以面食待客，此菜因制作简便、味道鲜美，成为文人雅士宴席上的常见小品，象征朴素中的雅致。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/79_温面_1775553957.png",
+    "image_generated_at": "2026-04-07 17:25:57"
   },
   {
     "dish_name": "鳝面",
@@ -1730,7 +1888,9 @@
     "cultural_story": "清代袁枚在《随园食单》中记载此菜，赞其“鲜嫩异常”。相传乾隆南巡杭州时，曾微服品尝此面，赞不绝口。鳝面因此成为杭帮宴席上的经典，文人雅士常以“鳝面佐酒”为雅事。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/80_鳝面_1775553964.png",
+    "image_generated_at": "2026-04-07 17:26:04"
   },
   {
     "dish_name": "裙带面",
@@ -1751,7 +1911,9 @@
     "cultural_story": "清代文人袁枚在《随园食单》中推崇此面，认为其汤多面少的设计暗合文人雅士'留白'的审美。扬州盐商富甲天下，宴席上常以精致面点待客，裙带面因汤清味美，成为文人墨客宴饮时的雅致之选。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/81_裙带面_1775553972.png",
+    "image_generated_at": "2026-04-07 17:26:12"
   },
   {
     "dish_name": "素面",
@@ -1773,7 +1935,9 @@
     "cultural_story": "此菜为扬州定慧庵僧人所创，因工艺精湛而秘不外传，反映了古代僧人对饮食文化的极致追求。袁枚在《随园食单》中特意记载，既是对这道菜的推崇，也体现了清代文人饮食生活中对精致与传承的重视。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/82_素面_1775553981.png",
+    "image_generated_at": "2026-04-07 17:26:21"
   },
   {
     "dish_name": "蓑衣饼",
@@ -1796,7 +1960,9 @@
     "cultural_story": "清代文人袁枚在《随园食单》中记载此饼，称其“香脆可口，为晨点佳品”。相传乾隆南巡时，曾微服至随园品尝此饼，赞其“酥香不腻，回味悠长”，遂成为江南名点。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/83_蓑衣饼_1775553989.png",
+    "image_generated_at": "2026-04-07 17:26:29"
   },
   {
     "dish_name": "虾饼",
@@ -1819,7 +1985,9 @@
     "cultural_story": "随园主人袁枚在《随园食单》中推崇此菜，称其“鲜嫩无比”，曾与文人雅士共品时赞其“如玉如脂”，成为江南文人宴席上的雅致小品。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/149_虾饼_1775554518.png",
+    "image_generated_at": "2026-04-07 17:35:18"
   },
   {
     "dish_name": "薄饼",
@@ -1842,7 +2010,9 @@
     "cultural_story": "孔府薄饼源于清代山东孔府，为孔氏家族待客佳品。相传孔藩台（孔府官员）家厨技艺精湛，薄饼制作工艺秘而不宣，家人仿制不得其法。此饼成为孔府宴席标志性点心，体现了儒家饮食文化的精致与讲究，后流传至陕西，演变为'西饼'。",
     "processed": true,
     "longitude": 116.99,
-    "latitude": 36.67
+    "latitude": 36.67,
+    "image_url": "/images/dishes/85_薄饼_1775554006.png",
+    "image_generated_at": "2026-04-07 17:26:46"
   },
   {
     "dish_name": "面老鼠",
@@ -1864,7 +2034,9 @@
     "cultural_story": "随园主人袁枚在《随园食单》中记载此菜，推崇其简单却见功夫的做法。相传清代文人雅士常以鸡汁面待客，既显家常之味，又暗含文人雅趣，成为文人圈中流传的佳话。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/86_面老鼠_1775554013.png",
+    "image_generated_at": "2026-04-07 17:26:53"
   },
   {
     "dish_name": "颠不棱即肉饺也",
@@ -1886,7 +2058,9 @@
     "cultural_story": "据《随园食单》记载，袁枚在广东任职时品尝到颠不棱，对其软美口感赞不绝口。这道菜因馅料中加入肉皮冻，口感独特，成为官府宴席上的特色点心，反映了清代广东饮食文化的精致与创新。",
     "processed": true,
     "longitude": 113.28,
-    "latitude": 23.13
+    "latitude": 23.13,
+    "image_url": "/images/dishes/87_颠不棱即肉饺也_1775554021.png",
+    "image_generated_at": "2026-04-07 17:27:01"
   },
   {
     "dish_name": "韭合",
@@ -1906,7 +2080,9 @@
     "modern_method": "韭菜洗净切末，与猪肉馅、盐、生抽拌匀。擀制面皮，包入馅料成饺子。平底锅放油，将饺子煎至两面金黄，面皮酥脆即可。",
     "geo_factors": "韭菜是中国广泛种植的蔬菜，南北各地均有产出，尤其在北方冬季作为常见食材。此菜体现了北方以面食为主、就地取材的烹饪传统。",
     "cultural_story": "清代袁枚在《随园食单》中记录此菜，反映了他对家常小吃的重视。文人雅士常以简朴食材烹制美味，体现“大道至简”的饮食哲学，此菜亦成为江南文人宴席中的清雅点缀。",
-    "processed": true
+    "processed": true,
+    "image_url": "/images/dishes/88_韭合_1775554028.png",
+    "image_generated_at": "2026-04-07 17:27:08"
   },
   {
     "dish_name": "糖饼（又名面衣）",
@@ -1928,7 +2104,9 @@
     "cultural_story": "清代袁枚在《随园食单》中记载此菜，可见其流行于文人雅士间。杭州作为南宋故都，饮食文化底蕴深厚，软锅饼可能源于宋代宫廷点心，后流传民间成为特色小吃。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/89_糖饼（又名面衣）_1775554035.png",
+    "image_generated_at": "2026-04-07 17:27:15"
   },
   {
     "dish_name": "烧饼",
@@ -1952,7 +2130,9 @@
     "cultural_story": "随园主人袁枚在《随园食单》中特别提到此饼，赞其“叩儿会做”，可见家中厨艺精湛。松子胡桃饼常作为文人雅士茶点，象征清雅闲适的生活，体现了清代江南文人追求精致饮食的审美情趣。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/90_烧饼_1775554043.png",
+    "image_generated_at": "2026-04-07 17:27:23"
   },
   {
     "dish_name": "千层馒头",
@@ -1974,7 +2154,9 @@
     "cultural_story": "杨参戎为清代将领，其家厨擅长制作精细面点。此馒头因工艺复杂，仅扬州、常州、无锡部分师傅掌握，成为江南地区的代表性点心。文人雅士常以品尝此馒头为乐，赞其“白如雪，薄如纸”，体现了清代江南饮食文化的精致与讲究。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/91_千层馒头_1775554050.png",
+    "image_generated_at": "2026-04-07 17:27:30"
   },
   {
     "dish_name": "面茶",
@@ -1997,7 +2179,9 @@
     "cultural_story": "清代文人袁枚在《随园食单》中记载此菜，体现了其“俭而得美”的饮食理念。相传袁枚偶得粗茶，便以茶入面，创新出这款朴素却风雅的点心，成为文人雅士清谈佐餐的雅品。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/92_面茶_1775554058.png",
+    "image_generated_at": "2026-04-07 17:27:38"
   },
   {
     "dish_name": "杏酪",
@@ -2019,7 +2203,9 @@
     "cultural_story": "袁枚在《随园食单》中推崇此菜，认为其清雅宜人。清代文人常以杏仁糊待客，象征主人品味高雅，如《红楼梦》中贾府宴席亦有类似甜品。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/93_杏酪_1775554065.png",
+    "image_generated_at": "2026-04-07 17:27:45"
   },
   {
     "dish_name": "粉衣",
@@ -2041,7 +2227,9 @@
     "cultural_story": "袁枚在《随园食单》中提及此法，反映清代文人饮食的务实态度。糖面衣虽简，却体现了“大道至简”的饮食哲学，成为文人雅士闲时的小食佳品。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/94_粉衣_1775554073.png",
+    "image_generated_at": "2026-04-07 17:27:53"
   },
   {
     "dish_name": "竹叶粽",
@@ -2062,7 +2250,9 @@
     "cultural_story": "清代袁枚在《随园食单》中记载此菜，取其自然清雅之趣。文人雅士常以竹叶裹米，象征君子品格，如竹般清高，如米般温润，成为文人宴席上的雅致点心。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/95_竹叶粽_1775554080.png",
+    "image_generated_at": "2026-04-07 17:28:00"
   },
   {
     "dish_name": "萝卜汤圆",
@@ -2085,7 +2275,9 @@
     "cultural_story": "随园主人袁枚记录此菜时提到春圃方伯家制法，并传授给儿子。文人雅士喜以萝卜入馔，取其清雅之性，与江南文人的淡泊心境相契合，体现了饮食中的文人趣味。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/96_萝卜汤圆_1775554088.png",
+    "image_generated_at": "2026-04-07 17:28:08"
   },
   {
     "dish_name": "水粉汤圆",
@@ -2109,7 +2301,9 @@
     "cultural_story": "袁枚在《随园食单》中推崇此菜，清代文人常以汤圆雅集。相传乾隆南巡时，曾品尝江南文人改良的咸馅汤圆，赞其'滑腻中见鲜香'，成为文人宴席雅品。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/97_水粉汤圆_1775554096.png",
+    "image_generated_at": "2026-04-07 17:28:16"
   },
   {
     "dish_name": "脂油糕",
@@ -2131,7 +2325,9 @@
     "cultural_story": "清代袁枚在《随园食单》中记载此菜，文人雅士常以脂油糕佐茶，其制作工艺考究，象征文人追求的细腻与雅致，成为江南茶点文化代表。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/98_脂油糕_1775554104.png",
+    "image_generated_at": "2026-04-07 17:28:24"
   },
   {
     "dish_name": "雪花糕",
@@ -2153,7 +2349,9 @@
     "cultural_story": "清代文人袁枚在《随园食单》中记载此菜，因其制作简便、香甜可口，成为文人雅士茶点之选。相传袁枚常以此款待宾客，赞其“糯而不腻，香远益清”，体现了江南文人对精致生活的追求。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/99_雪花糕_1775554111.png",
+    "image_generated_at": "2026-04-07 17:28:32"
   },
   {
     "dish_name": "软香糕",
@@ -2175,7 +2373,9 @@
     "cultural_story": "清代文人袁枚在《随园食单》中盛赞软香糕，称其“松腻异常”，成为江南文人雅士的茶点佳品。传说西施曾以虎丘糕慰劳将士，使其更添历史底蕴。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/100_软香糕_1775554119.png",
+    "image_generated_at": "2026-04-07 17:28:39"
   },
   {
     "dish_name": "百果糕",
@@ -2197,7 +2397,9 @@
     "cultural_story": "清代袁枚在《随园食单》中盛赞此糕，可见其文人雅士的喜爱。杭州作为江南文化中心，此类糕点常与茶点相伴，成为文人墨客品茗赏景时的雅致选择，体现了江南饮食文化的精致与闲适。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/101_百果糕_1775554127.png",
+    "image_generated_at": "2026-04-07 17:28:47"
   },
   {
     "dish_name": "栗糕",
@@ -2221,7 +2423,9 @@
     "cultural_story": "重阳节登高食栗糕是古代文人雅士的传统，袁枚在《随园食单》中记载此食，取栗子“养胃气”之意，搭配松子、瓜仁，象征长寿吉祥，成为文人宴席的雅致点心。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/102_栗糕_1775554135.png",
+    "image_generated_at": "2026-04-07 17:28:55"
   },
   {
     "dish_name": "青糕、青团",
@@ -2242,7 +2446,9 @@
     "cultural_story": "清代文人袁枚在《随园食单》中记载此菜，取其自然之趣。江南文人常以时令花草入馔，既显雅致，又合养生之道，体现了“不时不食”的传统饮食哲学。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/103_青糕、青团_1775554142.png",
+    "image_generated_at": "2026-04-07 17:29:03"
   },
   {
     "dish_name": "合欢饼",
@@ -2263,7 +2469,9 @@
     "cultural_story": "清代袁枚在《随园食单》中记载此法，反映了文人雅士对精致饮食的追求。印糕造型如玉璧，寓意吉祥，常作为节令礼品，体现了江南饮食文化的雅致与匠心。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/104_合欢饼_1775554150.png",
+    "image_generated_at": "2026-04-07 17:29:10"
   },
   {
     "dish_name": "鸡豆糕",
@@ -2284,7 +2492,9 @@
     "cultural_story": "袁枚在《随园食单》中记载此菜，展现其对食材本味的追求。鸡豆糕制作讲究火候与刀工，体现了文人雅士对饮食美学的追求，成为清代江南文人宴席上的雅致点心。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/105_鸡豆糕_1775554158.png",
+    "image_generated_at": "2026-04-07 17:29:18"
   },
   {
     "dish_name": "鸡豆粥",
@@ -2306,7 +2516,9 @@
     "cultural_story": "清代文人袁枚在《随园食单》中推崇此粥，认为其‘清而不淡，补而不腻’。相传江南文人雅士常以此粥佐茶，既能养生又不失雅致。清代名医徐大椿也曾赞其‘健脾养胃，老少咸宜’，成为文人墨客日常养生的首选。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/106_鸡豆粥_1775554166.png",
+    "image_generated_at": "2026-04-07 17:29:26"
   },
   {
     "dish_name": "金团",
@@ -2327,7 +2539,9 @@
     "cultural_story": "清代袁枚在《随园食单》中记载此菜，反映了杭州文人雅士对饮食美学的追求。金团造型寓意吉祥，常用于节庆，体现了江南饮食的精致与诗意。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/107_金团_1775554173.png",
+    "image_generated_at": "2026-04-07 17:29:33"
   },
   {
     "dish_name": "麻团",
@@ -2349,7 +2563,9 @@
     "cultural_story": "清代文人袁枚在《随园食单》中记载此菜，赞其“糯而不腻，香而甘美”。相传为江南文人宴客时的小点，寓意团团圆圆，深受文人雅士喜爱。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/108_麻团_1775554181.png",
+    "image_generated_at": "2026-04-07 17:29:41"
   },
   {
     "dish_name": "芋粉团",
@@ -2371,7 +2587,9 @@
     "cultural_story": "清代袁枚在《随园食单》中记载此菜，朝天宫道士以清修之巧创制野鸡馅粉团，文人雅士常品此谈诗，成为金陵文人宴席雅趣之一。",
     "processed": true,
     "longitude": 118.78,
-    "latitude": 32.06
+    "latitude": 32.06,
+    "image_url": "/images/dishes/109_芋粉团_1775554188.png",
+    "image_generated_at": "2026-04-07 17:29:48"
   },
   {
     "dish_name": "熟藕",
@@ -2393,7 +2611,9 @@
     "cultural_story": "清代文人袁枚在《随园食单》中特别推崇此菜，认为嫩藕“虽软熟而以齿决，故味在也”。他曾多次宴请宾客，以糖藕佐酒，赞其“清脆中带着甘甜，如文人墨客般内敛而有韵味”。此菜也成为江南文人宴席上的经典甜品，象征生活清雅有致。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/110_熟藕_1775554198.png",
+    "image_generated_at": "2026-04-07 17:29:58"
   },
   {
     "dish_name": "新栗、新菱",
@@ -2413,7 +2633,9 @@
     "cultural_story": "袁枚在《随园食单》中感慨南京厨师不肯煨烂栗子，导致食客错过真味。这反映了清代文人追求食材本味的饮食美学，也暗讽了当时厨师的敷衍态度，体现了对传统烹饪技艺的珍视。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/111_新栗、新菱_1775554205.png",
+    "image_generated_at": "2026-04-07 17:30:06"
   },
   {
     "dish_name": "莲子",
@@ -2434,7 +2656,9 @@
     "cultural_story": "清代袁枚在《随园食单》中特别推崇此法，认为煨建莲能最大限度保留莲子的清甜。相传文人雅士常以煨莲佐茶，取其“清心”之意。乾隆年间，建莲曾作为贡品入宫，煨莲技艺因此更添雅致。",
     "processed": true,
     "longitude": 118.3,
-    "latitude": 26.08
+    "latitude": 26.08,
+    "image_url": "/images/dishes/112_莲子_1775554213.png",
+    "image_generated_at": "2026-04-07 17:30:13"
   },
   {
     "dish_name": "芋",
@@ -2455,7 +2679,9 @@
     "cultural_story": "清代袁枚在《随园食单》中记录此菜，体现了文人追求自然本味的饮食哲学。芋头在古代被视为平民食材，通过晒干保存的智慧，展现了民间生活的巧思，与文人“返璞归真”的理念不谋而合。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/113_芋_1775554220.png",
+    "image_generated_at": "2026-04-07 17:30:21"
   },
   {
     "dish_name": "萧美人点心",
@@ -2475,7 +2701,9 @@
     "modern_method": "选用高筋面粉，加入适量糖和水，揉成光滑面团后醒发。擀成薄片，包入馅料（如豆沙、枣泥等），蒸制时火候适中，保持洁白外观，出锅后小巧玲珑，口感松软。",
     "geo_factors": "仪真地处长江与运河交汇处，自古为繁华商埠，物产丰饶，盛产优质稻麦，为面粉点心提供了优质原料，当地饮食文化精致讲究，催生了萧美人这样的点心名师。",
     "cultural_story": "萧美人是清代乾隆年间著名的点心师傅，其点心因精致美味而闻名遐迩，甚至有文人雅士专门为其题诗作赋。传说乾隆皇帝南巡时，也曾品尝过她的点心，赞不绝口，使其声名远播，成为当时江南饮食文化的一张名片。",
-    "processed": true
+    "processed": true,
+    "image_url": "/images/dishes/114_萧美人点心_1775554228.png",
+    "image_generated_at": "2026-04-07 17:30:28"
   },
   {
     "dish_name": "刘方伯月饼",
@@ -2500,7 +2728,9 @@
     "cultural_story": "此点心源于清代山东，随园主人袁枚在《随园食单》中特别记载其“香松柔腻”的独特口感。相传为当地文人雅士宴客时精心制作的茶点，因其不腻的甜香和酥松口感，深受文人墨客喜爱，成为体现山东饮食精致化的代表作。",
     "processed": true,
     "longitude": 116.99,
-    "latitude": 36.67
+    "latitude": 36.67,
+    "image_url": "/images/dishes/115_刘方伯月饼_1775554235.png",
+    "image_generated_at": "2026-04-07 17:30:36"
   },
   {
     "dish_name": "陶方伯十景点心",
@@ -2522,7 +2752,9 @@
     "cultural_story": "陶方伯夫人的点心被誉为天下第一，连萨制军都称赞其技艺超群。陶方伯去世后，这道点心也随之失传，如同《广陵散》般成为绝响，令人扼腕叹息，成为清代饮食文化的一大遗憾。",
     "processed": true,
     "longitude": 116.99,
-    "latitude": 36.67
+    "latitude": 36.67,
+    "image_url": "/images/dishes/116_陶方伯十景点心_1775554243.png",
+    "image_generated_at": "2026-04-07 17:30:43"
   },
   {
     "dish_name": "杨中丞西洋饼",
@@ -2545,7 +2777,9 @@
     "cultural_story": "随园主人袁枚在《随园食单》中记载此菜，赞其“白如雪，明如绵纸”。相传为江南文人雅集时的茶点，因其制作精巧、口感清雅，深受文人墨客喜爱。清代诗人曾以“薄如蝉翼映霜雪，松风伴得玉盘香”赞美此饼，成为文人宴席上的雅致点缀。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/117_杨中丞西洋饼_1775554253.png",
+    "image_generated_at": "2026-04-07 17:30:53"
   },
   {
     "dish_name": "白云片",
@@ -2567,7 +2801,9 @@
     "cultural_story": "清代袁枚在《随园食单》中盛赞此菜，称其'薄如绵纸'，'上口极脆'。相传为南京文人宴客时的雅致点心，因形似白云，又得'白云片'美名，成为金陵饮食文化的代表之一。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/118_白云片_1775554260.png",
+    "image_generated_at": "2026-04-07 17:31:01"
   },
   {
     "dish_name": "风枵",
@@ -2589,7 +2825,9 @@
     "cultural_story": "风枵为杭州传统茶点，名取自《诗经》“风其枵矣”，寓意轻巧。清代袁枚在《随园食单》中记载此菜，赞其“色白如霜，上口而化”，成为文人雅士品茗时喜爱的精致小食。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/119_风枵_1775554267.png",
+    "image_generated_at": "2026-04-07 17:31:08"
   },
   {
     "dish_name": "三层玉带糕",
@@ -2611,7 +2849,9 @@
     "cultural_story": "清代袁枚在《随园食单》中记载此菜，称其为“苏州人法”，反映了江南文人饮食的精致讲究。苏州糕点历史悠久，曾为贡品，文人雅士常以品糕论诗，增添雅趣。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/120_三层玉带糕_1775554275.png",
+    "image_generated_at": "2026-04-07 17:31:15"
   },
   {
     "dish_name": "运司糕",
@@ -2633,7 +2873,9 @@
     "cultural_story": "运司糕因卢雅雨的喜爱而得名，卢雅雨为清代文人，曾任两淮盐运使，在扬州任职期间广交文人墨客。此糕点因其雅致的外形和淡雅的口感，成为文人雅士宴席上的点心，体现了清代扬州文人饮食的精致与风雅。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/121_运司糕_1775554285.png",
+    "image_generated_at": "2026-04-07 17:31:25"
   },
   {
     "dish_name": "沙糕",
@@ -2655,7 +2897,9 @@
     "cultural_story": "清代文人袁枚在《随园食单》中记载此糕，称其“糯而不腻，甜而不齁”，是文人雅士品茶佐食的佳品，常出现在江南文人宴席上。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/122_沙糕_1775554292.png",
+    "image_generated_at": "2026-04-07 17:31:33"
   },
   {
     "dish_name": "小馒头、小馄饨",
@@ -2678,7 +2922,9 @@
     "cultural_story": "清代袁枚在《随园食单》中盛赞扬州发酵技艺，称其“手捺之不盈半寸，放松仍隆然而高”。扬州文人雅士常以小馒头配馄饨佐茶，成为文人宴席上的精致茶点，体现了淮扬饮食的精致与雅致。",
     "processed": true,
     "longitude": 119.42,
-    "latitude": 32.39
+    "latitude": 32.39,
+    "image_url": "/images/dishes/123_小馒头、小馄饨_1775554300.png",
+    "image_generated_at": "2026-04-07 17:31:40"
   },
   {
     "dish_name": "雪蒸糕法",
@@ -2701,7 +2947,9 @@
     "cultural_story": "清代袁枚在《随园食单》中记载此糕，称其“与市中枕儿糕法同”，可见当时已是流行点心。文人雅士常以千层糕佐茶，因其层层分明、寓意“步步高升”，成为宴席雅品。相传袁枚曾以此糕招待名士，赞其“松软如云，甜而不腻”。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/124_雪蒸糕法_1775554310.png",
+    "image_generated_at": "2026-04-07 17:31:50"
   },
   {
     "dish_name": "作酥饼法",
@@ -2723,7 +2971,9 @@
     "cultural_story": "清代袁枚在《随园食单》中记载此饼，因其层次分明、酥香可口，成为文人雅士宴客的点心。相传袁枚常以此饼招待宾客，赞其“外酥里嫩，入口即化”，成为江南茶点经典。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/125_作酥饼法_1775554319.png",
+    "image_generated_at": "2026-04-07 17:32:00"
   },
   {
     "dish_name": "天然饼",
@@ -2745,7 +2995,9 @@
     "cultural_story": "此饼出自清代文人袁枚《随园食单》，记载于点心单中。张荷塘为泾阳知府，其制饼技艺被袁枚赞为“松美异常”，反映了清代官宦饮食的精致追求，也体现了文人饮食文化中对自然本味的推崇。",
     "processed": true,
     "longitude": 108.94,
-    "latitude": 34.34
+    "latitude": 34.34,
+    "image_url": "/images/dishes/126_天然饼_1775554329.png",
+    "image_generated_at": "2026-04-07 17:32:09"
   },
   {
     "dish_name": "花边月饼",
@@ -2767,7 +3019,9 @@
     "cultural_story": "袁枚在《随园食单》中盛赞明府月饼，甚至特意接来女厨师亲制。月饼的“花边”工艺体现了清代江南文人对饮食美学的追求，枣不去皮、油不先熬的细节，反映了文人崇尚自然本味的饮食哲学，也展现了清代官宦人家对饮食工艺的极致追求。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/127_花边月饼_1775554339.png",
+    "image_generated_at": "2026-04-07 17:32:19"
   },
   {
     "dish_name": "制馒头法",
@@ -2788,7 +3042,9 @@
     "cultural_story": "袁枚随园食单中记载此菜，源于对新明府厨艺的赞叹。清代文人常以饮食雅事为乐，此馒头因工艺考究成为文人宴客之物，体现了“食不厌精”的文人饮食美学。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/128_制馒头法_1775554349.png",
+    "image_generated_at": "2026-04-07 17:32:29"
   },
   {
     "dish_name": "扬州洪府粽子",
@@ -2810,7 +3066,9 @@
     "cultural_story": "相传为清代洪府家传美食，文人袁枚在《随园食单》中赞其“肉与米化”，体现了江南文人饮食的精致追求。火腿的咸香与糯米的软糯相得益彰，成为端午时节的雅致美食。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/129_扬州洪府粽子_1775554358.png",
+    "image_generated_at": "2026-04-07 17:32:39"
   },
   {
     "dish_name": "刀鱼二法",
@@ -2835,7 +3093,9 @@
     "cultural_story": "袁枚在《随园食单》中批评金陵人油炸刀鱼的做法，引用谚语'驼背夹直，其人不活'讽刺其破坏食材本味。而推崇芜湖陶大太的巧去鱼刺法，反映清代文人追求食材本味与烹饪技艺的平衡。刀鱼作为长江三鲜之一，其烹饪方式之争体现了江南饮食文化中对'鲜'的不同理解。",
     "processed": true,
     "longitude": 118.78,
-    "latitude": 32.06
+    "latitude": 32.06,
+    "image_url": "/images/dishes/130_刀鱼二法_1775554368.png",
+    "image_generated_at": "2026-04-07 17:32:48"
   },
   {
     "dish_name": "鲥鱼",
@@ -2858,7 +3118,9 @@
     "cultural_story": "清代文人袁枚在《随园食单》中特别强调鲥鱼的烹饪方法，认为其“真味”在于完整保留鱼肉的鲜美。相传乾隆皇帝南巡时，曾品尝过镇江鲥鱼，对其赞不绝口。袁枚作为美食家，对鲥鱼的烹饪见解影响了后世江南菜系的发展，成为文人雅士推崇的时令珍品。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/131_鲥鱼_1775554375.png",
+    "image_generated_at": "2026-04-07 17:32:56"
   },
   {
     "dish_name": "鲟鱼",
@@ -2882,7 +3144,9 @@
     "cultural_story": "清代文人袁枚在《随园食单》中记载此菜，提及尹文端公自诩烹饪鲟鳇鱼最佳，却嫌其煨制过熟。苏州唐氏的炒蝗鱼片以火候精准、调味清新著称，成为文人雅士推崇的佳肴，反映了清代江南地区对食材本味的追求与饮食美学的精致化。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/132_鲟鱼_1775554385.png",
+    "image_generated_at": "2026-04-07 17:33:05"
   },
   {
     "dish_name": "黄鱼",
@@ -2905,7 +3169,9 @@
     "cultural_story": "袁枚在《随园食单》中强调黄鱼“不可以清治之”，反映清代文人追求浓郁风味的饮食观。黄鱼曾是江南文人宴席上的珍贵食材，其浓煮之法可能受浙菜“浓而不腻”风格影响，体现当时士绅对食材本味的深度挖掘。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/133_黄鱼_1775554395.png",
+    "image_generated_at": "2026-04-07 17:33:15"
   },
   {
     "dish_name": "班鱼",
@@ -2928,7 +3194,9 @@
     "cultural_story": "袁枚在《随园食单》中推崇此菜，体现其“一物一性”的烹饪理念。清代文人常以鱼宴客，班鱼因肉质细腻被视为上品。此菜亦与江南文人“鲜中求雅”的饮食哲学相符，彰显文人饮食的精致与讲究。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/134_班鱼_1775554402.png",
+    "image_generated_at": "2026-04-07 17:33:23"
   },
   {
     "dish_name": "假蟹",
@@ -2951,7 +3219,9 @@
     "cultural_story": "袁枚在《随园食单》中推崇“一物献一味”，此菜以黄鱼之鲜与鸡蛋之嫩相得益彰，体现文人雅士对食材本味的追求。相传袁枚常以黄鱼宴客，搭配诗词，彰显江南文人的饮食雅趣。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/135_假蟹_1775554410.png",
+    "image_generated_at": "2026-04-07 17:33:30"
   },
   {
     "dish_name": "汤鳗",
@@ -2974,7 +3244,9 @@
     "cultural_story": "清代文人袁枚在《随园食单》中特别推崇家致华分司的蒸鳗鱼，认为其火候掌握极佳。他还提到常熟顾比部家的煨制法，可见当时鳗鱼已是文人宴席上的佳肴，体现了江南文人对食材本味的追求和烹饪技艺的讲究。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/136_汤鳗_1775554419.png",
+    "image_generated_at": "2026-04-07 17:33:39"
   },
   {
     "dish_name": "红煨鳗",
@@ -2997,7 +3269,9 @@
     "cultural_story": "清代扬州盐商朱分司的鳗鱼技艺闻名一时，袁枚在《随园食单》中特别推崇其“红煨鳗鱼”。此菜讲究“卤味收入鳗肉中”，体现了文人雅士对食材本味的追求，也反映了扬州盐商饮食文化的精致与讲究。",
     "processed": true,
     "longitude": 119.42,
-    "latitude": 32.39
+    "latitude": 32.39,
+    "image_url": "/images/dishes/137_红煨鳗_1775554429.png",
+    "image_generated_at": "2026-04-07 17:33:49"
   },
   {
     "dish_name": "炸鳗",
@@ -3019,7 +3293,9 @@
     "cultural_story": "随园主人袁枚推崇此菜，认为其“蒿香与鱼鲜相融，胜过珍馐”。相传文人雅士常以蒿菜喻清雅，鳗鱼喻丰腴，此菜暗合文人外清内敛的品格，成为宴席上的雅致之选。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/138_炸鳗_1775554437.png",
+    "image_generated_at": "2026-04-07 17:33:57"
   },
   {
     "dish_name": "生炒甲鱼",
@@ -3042,7 +3318,9 @@
     "cultural_story": "清代袁枚在《随园食单》中记录此菜，称其为真定魏太守家法。魏太守可能为清代官员，此菜体现了官宦饮食的精致讲究，也反映了清代河北地区饮食文化的融合与创新。",
     "processed": true,
     "longitude": 114.48,
-    "latitude": 38.03
+    "latitude": 38.03,
+    "image_url": "/images/dishes/139_生炒甲鱼_1775554444.png",
+    "image_generated_at": "2026-04-07 17:34:04"
   },
   {
     "dish_name": "酱炒甲鱼",
@@ -3065,7 +3343,9 @@
     "cultural_story": "清代袁枚在《随园食单》中记录此菜，杭州文人雅士常以甲鱼宴客，象征长寿富贵。相传乾隆南巡时，杭州名厨以此菜献艺，获赞“江南第一味”。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/140_酱炒甲鱼_1775554452.png",
+    "image_generated_at": "2026-04-07 17:34:12"
   },
   {
     "dish_name": "带骨甲鱼",
@@ -3088,7 +3368,9 @@
     "cultural_story": "袁枚在《随园食单》中强调甲鱼‘宜小不宜大’，反映了清代文人追求食材本味的饮食观。‘童子脚鱼’的称呼雅致，体现了文人对食材的细腻观察，也暗合《红楼梦》中‘小题大做’的精致饮食文化。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/141_带骨甲鱼_1775554459.png",
+    "image_generated_at": "2026-04-07 17:34:19"
   },
   {
     "dish_name": "青盐甲鱼",
@@ -3113,7 +3395,9 @@
     "cultural_story": "此菜出自清代苏州名厨唐静涵，被袁枚收录于《随园食单》。袁枚对甲鱼烹饪颇有研究，认为大小甲鱼各有弊端，需选中等大小。此菜反映了清代江南文人宴席上对食材考究、调味雅致的追求，体现了饮食文化的精致化。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/142_青盐甲鱼_1775554466.png",
+    "image_generated_at": "2026-04-07 17:34:26"
   },
   {
     "dish_name": "汤煨甲鱼",
@@ -3136,7 +3420,9 @@
     "cultural_story": "清代文人袁枚在《随园食单》中推崇此菜，赞吴竹屿制法最佳。甲鱼在江南被视为滋补佳品，文人雅士常以之入宴，象征清雅与富足，体现了江南饮食的精致与讲究。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/143_汤煨甲鱼_1775554473.png",
+    "image_generated_at": "2026-04-07 17:34:34"
   },
   {
     "dish_name": "全壳甲鱼",
@@ -3158,7 +3444,9 @@
     "cultural_story": "此菜出自清代袁枚《随园食单》，记载于“杂素菜单”中。杨参将家为山东武将世家，其家厨创新此菜，以原壳盛装，既显奢华又暗含“甲壳护体”的吉祥寓意，体现了清代官府宴席的精致与讲究。",
     "processed": true,
     "longitude": 116.99,
-    "latitude": 36.67
+    "latitude": 36.67,
+    "image_url": "/images/dishes/144_全壳甲鱼_1775554481.png",
+    "image_generated_at": "2026-04-07 17:34:41"
   },
   {
     "dish_name": "鳝丝羹",
@@ -3181,7 +3469,9 @@
     "cultural_story": "随园主人袁枚曾批评南京厨师将鳝鱼烹制如炭，失去本味。此菜强调保留鳝鱼的鲜美，与文人追求食材本真的饮食理念契合，反映了清代江南文人对饮食美学的讲究。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/145_鳝丝羹_1775554488.png",
+    "image_generated_at": "2026-04-07 17:34:48"
   },
   {
     "dish_name": "炒鳝",
@@ -3201,7 +3491,9 @@
     "cultural_story": "袁枚在《随园食单》中强调此菜需“如炒肉鸡之法”，体现其对烹饪技法的严谨。清代文人常以鳝鱼入诗，如“黄鱼紫蟹时堪荐，炒鳝烹虾日可餐”，反映鳝鱼在文人饮食中的雅趣。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/146_炒鳝_1775554495.png",
+    "image_generated_at": "2026-04-07 17:34:56"
   },
   {
     "dish_name": "段鳝",
@@ -3224,7 +3516,9 @@
     "cultural_story": "袁枚在《随园食单》中推崇此菜，认为鳝鱼配姜汁可去腥提鲜。清代文人李渔亦赞鳝鱼为“水中人参”，认为其滋补养生。此菜亦常被文人雅士宴请时选用，象征生活雅致。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/147_段鳝_1775554503.png",
+    "image_generated_at": "2026-04-07 17:35:03"
   },
   {
     "dish_name": "虾圆",
@@ -3246,7 +3540,9 @@
     "cultural_story": "清代袁枚在《随园食单》中特别提到虾圆的制作，强调“不宜过细”以保真味，体现了文人饮食对食材本味的追求。江南文人雅士常以虾圆佐茶，其清淡鲜美与文人气质相契合，成为文人宴席上的雅致小品。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/148_虾圆_1775554510.png",
+    "image_generated_at": "2026-04-07 17:35:10"
   },
   {
     "dish_name": "虾饼",
@@ -3291,7 +3587,9 @@
     "cultural_story": "随园主人袁枚在《随园食单》中推崇此菜，认为其做法简约而风味突出。相传清代文人雅士常以酒炙黄鱼佐酒，取其“壳酥肉嫩”之趣，视为文人宴席中的雅致小品。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/150_醉虾_1775554525.png",
+    "image_generated_at": "2026-04-07 17:35:25"
   },
   {
     "dish_name": "炒虾",
@@ -3313,7 +3611,9 @@
     "cultural_story": "袁枚在《随园食单》中记录此菜，强调烹饪需灵活变通。清代文人常以虾喻君子，如李渔称虾“有君子之风”，此菜亦暗合文人雅趣，体现饮食与文化的交融。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/151_炒虾_1775554533.png",
+    "image_generated_at": "2026-04-07 17:35:33"
   },
   {
     "dish_name": "蟹",
@@ -3334,7 +3634,9 @@
     "cultural_story": "清代文人袁枚在《随园食单》中特别推崇清蒸蟹的吃法，认为‘自剥自食为妙’。他曾邀请好友品蟹，边剥边谈，认为蟹肉需与蟹黄、蟹膏一同品尝，方能体会‘蟹之至味’。这种吃法体现了江南文人追求自然本真的生活美学。",
     "processed": true,
     "longitude": 119.42,
-    "latitude": 32.39
+    "latitude": 32.39,
+    "image_url": "/images/dishes/152_蟹_1775554541.png",
+    "image_generated_at": "2026-04-07 17:35:41"
   },
   {
     "dish_name": "蟹羹",
@@ -3355,7 +3657,9 @@
     "cultural_story": "清代袁枚在《随园食单》中批评了厨师乱加配料的做法，强调食材本味。文人雅士品蟹时讲究“蟹肉上席，百味失鲜”，此菜体现了文人饮食中“大道至简”的审美追求。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/153_蟹羹_1775554549.png",
+    "image_generated_at": "2026-04-07 17:35:49"
   },
   {
     "dish_name": "炒蟹粉",
@@ -3375,7 +3679,9 @@
     "cultural_story": "袁枚在《随园食单》中强调此菜，体现文人饮食对“鲜”的追求。清代文人常以蟹宴雅集，苏东坡亦有“不到庐山辜负目，不食螃蟹辜负腹”之句，足见蟹在饮食文化中的地位。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/154_炒蟹粉_1775554556.png",
+    "image_generated_at": "2026-04-07 17:35:57"
   },
   {
     "dish_name": "剥壳蒸蟹",
@@ -3397,7 +3703,9 @@
     "cultural_story": "清代袁枚在《随园食单》中记载此菜，赞其“比炒蟹粉觉有新色”。杨兰坡明府以南瓜拌蟹的创意，体现文人雅士对食材的巧思。此菜不仅讲究食材本味，更注重造型雅致，体现江南饮食文化的精致与诗意。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/155_剥壳蒸蟹_1775554564.png",
+    "image_generated_at": "2026-04-07 17:36:05"
   },
   {
     "dish_name": "蛤蜊",
@@ -3418,7 +3726,9 @@
     "cultural_story": "袁枚在《随园食单》中特别强调此菜的烹饪要点，反映清代文人追求食材本味的饮食观。据说江南文人雅集常以此菜佐酒，取其“清鲜雅致”之意，与文人气质相得益彰。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/156_蛤蜊_1775554573.png",
+    "image_generated_at": "2026-04-07 17:36:13"
   },
   {
     "dish_name": "蚶",
@@ -3441,7 +3751,9 @@
     "cultural_story": "清代袁枚在《随园食单》中特别推崇奉化蚶，认为其鲜美胜过其他贝类。文人雅士常以蚶佐酒，视为清雅之味，体现了江南饮食文化的精致与讲究。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/157_蚶_1775554580.png",
+    "image_generated_at": "2026-04-07 17:36:20"
   },
   {
     "dish_name": "［虫车］蛼［虫敖］",
@@ -3464,7 +3776,9 @@
     "cultural_story": "袁枚在《随园食单》中特别推崇此菜，认为其味胜蛏干。清代文人雅士常以河鲜入馔，车螯作为江南特产，不仅是美味，更成为文人宴客的雅致之物。袁枚的记载，既是对地方风物的珍视，也体现了清代文人饮食生活中对食材本味的追求。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/158_［虫车］蛼［虫敖］_1775554589.png",
+    "image_generated_at": "2026-04-07 17:36:29"
   },
   {
     "dish_name": "程泽弓蛏干",
@@ -3485,7 +3799,9 @@
     "cultural_story": "清代扬州盐商讲究饮食，程泽弓家厨擅制海味。此菜需耐心处理，体现商贾对食材的极致追求。袁枚在《随园食单》中特别记载，赞其工艺精妙，成为江南文人宴客的雅品。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/159_程泽弓蛏干_1775554597.png",
+    "image_generated_at": "2026-04-07 17:36:37"
   },
   {
     "dish_name": "鲜蛏",
@@ -3507,7 +3823,9 @@
     "cultural_story": "清代文人袁枚在《随园食单》中特别提到何春巢家的蛏汤豆腐，称其为“绝品”。何春巢是当时知名美食家，此菜不仅体现了江南文人对食材本味的追求，也展现了文人雅士对饮食细节的极致讲究。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/160_鲜蛏_1775554604.png",
+    "image_generated_at": "2026-04-07 17:36:45"
   },
   {
     "dish_name": "水鸡",
@@ -3530,7 +3848,9 @@
     "cultural_story": "袁枚在《随园食单》中记载此菜，反映清代文人饮食的精致追求。田鸡在江南被视为“水中鸡”，文人雅士常以田鸡入馔，既取其鲜美，又暗合“鸡”的吉祥寓意，体现了饮食文化的雅趣与生活智慧。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/161_水鸡_1775554612.png",
+    "image_generated_at": "2026-04-07 17:36:52"
   },
   {
     "dish_name": "熏蛋",
@@ -3551,7 +3871,9 @@
     "cultural_story": "袁枚在《随园食单》中推崇此菜，认为其虽简单却见功夫。清代文人常以家常小菜待客，煨蛋因制作考究、口感温润，成为文人雅士餐桌上的雅致点缀。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/162_熏蛋_1775554620.png",
+    "image_generated_at": "2026-04-07 17:37:00"
   },
   {
     "dish_name": "茶叶蛋",
@@ -3573,7 +3895,9 @@
     "cultural_story": "相传为清代随园主人袁枚所创，他在《随园食单》中详细记载了做法。文人雅士常以茶叶蛋佐茶，其淡雅风味与茶文化相得益彰，成为文人生活中的雅致点缀。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/163_茶叶蛋_1775554627.png",
+    "image_generated_at": "2026-04-07 17:37:08"
   },
   {
     "dish_name": "边鱼",
@@ -3597,7 +3921,9 @@
     "cultural_story": "袁枚在《随园食单》中强调‘鲜’为至味，此菜以活鱼蒸制，不加过多调料，突出食材本味。清代文人常以鱼宴客，边鱼因形似鲥鱼但价格低廉，被称为‘假鲥鱼’，成为文人雅士的餐桌雅趣。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/164_边鱼_1775554635.png",
+    "image_generated_at": "2026-04-07 17:37:16"
   },
   {
     "dish_name": "鲫鱼",
@@ -3618,7 +3944,9 @@
     "modern_method": "挑选新鲜扁身白鲫鱼，处理后用黄酒、少许糖和酱油腌制，上锅蒸制。根据鱼的大小调整蒸制时间，确保鱼肉嫩滑脱骨。出锅后淋少许热油，保留原汁原味。",
     "geo_factors": "鲫鱼广泛分布于中国淡水水域，六合龙池因水质优良，所产鲫鱼肉质细嫩，成为地方特色。通州地区的煨制技艺则体现了当地对鱼骨酥烂的烹饪追求。",
     "cultural_story": "清代文人袁枚在《随园食单》中推崇清蒸鲫鱼，认为其能体现'真味'。他特别提到六合龙池鲫鱼，反映了清代文人对食材本味的追求。鲫鱼在江南文化中象征'吉庆'，常出现在文人宴席，体现了饮食与文化的紧密联系。",
-    "processed": true
+    "processed": true,
+    "image_url": "/images/dishes/165_鲫鱼_1775554646.png",
+    "image_generated_at": "2026-04-07 17:37:26"
   },
   {
     "dish_name": "白鱼",
@@ -3640,7 +3968,9 @@
     "cultural_story": "清代袁枚在《随园食单》中盛赞此菜，称其“美不可言”。相传他曾于江中偶遇渔获活鱼，即兴烹制，连称“此味只应天上有”。文人雅士常以糟鱼为雅宴佳品，寓意“糟粕化精华”，暗含人生哲理。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/166_白鱼_1775554654.png",
+    "image_generated_at": "2026-04-07 17:37:34"
   },
   {
     "dish_name": "季鱼",
@@ -3663,7 +3993,9 @@
     "cultural_story": "袁枚在《随园食单》中推崇“一物献一味”，此菜即体现其饮食哲学。清代文人常以鱼宴客，鲥鱼因鲜美珍贵，成为文人雅士餐桌上的雅品。袁枚强调炒鱼片要“薄”，反映其对食材本味的极致追求。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/167_季鱼_1775554661.png",
+    "image_generated_at": "2026-04-07 17:37:41"
   },
   {
     "dish_name": "土步鱼",
@@ -3684,7 +4016,9 @@
     "cultural_story": "清代袁枚在《随园食单》中提及此鱼，反映了江南与南京饮食文化的差异。土步鱼在杭州被视为珍品，体现了杭州人对本地食材的偏爱，也展现了文人饮食的雅趣与地域饮食的多样性。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/168_土步鱼_1775554669.png",
+    "image_generated_at": "2026-04-07 17:37:49"
   },
   {
     "dish_name": "鱼松",
@@ -3707,7 +4041,9 @@
     "cultural_story": "清代袁枚在《随园食单》中记载此菜，反映江南文人饮食的精致与务实。封鱼之法可追溯至宋代，文人雅士常以自制鱼肴待客，既显品味又具保存智慧。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/169_鱼松_1775554676.png",
+    "image_generated_at": "2026-04-07 17:37:56"
   },
   {
     "dish_name": "鱼圆",
@@ -3732,7 +4068,9 @@
     "cultural_story": "随园主人袁枚在《随园食单》中推崇此菜，认为鱼圆能体现江南饮食的精致。相传清代文人雅士常以鱼圆佐茶，赞其“滑嫩如脂，鲜香无比”。鱼圆的“圆”形也寓意团圆，成为江南宴席上的吉祥菜。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/170_鱼圆_1775554686.png",
+    "image_generated_at": "2026-04-07 17:38:06"
   },
   {
     "dish_name": "鱼片",
@@ -3755,7 +4093,9 @@
     "cultural_story": "随园主人袁枚推崇本味，此菜强调火候与食材本味，呼应文人“食不厌精”的追求。清代文人常以鱼片喻才情，清炒鱼片亦成文人宴席雅品。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/171_鱼片_1775554694.png",
+    "image_generated_at": "2026-04-07 17:38:14"
   },
   {
     "dish_name": "连鱼豆腐",
@@ -3779,7 +4119,9 @@
     "cultural_story": "此菜为杭州名菜，相传清代文人袁枚在《随园食单》中特别推崇，认为鱼头与豆腐的搭配既能去腥提鲜，又能体现江南菜的温润雅致，成为文人雅士宴客的佳品。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/172_连鱼豆腐_1775554701.png",
+    "image_generated_at": "2026-04-07 17:38:21"
   },
   {
     "dish_name": "醋搂鱼",
@@ -3802,7 +4144,9 @@
     "cultural_story": "此菜与南宋名菜宋嫂鱼羹渊源颇深。袁枚批评当时杭州五柳居品质下滑，感叹《梦梁录》记载的名菜徒有虚名。他强调鱼块大小需适中，过大则味不透，过小则刺多，反映文人饮食的精致追求。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/173_醋搂鱼_1775554709.png",
+    "image_generated_at": "2026-04-07 17:38:29"
   },
   {
     "dish_name": "银鱼",
@@ -3824,7 +4168,9 @@
     "cultural_story": "清代袁枚在《随园食单》中盛赞银鱼，称其“冰鲜”之名雅致。文人雅士常以银鱼入宴，因其形态如银丝，象征清雅。相传乾隆南巡时，曾品尝太湖银鱼，赞其“鲜嫩无匹”，成为江南贡品。",
     "processed": true,
     "longitude": 120.3,
-    "latitude": 31.57
+    "latitude": 31.57,
+    "image_url": "/images/dishes/174_银鱼_1775554716.png",
+    "image_generated_at": "2026-04-07 17:38:36"
   },
   {
     "dish_name": "台鲞",
@@ -3843,7 +4189,9 @@
     "modern_method": "选用优质台鲞，与五花肉同炖。先将五花肉煮至软烂，再加入台鲞小火慢炖10分钟，使鲞入味。冷却后冷藏成冻，切片食用，口感滑嫩，鲜味浓郁。",
     "geo_factors": "台州松门地处沿海，盛产优质鲞鱼，当地气候适宜晒制，肉质肥美软嫩，成为台鲞的优质产地，体现了沿海物产与饮食风味的紧密联系。",
     "cultural_story": "清代袁枚在《随园食单》中详述台鲞的烹饪法，可见其文人雅士对食材的讲究。绍兴人将鲞冻视为冬季佳肴，既保留了鲞的鲜味，又增添了冻品的爽滑，体现了江南饮食的精致与智慧。",
-    "processed": true
+    "processed": true,
+    "image_url": "/images/dishes/175_台鲞_1775554724.png",
+    "image_generated_at": "2026-04-07 17:38:44"
   },
   {
     "dish_name": "糟鲞",
@@ -3865,7 +4213,9 @@
     "cultural_story": "清代袁枚在《随园食单》中记载此菜，赞其“夏日食之，愈陈愈美”。文人雅士常以糟鱼佐酒，视为消暑佳品，体现了江南饮食文化的精致与讲究。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/176_糟鲞_1775554731.png",
+    "image_generated_at": "2026-04-07 17:38:51"
   },
   {
     "dish_name": "虾子勒鲞",
@@ -3887,7 +4237,9 @@
     "cultural_story": "随园主人袁枚在《随园食单》中记载此菜，体现了清代文人追求时令食材与精致烹饪的饮食美学。三伏日食用，既消暑又滋补，反映了古代文人对节气与饮食关系的深刻理解。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/177_虾子勒鲞_1775554739.png",
+    "image_generated_at": "2026-04-07 17:38:59"
   },
   {
     "dish_name": "鱼脯",
@@ -3910,7 +4262,9 @@
     "cultural_story": "清代袁枚在《随园食单》中记载此菜，称其“苏州法也”。江南文人雅士常以风鱼佐酒，取其咸香下饭。相传乾隆南巡时，苏州名厨以此菜献上，乾隆赞其“咸鲜得宜，回味悠长”。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/178_鱼脯_1775554747.png",
+    "image_generated_at": "2026-04-07 17:39:07"
   },
   {
     "dish_name": "家常煎鱼",
@@ -3932,7 +4286,9 @@
     "cultural_story": "袁枚在《随园食单》中强调烹饪需“耐性”，反映文人饮食的讲究。此菜源于民间，经文人改良，体现了“食不厌精”的生活美学，也暗合江南文人“慢生活”的哲学。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/179_家常煎鱼_1775554754.png",
+    "image_generated_at": "2026-04-07 17:39:14"
   },
   {
     "dish_name": "黄姑鱼",
@@ -3951,7 +4307,9 @@
     "modern_method": "将干黄姑鱼用料酒浸泡后剥去鱼皮，平铺在蒸盘上，与米饭一同蒸制约15分钟至鱼肉熟透，保持鱼肉鲜嫩，酒香渗透。",
     "geo_factors": "岳州（今岳阳）地处洞庭湖畔，水网密布，盛产小型淡水鱼，当地渔民以晒干法保存鱼类，便于长途运输，形成独特的风味。",
     "cultural_story": "清代文人袁枚在《随园食单》中记载此菜，称其'味最鲜'，反映江南文人对食材本味的追求。黄姑鱼因袁枚的推崇，成为文人宴席上的雅致小菜，体现'不时不食'的饮食哲学。",
-    "processed": true
+    "processed": true,
+    "image_url": "/images/dishes/180_黄姑鱼_1775554762.png",
+    "image_generated_at": "2026-04-07 17:39:22"
   },
   {
     "dish_name": "白片鸡",
@@ -3971,7 +4329,9 @@
     "cultural_story": "袁枚在《随园食单》中推崇此菜，认为其如古代祭祀的太羹玄酒般纯粹。文人雅士常以此菜待客，既显简朴，又不失雅致，体现了“大道至简”的饮食哲学。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/181_白片鸡_1775554770.png",
+    "image_generated_at": "2026-04-07 17:39:30"
   },
   {
     "dish_name": "鸡松",
@@ -3995,7 +4355,9 @@
     "cultural_story": "随园主人袁枚推崇此菜，认为松子与鸡肉的搭配文人雅士所爱。相传清代文人雅集常以此菜佐酒，松子象征高洁，鸡肉寓意团圆，成为文人宴席上的雅致之选。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/182_鸡松_1775554780.png",
+    "image_generated_at": "2026-04-07 17:39:40"
   },
   {
     "dish_name": "生炮鸡",
@@ -4019,7 +4381,9 @@
     "cultural_story": "随园主人袁枚推崇此菜，认为其“嫩如豆腐，香如蟹黄”。相传为文人雅士宴客时的小食，取其制作简便、口感鲜嫩，适合佐酒闲谈，体现清代文人的生活雅趣。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/183_生炮鸡_1775554787.png",
+    "image_generated_at": "2026-04-07 17:39:47"
   },
   {
     "dish_name": "鸡粥",
@@ -4042,7 +4406,9 @@
     "cultural_story": "袁枚在《随园食单》中特别推崇此菜，认为其适合老人滋补。清代文人讲究饮食养生，此菜体现了“食不厌精”的文人饮食哲学。相传袁枚曾以此菜款待老友，赞其“刮而不斩，嫩而不腻”，成为文人宴席上的雅品。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/184_鸡粥_1775554797.png",
+    "image_generated_at": "2026-04-07 17:39:57"
   },
   {
     "dish_name": "焦鸡",
@@ -4066,7 +4432,9 @@
     "cultural_story": "此菜为清代杨中丞家传之法，后经文人方辅推崇。袁枚在《随园食单》中特别记载，可见其地位。清代文人宴客讲究食材本味，此菜通过多重工序保留鸡肉鲜美，体现了文人饮食的雅致与讲究。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/185_焦鸡_1775554804.png",
+    "image_generated_at": "2026-04-07 17:40:05"
   },
   {
     "dish_name": "捶鸡",
@@ -4088,7 +4456,9 @@
     "cultural_story": "此菜源于清代南京，高南昌太守作为地方官员，家中厨师将家常鸡肴改良为精致宴席菜。袁枚在《随园食单》中特别提及，可见其工艺之精妙，反映了清代文人饮食对食材本味的追求。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/186_捶鸡_1775554812.png",
+    "image_generated_at": "2026-04-07 17:40:12"
   },
   {
     "dish_name": "炒鸡片",
@@ -4111,7 +4481,9 @@
     "cultural_story": "随园主人袁枚推崇此菜，认为其“火候得宜，便成佳品”。清代文人常以鸡蓉待客，象征主人的用心与待客之道，成为文人雅宴中的精致小品。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/187_炒鸡片_1775554819.png",
+    "image_generated_at": "2026-04-07 17:40:19"
   },
   {
     "dish_name": "蒸小鸡",
@@ -4135,7 +4507,9 @@
     "cultural_story": "袁枚在《随园食单》中推崇此菜，认为蒸制最能保留鸡肉鲜味。清代文人常以清蒸童子鸡待客，象征主人的诚意与雅致，成为文人宴席上的经典菜肴。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/188_蒸小鸡_1775554826.png",
+    "image_generated_at": "2026-04-07 17:40:27"
   },
   {
     "dish_name": "酱鸡",
@@ -4156,7 +4530,9 @@
     "cultural_story": "随园主人袁枚在《随园食单》中推崇此菜，认为其风味胜于腊鸡。清代文人常以风干鸡佐酒，视为冬日雅事。传说袁枚曾以此菜招待好友，赞其'咸淡得宜，回味无穷'。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/189_酱鸡_1775554834.png",
+    "image_generated_at": "2026-04-07 17:40:34"
   },
   {
     "dish_name": "鸡丁",
@@ -4179,7 +4555,9 @@
     "cultural_story": "袁枚在《随园食单》中推崇本味，此菜体现其“一物献一味”的理念。清代文人雅集常以鸡丁配时令蔬果，象征文思敏捷，如笋丁破土、荸荠清脆，暗喻才情勃发。",
     "processed": true,
     "longitude": 104.07,
-    "latitude": 30.67
+    "latitude": 30.67,
+    "image_url": "/images/dishes/190_鸡丁_1775554841.png",
+    "image_generated_at": "2026-04-07 17:40:42"
   },
   {
     "dish_name": "鸡圆",
@@ -4202,7 +4580,9 @@
     "cultural_story": "清代扬州文人雅士云集，臧八太爷作为当地名厨，其制作的斩鸡脯子备受推崇。袁枚在《随园食单》中特别记载，称其“鲜嫩如虾团”，体现了清代扬州饮食文化的精致与雅致，也反映了当时文人墨客对美食的品鉴与追求。",
     "processed": true,
     "longitude": 119.42,
-    "latitude": 32.39
+    "latitude": 32.39,
+    "image_url": "/images/dishes/191_鸡圆_1775554849.png",
+    "image_generated_at": "2026-04-07 17:40:49"
   },
   {
     "dish_name": "蘑菇煨鸡",
@@ -4225,7 +4605,9 @@
     "cultural_story": "袁枚在《随园食单》中详述此菜，强调“不用水”的烹饪智慧，体现其“本味至上”的饮食理念。相传他曾以此菜款待文人雅士，赞其“鲜香无比，有山珍海味之实，无山珍海味之名”。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/192_蘑菇煨鸡_1775554856.png",
+    "image_generated_at": "2026-04-07 17:40:56"
   },
   {
     "dish_name": "梨炒鸡",
@@ -4248,7 +4630,9 @@
     "cultural_story": "随园主人袁枚在《随园食单》中推崇此菜，认为其“梨香与鸡鲜相融，别有风味”。相传清代文人雅士常以此菜佐酒，梨的清甜能解腻，鸡的鲜嫩能衬酒，成为文人宴席上的雅致小品。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/193_梨炒鸡_1775554864.png",
+    "image_generated_at": "2026-04-07 17:41:04"
   },
   {
     "dish_name": "假野鸡卷",
@@ -4272,7 +4656,9 @@
     "cultural_story": "袁枚在《随园食单》中推崇此菜，认为其做法巧妙，将普通食材化为珍馐。相传为文人雅士宴客时的小吃，寓意“包罗万象”，体现了清代文人对饮食美学的追求。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/194_假野鸡卷_1775554871.png",
+    "image_generated_at": "2026-04-07 17:41:11"
   },
   {
     "dish_name": "黄芽菜炒鸡",
@@ -4298,7 +4684,9 @@
     "cultural_story": "袁枚在《随园食单》中强调“一物各献一性，一碗各成一味”，此菜体现其烹饪理念。清代文人雅士常以鸡为宴席主菜，搭配时蔬，既显家常又不失雅致，成为文人宴客的经典菜品。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/195_黄芽菜炒鸡_1775554878.png",
+    "image_generated_at": "2026-04-07 17:41:19"
   },
   {
     "dish_name": "栗子炒鸡",
@@ -4320,7 +4708,9 @@
     "cultural_story": "随园主人袁枚在《随园食单》中推崇此菜，认为栗子与鸡的搭配能“补而不腻”，是文人宴席上的雅致之选。相传清代文人常以此菜佐酒，寓意“栗”与“利”谐音，讨吉利之意。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/196_栗子炒鸡_1775554886.png",
+    "image_generated_at": "2026-04-07 17:41:26"
   },
   {
     "dish_name": "灼八块",
@@ -4342,7 +4732,9 @@
     "cultural_story": "随园主人袁枚在《随园食单》中推崇此菜，认为其“煨得极烂，极透，极香”。清代文人常以鸡酒待客，油煨鸡因做法简单而风味独特，成为文人雅士宴席上的常见菜肴，象征着生活的闲适与品味。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/197_灼八块_1775554894.png",
+    "image_generated_at": "2026-04-07 17:41:34"
   },
   {
     "dish_name": "珍珠团",
@@ -4366,7 +4758,9 @@
     "cultural_story": "随园主人袁枚在《随园食单》中推崇此菜，认为其做法简单却风味独特。清代文人常以鸡丁入菜，象征文人雅士的细腻心思，此菜亦成为文人宴席上的常见小食。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/198_珍珠团_1775554901.png",
+    "image_generated_at": "2026-04-07 17:41:41"
   },
   {
     "dish_name": "黄芪蒸鸡治疗",
@@ -4387,7 +4781,9 @@
     "cultural_story": "随园主人袁枚推崇此菜，认为其‘补而不燥’。清代文人常以黄芪入膳，视为养生佳品，相传乾隆南巡时曾品尝此菜，赞其‘色香味俱佳，堪为御膳’。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/199_黄芪蒸鸡治疗_1775554909.png",
+    "image_generated_at": "2026-04-07 17:41:49"
   },
   {
     "dish_name": "卤鸡",
@@ -4412,7 +4808,9 @@
     "cultural_story": "袁枚在《随园食单》中推崇此菜，认为其做法考究，体现了文人饮食的雅致。清代文人常以鸡喻才，此菜或与文人雅集相关，象征团圆与圆满，成为宴席上的雅致之选。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/200_卤鸡_1775554917.png",
+    "image_generated_at": "2026-04-07 17:41:57"
   },
   {
     "dish_name": "蒋鸡",
@@ -4436,7 +4834,9 @@
     "cultural_story": "蒋御史为清代官员，此菜为其家传秘方。《随园食单》收录此菜，体现了清代文人注重食材本味与精致烹饪的饮食风尚，成为江南文人宴席上的经典佳肴。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/201_蒋鸡_1775554924.png",
+    "image_generated_at": "2026-04-07 17:42:04"
   },
   {
     "dish_name": "唐鸡",
@@ -4459,7 +4859,9 @@
     "cultural_story": "清代文人袁枚在《随园食单》中记录此菜时特别提到唐静涵的家法，可见清代文人饮食之讲究。唐静涵可能是当时知名的美食家，此菜因其独特的调味方式（加白糖）而备受推崇，反映了清代饮食文化中咸甜结合的审美趣味。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/202_唐鸡_1775554934.png",
+    "image_generated_at": "2026-04-07 17:42:14"
   },
   {
     "dish_name": "鸡肝",
@@ -4480,7 +4882,9 @@
     "cultural_story": "袁枚在《随园食单》中推崇此法，认为“炒贵速，不贵熟”，曾以“厨中三昧，唯此一诀”赞誉其妙，暗合文人追求自然本真的美学。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/203_鸡肝_1775554941.png",
+    "image_generated_at": "2026-04-07 17:42:21"
   },
   {
     "dish_name": "鸡血",
@@ -4502,7 +4906,9 @@
     "cultural_story": "随园主人袁枚推崇此菜，认为其“宜于老人”，体现了清代文人对养生饮食的讲究。江南文人雅士常以羹汤待客，鸡血羹因制作简便、营养丰富，成为文人宴席中的温和之选。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/204_鸡血_1775554948.png",
+    "image_generated_at": "2026-04-07 17:42:28"
   },
   {
     "dish_name": "鸡丝",
@@ -4527,7 +4933,9 @@
     "cultural_story": "清代袁枚在《随园食单》中记载此菜，称其为杭菜代表。江南文人雅士常以鸡丝拌笋芹佐酒，取其清爽不腻，寓意生活雅致。据说乾隆南巡时，杭州名厨曾以此菜献艺，得乾隆赞赏，流传至今。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/205_鸡丝_1775554955.png",
+    "image_generated_at": "2026-04-07 17:42:36"
   },
   {
     "dish_name": "糟鸡",
@@ -4549,7 +4957,9 @@
     "cultural_story": "清代袁枚在《随园食单》中提及糟鸡，赞其“香鲜异常”。江南文人雅士常以糟品佐酒，糟鸡因其风味独特，成为文人宴席上的雅致菜肴，体现了江南饮食文化的精致与闲适。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/206_糟鸡_1775554962.png",
+    "image_generated_at": "2026-04-07 17:42:42"
   },
   {
     "dish_name": "鸡肾",
@@ -4570,7 +4980,9 @@
     "cultural_story": "袁枚在《随园食单》中推崇此菜，认为其“鲜嫩绝伦”，体现了清代文人追求食材本味的饮食美学。相传此菜为江南文人宴客雅集时的精致小菜，象征雅致生活。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/207_鸡肾_1775554969.png",
+    "image_generated_at": "2026-04-07 17:42:49"
   },
   {
     "dish_name": "鸡蛋",
@@ -4592,7 +5004,9 @@
     "cultural_story": "清代文人袁枚在《随园食单》中记载此菜，称其“千锤而反嫩”，暗喻人生需经历千锤百炼方能升华。相传袁枚曾以此菜款待好友，宾客赞其“看似寻常最奇崛”，成为文人雅士宴席上的雅致小品。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/208_鸡蛋_1775554978.png",
+    "image_generated_at": "2026-04-07 17:42:59"
   },
   {
     "dish_name": "野鸡五法",
@@ -4615,7 +5029,9 @@
     "cultural_story": "袁枚在《随园食单》中详述此菜，反映清代文人饮食精致化。野鸡披胸肉的多种做法，体现了随园主人对食材本味的追求。其中“铁奁上烧”之法，或与江南地区流行的“铁板烧”类似，展现了文人宴席中雅俗共赏的饮食智慧。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/209_野鸡五法_1775554988.png",
+    "image_generated_at": "2026-04-07 17:43:08"
   },
   {
     "dish_name": "赤炖肉鸡",
@@ -4638,7 +5054,9 @@
     "cultural_story": "随园主人袁枚在《随园食单》中推崇此菜，认为酒炖能激发鸡肉本味。清代文人常以酒入馔，此菜亦受士大夫青睐。相传袁枚曾以此菜宴客，酒香四溢，客赞'此味只应天上有'，成为文人雅宴佳话。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/210_赤炖肉鸡_1775554996.png",
+    "image_generated_at": "2026-04-07 17:43:16"
   },
   {
     "dish_name": "鸽子",
@@ -4659,7 +5077,9 @@
     "cultural_story": "清代文人袁枚在《随园食单》中推崇此菜，认为火腿能提鲜增香。相传乾隆南巡时，曾品尝此菜，赞其“汤清肉嫩，回味无穷”，成为江南名菜的代表。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/211_鸽子_1775555003.png",
+    "image_generated_at": "2026-04-07 17:43:24"
   },
   {
     "dish_name": "鸽蛋",
@@ -4680,7 +5100,9 @@
     "cultural_story": "袁枚在《随园食单》中记录此菜，反映清代文人饮食的雅趣。鸽蛋象征纯洁，常被文人雅士用于宴席，搭配微醋的吃法，暗合文人追求淡雅中见真味的饮食哲学。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/212_鸽蛋_1775555011.png",
+    "image_generated_at": "2026-04-07 17:43:31"
   },
   {
     "dish_name": "野鸭",
@@ -4702,7 +5124,9 @@
     "cultural_story": "此菜为清代苏州包道台家独创，袁枚在《随园食单》中特别提及其精妙之处，却惋惜失传。包道台作为地方官员，其家厨融合了江南文人的饮食雅趣，将野鸭的野性与雪梨的清甜结合，成为文人宴席上的雅致佳肴。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/213_野鸭_1775555018.png",
+    "image_generated_at": "2026-04-07 17:43:39"
   },
   {
     "dish_name": "蒸鸭",
@@ -4725,7 +5149,9 @@
     "cultural_story": "此菜为清代真定太守魏氏家传秘方，被袁枚收录于《随园食单》。相传魏太守为官清廉，喜用家常食材创新菜品，此鸭兼具荤素之味，蒸制时汤汁不流失，体现了北方官宦人家的饮食智慧。",
     "processed": true,
     "longitude": 114.48,
-    "latitude": 38.03
+    "latitude": 38.03,
+    "image_url": "/images/dishes/214_蒸鸭_1775555026.png",
+    "image_generated_at": "2026-04-07 17:43:46"
   },
   {
     "dish_name": "鸭糊涂",
@@ -4748,7 +5174,9 @@
     "cultural_story": "随园主人袁枚推崇本味烹饪，此菜强调原汤煨煮，体现“一物献一味”的理念。清代文人常以鸭宴客，袁枚在《随园食单》中记载此菜，赞其“天然不方不圆”，暗合文人追求自然之美的审美情趣。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/215_鸭糊涂_1775555034.png",
+    "image_generated_at": "2026-04-07 17:43:54"
   },
   {
     "dish_name": "卤鸭",
@@ -4770,7 +5198,9 @@
     "cultural_story": "清代袁枚随园宴客常以此菜待客，赞其“酒香透骨，妙不可言”。杨公为官清廉，此菜做法简单却见匠心，暗合文人雅士“大道至简”的饮食哲学，成为随园宴席上的经典雅菜。",
     "processed": true,
     "longitude": 113.28,
-    "latitude": 23.13
+    "latitude": 23.13,
+    "image_url": "/images/dishes/216_卤鸭_1775555042.png",
+    "image_generated_at": "2026-04-07 17:44:02"
   },
   {
     "dish_name": "鸭脯",
@@ -4794,7 +5224,9 @@
     "cultural_story": "袁枚在《随园食单》中推崇此菜，认为酒香能解鸭腻。清代文人常以鸭宴客，此菜因做法简便、滋味醇厚，成为文人雅士餐桌上的常见佳肴。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/217_鸭脯_1775555050.png",
+    "image_generated_at": "2026-04-07 17:44:10"
   },
   {
     "dish_name": "烧鸭",
@@ -4815,7 +5247,9 @@
     "cultural_story": "清代文人袁枚在《随园食单》中特别提及冯观察家的雏鸭叉烧，赞其“皮脆肉嫩，香气扑鼻”。冯观察为乾隆年间官员，家宴常以此菜待客，成为当时文人雅士聚会时的招牌菜。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/218_烧鸭_1775555057.png",
+    "image_generated_at": "2026-04-07 17:44:17"
   },
   {
     "dish_name": "挂卤鸭",
@@ -4836,7 +5270,9 @@
     "cultural_story": "清代袁枚在《随园食单》中特别提到水西门许店的塞葱鸭腹，赞其“盖闷而烧”的技法。相传此菜源于江南文人宴席，以鸭腹塞葱象征“腹有诗书”，寓意文人雅士的才情与内敛。",
     "processed": true,
     "longitude": 118.78,
-    "latitude": 32.06
+    "latitude": 32.06,
+    "image_url": "/images/dishes/219_挂卤鸭_1775555064.png",
+    "image_generated_at": "2026-04-07 17:44:24"
   },
   {
     "dish_name": "干蒸鸭",
@@ -4858,7 +5294,9 @@
     "cultural_story": "此菜记载于《随园食单》，袁枚赞其“精肉皆烂如泥”。杭州商人何星的家传做法，以文火慢蒸、不加水为特色，体现江南文人饮食的精致与耐心，成为清代江南宴席上的经典佳肴。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/220_干蒸鸭_1775555072.png",
+    "image_generated_at": "2026-04-07 17:44:32"
   },
   {
     "dish_name": "野鸭团",
@@ -4880,7 +5318,9 @@
     "cultural_story": "袁枚在《随园食单》中提及此菜，称赞太兴孔亲家的烹饪技艺。野鸭在古代文人雅士中颇受欢迎，常被赋予高洁意象，此菜亦体现了清代文人饮食的精致与雅趣。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/221_野鸭团_1775555079.png",
+    "image_generated_at": "2026-04-07 17:44:40"
   },
   {
     "dish_name": "徐鸭",
@@ -4903,7 +5343,9 @@
     "cultural_story": "随园主人袁枚推崇此菜，认为慢炖方能入味。清代文人常以酒炖鸭待客，象征情谊深厚。相传袁枚曾以此宴客，赞其“酒香透骨，肉嫩如糜”，成为文人雅士宴饮佳品。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/222_徐鸭_1775555090.png",
+    "image_generated_at": "2026-04-07 17:44:50"
   },
   {
     "dish_name": "煨麻雀",
@@ -4925,7 +5367,9 @@
     "cultural_story": "清代文人薛生白曾劝人勿食家禽，因其认为野禽味更鲜美且易消化。袁枚在《随园食单》中记载此菜，既反映清代文人饮食崇尚自然的理念，也体现当时江南地区对野味的推崇与饮食文化的精致化。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/223_煨麻雀_1775555097.png",
+    "image_generated_at": "2026-04-07 17:44:57"
   },
   {
     "dish_name": "煨鹩鹑、黄雀",
@@ -4947,7 +5391,9 @@
     "cultural_story": "清代文人袁枚在《随园食单》中盛赞苏州沈观察煨制的黄雀“并骨如泥”，可见其技艺之高超。黄雀在古代常被视为文人雅士的盘中珍馐，糟制之法更是江南饮食文化的精髓，体现了吴地饮食的精致与雅致。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/224_煨鹩鹑、黄雀_1775555105.png",
+    "image_generated_at": "2026-04-07 17:45:05"
   },
   {
     "dish_name": "云林鹅",
@@ -4972,7 +5418,9 @@
     "cultural_story": "倪瓒为元代著名画家、诗人，其饮食讲究清雅脱俗。此法强调“不使鹅身近水”，体现文人追求食材本味的理念。茅柴慢蒸的耐心与克制，暗合文人修身养性的哲学，使一道家常菜升华为文化符号。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/225_云林鹅_1775555115.png",
+    "image_generated_at": "2026-04-07 17:45:15"
   },
   {
     "dish_name": "蒋侍郎豆腐",
@@ -4996,7 +5444,9 @@
     "cultural_story": "袁枚在《随园食单》中推崇此菜，认为豆腐虽简，但用虾米提鲜、甜酒增香，尽显文人雅士对食材本味的追求，反映清代江南饮食的精致与雅趣。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/226_蒋侍郎豆腐_1775555125.png",
+    "image_generated_at": "2026-04-07 17:45:25"
   },
   {
     "dish_name": "杨中丞豆腐",
@@ -5020,7 +5470,9 @@
     "cultural_story": "随园主人袁枚推崇此菜，认为其“鲜嫩异常”，曾赞其“能解油腻，能助清欢”。文人雅士常以糟味入菜，追求淡雅中见真味，体现清代文人对饮食美学的追求。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/227_杨中丞豆腐_1775555133.png",
+    "image_generated_at": "2026-04-07 17:45:33"
   },
   {
     "dish_name": "张恺豆腐",
@@ -5042,7 +5494,9 @@
     "cultural_story": "袁枚在《随园食单》中推崇此菜，赞其“简而能鲜”。文人雅士常以豆腐喻清贫，而虾米添鲜，暗喻朴素生活中亦有滋味。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/228_张恺豆腐_1775555140.png",
+    "image_generated_at": "2026-04-07 17:45:41"
   },
   {
     "dish_name": "庆元豆腐",
@@ -5063,7 +5517,9 @@
     "cultural_story": "清代袁枚在《随园食单》中记载此菜，体现了文人雅士对家常小菜的精致追求。豆豉与豆腐的搭配，既经济实惠又风味独特，反映了清代饮食文化中“大味至淡”的哲学。",
     "processed": true,
     "longitude": 113.28,
-    "latitude": 23.13
+    "latitude": 23.13,
+    "image_url": "/images/dishes/229_庆元豆腐_1775555148.png",
+    "image_generated_at": "2026-04-07 17:45:48"
   },
   {
     "dish_name": "芙蓉豆腐",
@@ -5086,7 +5542,9 @@
     "cultural_story": "袁枚在《随园食单》中推崇此菜，认为其“清雅脱俗”。相传清代文人雅士常以豆腐脑入汤，配以紫菜虾肉，寓意“清白如豆腐，紫气东来”，成为文人宴席上的雅致小品。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/230_芙蓉豆腐_1775555156.png",
+    "image_generated_at": "2026-04-07 17:45:56"
   },
   {
     "dish_name": "王太守八宝豆腐",
@@ -5112,7 +5570,9 @@
     "cultural_story": "据孟亭太守称，此菜为康熙皇帝赐予徐健庵尚书的秘方。徐尚书取方时，御膳房竟索价一千两白银。太守的祖父楼村先生是徐尚书的门生，故得此方流传。此菜可见清代宫廷饮食的奢华与文人饮食的雅致。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/231_王太守八宝豆腐_1775555163.png",
+    "image_generated_at": "2026-04-07 17:46:04"
   },
   {
     "dish_name": "程立万豆腐",
@@ -5133,7 +5593,9 @@
     "cultural_story": "此菜记录于袁枚《随园食单》，反映清代文人饮食的雅趣。袁枚因错过请教做法而遗憾，体现其对美食的执着。查宣门冒充豆腐的趣事，也侧面反映当时文人饮食中的攀比与虚荣，而程立尤的煎豆腐则成为文人饮食中“真味难寻”的象征。",
     "processed": true,
     "longitude": 119.42,
-    "latitude": 32.39
+    "latitude": 32.39,
+    "image_url": "/images/dishes/232_程立万豆腐_1775555173.png",
+    "image_generated_at": "2026-04-07 17:46:13"
   },
   {
     "dish_name": "冻豆腐",
@@ -5157,7 +5619,9 @@
     "cultural_story": "袁枚在《随园食单》中特别推崇此菜，认为其“煨久则松，面起蜂窝”。友人致华分司曾以蘑菇替代火腿，夏月亦照冻腐之法烹制，袁枚赞其“甚佳”。此菜体现了文人雅士追求清淡、本味的美学理念，与“致中和”的儒家思想相契合。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/233_冻豆腐_1775555183.png",
+    "image_generated_at": "2026-04-07 17:46:23"
   },
   {
     "dish_name": "虾油豆腐",
@@ -5179,7 +5643,9 @@
     "modern_method": "将豆腐切块，两面煎至金黄备用。热锅下猪油，爆香葱和花椒，加入陈虾油炒出香味，放入煎好的豆腐翻炒均匀即可出锅。",
     "geo_factors": "虾油豆腐源于沿海地区，因盛产虾酱、虾油等调味品，当地物产丰富，善用海鲜调味，形成独特的咸鲜风味。",
     "cultural_story": "袁枚在《随园食单》中推崇此菜，认为虾油比酱油更添鲜味。清代文人常以豆腐入菜，取其淡雅中见真味，体现了文人饮食的精致与雅趣。",
-    "processed": true
+    "processed": true,
+    "image_url": "/images/dishes/234_虾油豆腐_1775555191.png",
+    "image_generated_at": "2026-04-07 17:46:31"
   },
   {
     "dish_name": "蕨菜",
@@ -5200,7 +5666,9 @@
     "cultural_story": "袁枚在《随园食单》中强调食材本味，此菜反映文人饮食美学——去芜存菁，以鸡汤提鲜而非掩盖蕨菜本味，体现清代文人追求自然与调和的饮食哲学。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/235_蕨菜_1775555198.png",
+    "image_generated_at": "2026-04-07 17:46:38"
   },
   {
     "dish_name": "葛仙米",
@@ -5222,7 +5690,9 @@
     "cultural_story": "陶方伯为清代官员，其家厨擅长将普通食材做出极致风味。此菜体现文人饮食追求“大味至淡”的境界，看似简单却考验火候与食材本味，暗合《随园食单》“一物献一味”的烹饪哲学。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/236_葛仙米_1775555206.png",
+    "image_generated_at": "2026-04-07 17:46:46"
   },
   {
     "dish_name": "石发",
@@ -5245,7 +5715,9 @@
     "cultural_story": "葛仙米得名于晋代葛洪，相传他服食此米后羽化成仙。清代《随园食单》将其列为佳肴，文人雅士常以此佐酒，既消暑又显雅致，体现了饮食与文化的交融。",
     "processed": true,
     "longitude": 114.3,
-    "latitude": 30.58
+    "latitude": 30.58,
+    "image_url": "/images/dishes/237_石发_1775555213.png",
+    "image_generated_at": "2026-04-07 17:46:53"
   },
   {
     "dish_name": "素烧鹅",
@@ -5269,7 +5741,9 @@
     "cultural_story": "袁枚在《随园食单》中推崇此菜，赞其“素中有荤，俭而不俗”。相传为随园家厨改良自道家素斋，以山药仿肉，豆腐皮代面，文人雅士品之，赞其“清雅脱俗，有山林之气”。",
     "processed": true,
     "longitude": 113.28,
-    "latitude": 23.13
+    "latitude": 23.13,
+    "image_url": "/images/dishes/238_素烧鹅_1775555221.png",
+    "image_generated_at": "2026-04-07 17:47:01"
   },
   {
     "dish_name": "芹",
@@ -5290,7 +5764,9 @@
     "cultural_story": "袁枚在《随园食单》中特别强调芹菜的烹饪之道，反对与肉类混炒，体现文人雅士对食材本味的追求。古人认为芹菜性凉，清热解毒，文人雅士常以清炒芹菜佐酒，既符合养生之道，又显清雅格调，成为文人宴席上的常见素菜。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/239_芹_1775555228.png",
+    "image_generated_at": "2026-04-07 17:47:09"
   },
   {
     "dish_name": "豆芽",
@@ -5311,7 +5787,9 @@
     "cultural_story": "袁枚在《随园食单》中借豆芽与燕窝的搭配，隐喻君子与贤才的关系。巢父、许由是上古高士，尧舜是圣明君主，象征不同层次的人才相得益彰。袁枚借此表达“物以类聚，人以群分”的哲学，也反映清代文人饮食中蕴含的文化思考。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/240_豆芽_1775555235.png",
+    "image_generated_at": "2026-04-07 17:47:15"
   },
   {
     "dish_name": "茭",
@@ -5333,7 +5811,9 @@
     "cultural_story": "清代袁枚在《随园食单》中特别提到茭白的烹饪方法，可见其重视食材本味。文人雅士常以茭白配酒，取其清雅之味，与江南文人的淡泊心境相契合，成为文人宴席上的常见小菜。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/241_茭_1775555241.png",
+    "image_generated_at": "2026-04-07 17:47:21"
   },
   {
     "dish_name": "青菜",
@@ -5355,7 +5835,9 @@
     "cultural_story": "袁枚在《随园食单》中强调食材本味，此菜体现文人饮食美学。清代文人喜以时蔬佐酒，笋与青菜搭配，既显雅致又合养生之道，成为文人宴席常见小菜。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/242_青菜_1775555246.png",
+    "image_generated_at": "2026-04-07 17:47:26"
   },
   {
     "dish_name": "台菜",
@@ -5378,7 +5860,9 @@
     "cultural_story": "袁枚在《随园食单》中特别推崇此菜，认为其最能体现蔬菜本味。相传他曾以此菜款待文人墨客，赞其“清雅如君子”。此菜也反映了清代文人饮食中崇尚自然、注重食材本真的审美情趣。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/243_台菜_1775555252.png",
+    "image_generated_at": "2026-04-07 17:47:32"
   },
   {
     "dish_name": "白菜",
@@ -5400,7 +5884,9 @@
     "cultural_story": "袁枚在《随园食单》中推崇此菜，认为白菜虽普通，但与火腿、鸡汤同煨，能化平凡为神奇。清代文人常以家常菜入诗，此菜也成为文人雅士餐桌上的清雅之选。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/244_白菜_1775555258.png",
+    "image_generated_at": "2026-04-07 17:47:38"
   },
   {
     "dish_name": "黄芽菜",
@@ -5420,7 +5906,9 @@
     "modern_method": "将北方食材洗净，用醋或加入虾米一同煨煮，保持中小火，煮至食材熟透即可立即食用，避免久放导致色味变化。",
     "geo_factors": "北方食材因气候寒冷，肉质紧实，适合醋和虾米提鲜，体现北方饮食的厚重与酸鲜结合的特点。",
     "cultural_story": "随园主人袁枚注重食材本味，主张“一熟便吃”，强调烹饪的时效性，反映文人追求自然、反对过度加工的饮食哲学，也暗合北方人豪爽直接的饮食性格。",
-    "processed": true
+    "processed": true,
+    "image_url": "/images/dishes/245_黄芽菜_1775555263.png",
+    "image_generated_at": "2026-04-07 17:47:43"
   },
   {
     "dish_name": "瓢儿菜",
@@ -5441,7 +5929,9 @@
     "cultural_story": "清代文人袁枚在《随园食单》中特别提及王孟亭太守家制的炒瓢菜心，赞其“最精”。王孟亭为乾隆年间官员，精于饮食，其烹饪技艺随袁枚的记载流传后世，成为江南文人宴席上的雅致佳肴。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/246_瓢儿菜_1775555269.png",
+    "image_generated_at": "2026-04-07 17:47:49"
   },
   {
     "dish_name": "波菜",
@@ -5462,7 +5952,9 @@
     "cultural_story": "此菜名源自清代袁枚《随园食单》，因其色泽搭配如金镶白玉而得名。文人雅士常以素食喻清高，此菜不假外物，仅凭本味取胜，暗合文人淡泊名利、返璞归真的生活哲学。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/247_波菜_1775555275.png",
+    "image_generated_at": "2026-04-07 17:47:55"
   },
   {
     "dish_name": "蘑菇",
@@ -5481,7 +5973,9 @@
     "modern_method": "选用新鲜鸡腿蘑，洗净切片。热锅下油，爆香蒜末，放入蘑菇大火快炒，加少许盐和生抽调味，炒至蘑菇变软出水即可出锅。全程保持大火，确保蘑菇鲜嫩多汁。",
     "geo_factors": "蘑菇在中国各地均有出产，但口蘑多产于北方草原，尤其是张家口一带，故称“口蘑”。鸡腿蘑则广泛分布于温带地区，适应性强，是常见的食用菌。",
     "cultural_story": "清代袁枚在《随园食单》中特别提到蘑菇的烹饪方法，可见其文人雅士对食材的讲究。蘑菇自古被视为山珍，象征自然馈赠，文人常以蘑菇入诗，表达对田园生活的向往。",
-    "processed": true
+    "processed": true,
+    "image_url": "/images/dishes/248_蘑菇_1775555281.png",
+    "image_generated_at": "2026-04-07 17:48:01"
   },
   {
     "dish_name": "松菌",
@@ -5503,7 +5997,9 @@
     "cultural_story": "袁枚在《随园食单》中特别推崇菌类，认为其“能助鲜”。他曾邀请文人雅士品尝松菌，赞其“有山林之气”。清代文人常以菌入馔，视为清雅之物，与江南文人的清淡审美相契合。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/249_松菌_1775555287.png",
+    "image_generated_at": "2026-04-07 17:48:07"
   },
   {
     "dish_name": "面筋三法",
@@ -5527,7 +6023,9 @@
     "cultural_story": "清代文人章淮树观察家精于此道，其制法被《随园食单》收录。袁枚赞其“最精”，反映了清代士大夫对饮食美学的追求，面筋的烹制技艺也体现了文人雅士对食材本味的极致追求。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/250_面筋三法_1775555293.png",
+    "image_generated_at": "2026-04-07 17:48:13"
   },
   {
     "dish_name": "茄二法",
@@ -5551,7 +6049,9 @@
     "cultural_story": "袁枚在《随园食单》中记录了两种茄子的贵族做法，分别出自文人吴小谷和官员卢八太爷家。其中蒸拌茄子的做法简单却见真味，体现了文人饮食“大味至淡”的审美。清代文人常以茄子入诗，如“蒸茄胜鲥鱼”，可见茄子在文人饮食中的地位。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/251_茄二法_1775555299.png",
+    "image_generated_at": "2026-04-07 17:48:19"
   },
   {
     "dish_name": "苋羹",
@@ -5573,7 +6073,9 @@
     "cultural_story": "清代袁枚在《随园食单》中特别推崇这道菜，认为其“有菜香而无菜气”。文人雅士喜食苋菜，因其清淡不腻，寓意文人清高淡泊的品格。相传乾隆南巡时，曾品尝此菜，赞其“色香味俱佳，不愧为江南佳肴”。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/252_苋羹_1775555305.png",
+    "image_generated_at": "2026-04-07 17:48:25"
   },
   {
     "dish_name": "芋羹",
@@ -5595,7 +6097,9 @@
     "cultural_story": "芋煨鸡的制法虽未流传，但见于《随园食单》，可见袁枚对这道菜的推崇。徐兆璜明府作为清代官员，其家厨能创制此菜，反映了清代文人雅士对饮食的精细追求。芋头在古代被视为“仙品”，与鸡同煨，既有滋补之效，又显雅致品味。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/253_芋羹_1775555311.png",
+    "image_generated_at": "2026-04-07 17:48:31"
   },
   {
     "dish_name": "豆腐皮",
@@ -5618,7 +6122,9 @@
     "cultural_story": "清代文人袁枚在《随园食单》中记载了此菜，并特别提到蒋侍郎和芜湖敬和尚的烹饪方法。敬和尚的素食创新体现了清代文人对素食的精致追求，而袁枚的记录则反映了当时文人饮食文化的雅趣与讲究。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/254_豆腐皮_1775555317.png",
+    "image_generated_at": "2026-04-07 17:48:38"
   },
   {
     "dish_name": "扁豆",
@@ -5640,7 +6146,9 @@
     "cultural_story": "袁枚在《随园食单》中强调食材本味，此菜体现了文人饮食的精致追求。清代文人喜用家常食材入菜，扁豆炒肉既取其鲜嫩，又去肉存豆，以素雅见长，暗合文人“淡中求味”的饮食哲学。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/255_扁豆_1775555323.png",
+    "image_generated_at": "2026-04-07 17:48:43"
   },
   {
     "dish_name": "瓠子、王瓜",
@@ -5663,7 +6171,9 @@
     "cultural_story": "随园主人袁枚在《随园食单》中推崇时令食材与简约烹饪，此菜以鱼军鱼为主，搭配家常蔬菜，体现了文人雅士追求本味、不事奢华的饮食哲学。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/256_瓠子、王瓜_1775555329.png",
+    "image_generated_at": "2026-04-07 17:48:49"
   },
   {
     "dish_name": "煨木耳、香蕈",
@@ -5685,7 +6195,9 @@
     "cultural_story": "清代袁枚在《随园食单》中记载此菜，赞叹定慧庵僧人精于素食烹饪。文人雅士常游扬州，慕名前往品尝，这道菜成为素食中的雅品，体现了江南文人对食材本味的追求。",
     "processed": true,
     "longitude": 119.42,
-    "latitude": 32.39
+    "latitude": 32.39,
+    "image_url": "/images/dishes/257_煨木耳、香蕈_1775555334.png",
+    "image_generated_at": "2026-04-07 17:48:54"
   },
   {
     "dish_name": "冬瓜",
@@ -5707,7 +6219,9 @@
     "cultural_story": "清代文人袁枚在《随园食单》中特别推崇定慧庵的冬瓜燕窝，赞其“红如血珀，不用荤汤”。这道菜体现了佛教素食文化与江南饮食美学的结合，成为文人雅士宴席上的清雅之选。",
     "processed": true,
     "longitude": 119.42,
-    "latitude": 32.39
+    "latitude": 32.39,
+    "image_url": "/images/dishes/258_冬瓜_1775555340.png",
+    "image_generated_at": "2026-04-07 17:49:00"
   },
   {
     "dish_name": "煨鲜菱",
@@ -5730,7 +6244,9 @@
     "cultural_story": "清代文人袁枚在《随园食单》中推崇此菜，认为菱角“浮水面者才嫩”，体现其对食材本味的追求。江南文人常以菱角入诗，如“菱歌唱彻采莲归”，此菜亦成为文人雅士宴客的清雅点心。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/259_煨鲜菱_1775555346.png",
+    "image_generated_at": "2026-04-07 17:49:06"
   },
   {
     "dish_name": "缸豆",
@@ -5751,7 +6267,9 @@
     "cultural_story": "清代袁枚在《随园食单》中特别推崇此菜，认为去肉存豆的吃法体现了文人雅士对食材本味的追求。相传某文士宴客时，特意让厨师将肉片挑出，只留豇豆，寓意“去繁就简”，以菜喻理。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/260_缸豆_1775555352.png",
+    "image_generated_at": "2026-04-07 17:49:12"
   },
   {
     "dish_name": "煨三笋",
@@ -5774,7 +6292,9 @@
     "cultural_story": "清代袁枚在《随园食单》中记载此菜，赞其“鲜洁无比”。江南文人雅士常以笋入馔，三笋羹不仅是一道美食，更承载着文人“清雅”的饮食审美，体现了江南饮食文化的精致与讲究。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/261_煨三笋_1775555357.png",
+    "image_generated_at": "2026-04-07 17:49:17"
   },
   {
     "dish_name": "芋煨白菜",
@@ -5796,7 +6316,9 @@
     "cultural_story": "袁枚在《随园食单》中推崇此菜，赞其“家常菜之最佳者”，反映文人雅士对朴素之美的欣赏。芋头象征富足，白菜寓意清白，暗合文人淡泊名利的生活哲学。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/262_芋煨白菜_1775555363.png",
+    "image_generated_at": "2026-04-07 17:49:23"
   },
   {
     "dish_name": "香珠豆",
@@ -5818,7 +6340,9 @@
     "cultural_story": "清代袁枚在《随园食单》中特别推崇此菜，认为其'香软可爱'。文人雅士常以香珠豆佐酒，视为秋日雅事。相传袁枚曾以此豆招待友人，赞其'虽微物而有至味'，体现了文人饮食的精致与雅趣。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/263_香珠豆_1775555368.png",
+    "image_generated_at": "2026-04-07 17:49:28"
   },
   {
     "dish_name": "马兰",
@@ -5840,7 +6364,9 @@
     "cultural_story": "清代袁枚在《随园食单》中记载此菜，文人雅士常以野菜入馔，马兰头拌笋不仅解腻，更象征清雅淡泊的生活情趣，体现了文人饮食的精致与自然。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/264_马兰_1775555374.png",
+    "image_generated_at": "2026-04-07 17:49:34"
   },
   {
     "dish_name": "杨花菜",
@@ -5860,7 +6386,9 @@
     "cultural_story": "清代袁枚在《随园食单》中记载此菜，赞其名雅。文人雅士常以时令入馔，杨花菜因其清新淡雅，成为春日宴席上的雅致小品，体现了江南饮食文化的精致与诗意。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/265_杨花菜_1775555379.png",
+    "image_generated_at": "2026-04-07 17:49:40"
   },
   {
     "dish_name": "问政笋丝",
@@ -5882,7 +6410,9 @@
     "cultural_story": "清代文人袁枚在《随园食单》中记载，龚司马以秋油煮笋烘干，徽州人初尝时惊为“异味”，如同梦中初醒。此事反映清代饮食文化的地域差异与创新，也体现文人雅士对食材本味的追求。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/266_问政笋丝_1775555385.png",
+    "image_generated_at": "2026-04-07 17:49:45"
   },
   {
     "dish_name": "炒鸡腿蘑菇",
@@ -5905,7 +6435,9 @@
     "cultural_story": "此菜出自清代《随园食单》，记录了芜湖大庵和尚的烹饪智慧。和尚以素食为主，却能将简单食材烹制出佳肴，体现了文人雅士对饮食的精致追求，也反映了江南地区饮食文化的包容与创新。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/267_炒鸡腿蘑菇_1775555391.png",
+    "image_generated_at": "2026-04-07 17:49:51"
   },
   {
     "dish_name": "盖碗装肉",
@@ -5926,7 +6458,9 @@
     "cultural_story": "袁枚在《随园食单》中推崇煨萝卜的朴素之美，认为其胜过珍馐。清代文人常以煨萝卜佐茶，取其清雅不夺茶香，体现了文人追求自然本味的饮食哲学。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/268_盖碗装肉_1775555397.png",
+    "image_generated_at": "2026-04-07 17:49:57"
   },
   {
     "dish_name": "杨公圆",
@@ -5947,7 +6481,9 @@
     "cultural_story": "相传杨公圆为清代文人袁枚友人杨某所创，因其制作精巧、风味独特，被《随园食单》收录。袁枚赞其“软糯入味，宴客之佳品”，成为文人雅士宴席上的经典菜肴。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/269_杨公圆_1775555403.png",
+    "image_generated_at": "2026-04-07 17:50:03"
   },
   {
     "dish_name": "猪头二法",
@@ -5971,7 +6507,9 @@
     "cultural_story": "袁枚在《随园食单》中详细记载此菜，可见其重视。清代文人雅士常以猪头宴客，取“头彩”吉祥之意。相传袁枚曾以此菜招待好友，食客赞其“肥而不腻，入口即化”，成为文人宴席上的经典佳肴，体现了江南饮食文化的精致与讲究。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/270_猪头二法_1775555409.png",
+    "image_generated_at": "2026-04-07 17:50:10"
   },
   {
     "dish_name": "猪蹄四法",
@@ -5995,7 +6533,9 @@
     "cultural_story": "随园主人袁枚称此菜为'神仙肉'，源于钱观察家制法精妙。文人雅士喜其'揭单被'趣称，即先食酥皮。清代笔记载，此菜常用于宴客，象征富贵团圆，文人宴饮中常以'神仙肉'喻美食之极致。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/271_猪蹄四法_1775555416.png",
+    "image_generated_at": "2026-04-07 17:50:16"
   },
   {
     "dish_name": "猪爪猪筋",
@@ -6017,7 +6557,9 @@
     "cultural_story": "袁枚在《随园食单》中推崇此菜，认为其“筋味与爪相同，可以搭配”。清代文人常以猪爪宴客，取“步步高升”之意，成为文人雅士餐桌上的雅致之选。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/272_猪爪猪筋_1775555422.png",
+    "image_generated_at": "2026-04-07 17:50:22"
   },
   {
     "dish_name": "猪肚二法",
@@ -6039,7 +6581,9 @@
     "cultural_story": "清代袁枚在《随园食单》中详细记录了此菜的南北做法差异，反映了他对饮食文化的细致观察。文人雅士常以饮食论道，煨肚的南北之争成为当时饮食趣谈。杭州文人更喜熏制糯米肚，将其作为茶点，体现了江南文人追求精致生活的饮食美学。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/273_猪肚二法_1775555428.png",
+    "image_generated_at": "2026-04-07 17:50:28"
   },
   {
     "dish_name": "猪肺二法",
@@ -6061,7 +6605,9 @@
     "cultural_story": "清代文人袁枚在《随园食单》中记载，汤西崖宴客时每碗需四片肺，可见其讲究。此菜体现了清代官场的饮食文化，对食材处理之精细，反映了当时士大夫对“食不厌精”的追求，也展现了江南饮食文化的雅致与考究。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/274_猪肺二法_1775555434.png",
+    "image_generated_at": "2026-04-07 17:50:34"
   },
   {
     "dish_name": "猪腰",
@@ -6083,7 +6629,9 @@
     "cultural_story": "随园主人袁枚曾以此菜宴客，因腰片煨制耗时，需提前一日备料，故称“一日功”。有文人笑言：“此菜如文人，需慢火熬煮，方能显其真味。”袁枚则回：“煨得一日，方得如泥耳，急不得也。”",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/275_猪腰_1775555441.png",
+    "image_generated_at": "2026-04-07 17:50:41"
   },
   {
     "dish_name": "猪里肉",
@@ -6106,7 +6654,9 @@
     "cultural_story": "此菜由清代扬州太守谢蕴山推崇，随园主人袁枚在《随园食单》中记录，反映文人雅士对精致小吃的追求。猪里肉虽普通，但经巧制登堂入室，体现“化平凡为神奇”的饮食智慧。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/276_猪里肉_1775555446.png",
+    "image_generated_at": "2026-04-07 17:50:47"
   },
   {
     "dish_name": "白片肉",
@@ -6125,7 +6675,9 @@
     "modern_method": "选用猪后腿或里脊肉，煮至断生后浸入原汤冷却。用锋利的刀片成极薄的肉片，排列整齐。食用时可蘸酱油或蒜泥，保持肉质的鲜嫩和温度。",
     "geo_factors": "源于北方游牧民族，满族跳神肉是其变体。北方寒冷气候需温补肉类，且猪只饲养普遍，肉质紧实适合切片。南方气候湿热，猪只脂肪较厚，难以做出北方白肉片的细腻口感。",
     "cultural_story": "袁枚在《随园食单》中特意提及此菜与儒家“割不正不食”的对比，赞赏其随性自然的割法。满族跳神肉原为祭祀用肉，后融入汉族饮食。清代文人常以此菜待客，因其制作考究却显低调，暗合文人“大味若淡”的审美追求。",
-    "processed": true
+    "processed": true,
+    "image_url": "/images/dishes/277_白片肉_1775555452.png",
+    "image_generated_at": "2026-04-07 17:50:53"
   },
   {
     "dish_name": "红煨肉三法",
@@ -6147,7 +6699,9 @@
     "cultural_story": "袁枚在《随园食单》中强调火候对煨肉的重要性，引用“紧火粥，慢火肉”的谚语，体现了清代文人对饮食精细化的追求。相传文人雅士常以煨肉佐酒，认为其软烂醇厚的口感最能体现“大味必淡”的饮食哲学。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/278_红煨肉三法_1775555459.png",
+    "image_generated_at": "2026-04-07 17:50:59"
   },
   {
     "dish_name": "白煨肉",
@@ -6170,7 +6724,9 @@
     "cultural_story": "袁枚在《随园食单》中详细记录此菜，强调火候与调味的平衡。清代文人常以煨肉待客，取其“慢工出细活”之意，象征主人的诚意与耐心，成为文人雅士宴席上的经典家常菜。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/279_白煨肉_1775555465.png",
+    "image_generated_at": "2026-04-07 17:51:06"
   },
   {
     "dish_name": "油灼肉",
@@ -6193,7 +6749,9 @@
     "cultural_story": "清代文人袁枚在《随园食单》中记载此菜，并提到友人犀的改良。犀认为用烧肉法重制更佳，体现了清代文人饮食的精致与创新。此菜也反映了江南文人追求饮食本味与技艺结合的生活美学。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/280_油灼肉_1775555471.png",
+    "image_generated_at": "2026-04-07 17:51:12"
   },
   {
     "dish_name": "干锅蒸肉",
@@ -6215,7 +6773,9 @@
     "cultural_story": "随园主人袁枚推崇此菜，认为其“味厚而香”。清代文人常以封肉待客，象征情谊深厚。相传某次名士聚会，因蒸肉时火候精准，众人赞其“文火慢煨，如君子之交”，遂成美谈。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/281_干锅蒸肉_1775555477.png",
+    "image_generated_at": "2026-04-07 17:51:17"
   },
   {
     "dish_name": "磁坛装肉",
@@ -6237,7 +6797,9 @@
     "cultural_story": "清代袁枚在《随园食单》中推崇此法，认为能最大限度保留食材本味。相传文人雅士常以此法烹制山珍，慢煨间品茗论诗，体现了“不时不食”的饮食哲学。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/282_磁坛装肉_1775555483.png",
+    "image_generated_at": "2026-04-07 17:51:23"
   },
   {
     "dish_name": "脱沙肉",
@@ -6262,7 +6824,9 @@
     "cultural_story": "清代袁枚在《随园食单》中记载此菜，反映文人宴席的讲究。网油卷象征富贵，煎焖工艺体现江南饮食的温润，常用于文人雅集，搭配清酒品鉴，展现饮食文化的雅致。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/283_脱沙肉_1775555489.png",
+    "image_generated_at": "2026-04-07 17:51:29"
   },
   {
     "dish_name": "晒干肉",
@@ -6283,7 +6847,9 @@
     "cultural_story": "随园主人袁枚推崇此菜，认为其“干而不枯，脆而不硬”，常作为文人雅集的佐酒小菜。清代文人喜以干菜配茶，寓意“清心寡欲”，反映文人淡泊的生活哲学。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/284_晒干肉_1775555494.png",
+    "image_generated_at": "2026-04-07 17:51:35"
   },
   {
     "dish_name": "火腿煨肉",
@@ -6306,7 +6872,9 @@
     "cultural_story": "袁枚在《随园食单》中推崇此菜，认为火腿与鲜肉同煨能互补风味。清代文人常以火腿宴客，象征雅致生活，此菜亦被列为文人宴席经典。",
     "processed": true,
     "longitude": 100.24,
-    "latitude": 26.87
+    "latitude": 26.87,
+    "image_url": "/images/dishes/285_火腿煨肉_1775555500.png",
+    "image_generated_at": "2026-04-07 17:51:40"
   },
   {
     "dish_name": "台鲞煨肉",
@@ -6328,7 +6896,9 @@
     "cultural_story": "清代袁枚在《随园食单》中记载此菜，称其为绍兴人独创。相传文人雅士冬日宴饮，以鲞冻肉佐酒，其冻晶莹剔透，入口即化，象征文人清雅之趣。此菜亦体现了绍兴人“不时不食”的饮食智慧。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/286_台鲞煨肉_1775555506.png",
+    "image_generated_at": "2026-04-07 17:51:46"
   },
   {
     "dish_name": "粉蒸肉",
@@ -6351,7 +6921,9 @@
     "cultural_story": "清代袁枚在《随园食单》中记载此菜，赞其“以不见水，故味独全”。江西文人喜用米粉调味，既保留食材本味，又增添层次感。此菜曾为文人雅士宴客必备，象征“肥而不腻，淡而有味”的饮食哲学。",
     "processed": true,
     "longitude": 115.89,
-    "latitude": 28.68
+    "latitude": 28.68,
+    "image_url": "/images/dishes/287_粉蒸肉_1775555512.png",
+    "image_generated_at": "2026-04-07 17:51:52"
   },
   {
     "dish_name": "熏煨肉",
@@ -6374,7 +6946,9 @@
     "cultural_story": "清代文人吴小谷（吴锡麒）曾任广文官，其家厨擅长此菜，随园主人袁枚品尝后赞不绝口，称其“香嫩异常”，成为清代文人宴席上的雅致佳肴。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/288_熏煨肉_1775555518.png",
+    "image_generated_at": "2026-04-07 17:51:58"
   },
   {
     "dish_name": "芙蓉肉",
@@ -6397,7 +6971,9 @@
     "cultural_story": "袁枚在《随园食单》中推崇“一物献一味”，此菜体现了其烹饪理念。据传，袁枚曾以此菜款待文人雅士，虾肉的鲜甜与肉片的醇厚相得益彰，象征文人间的深厚情谊，成为江南文人宴席上的经典之作。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/289_芙蓉肉_1775555524.png",
+    "image_generated_at": "2026-04-07 17:52:04"
   },
   {
     "dish_name": "荔枝肉",
@@ -6420,7 +6996,9 @@
     "cultural_story": "随园主人袁枚在《随园食单》中推崇此菜，认为其做法考究，滋味醇厚。相传清代文人雅士常以此菜佐酒，因其色泽红亮、肉质软糯，被誉为“文人菜”，体现了江南饮食文化的雅致与讲究。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/290_荔枝肉_1775555530.png",
+    "image_generated_at": "2026-04-07 17:52:10"
   },
   {
     "dish_name": "八宝肉",
@@ -6444,7 +7022,9 @@
     "cultural_story": "袁枚在《随园食单》中推崇此菜，认为其“煨法得宜，便觉肉松而味美”。相传文人雅士常以煨肉待客，搭配清茶，既显雅致又不失丰盛，体现了清代文人“食不厌精，脍不厌细”的生活美学。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/291_八宝肉_1775555536.png",
+    "image_generated_at": "2026-04-07 17:52:16"
   },
   {
     "dish_name": "菜花头煨肉",
@@ -6465,7 +7045,9 @@
     "cultural_story": "清代文人袁枚在《随园食单》中推崇此菜，认为其“淡而有味”，常作为文人雅士佐茶小菜。相传袁枚曾以此菜配新茶，与友人对坐品茗，赞其“清芬沁脾，齿颊留香”。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/292_菜花头煨肉_1775555542.png",
+    "image_generated_at": "2026-04-07 17:52:22"
   },
   {
     "dish_name": "炒肉丝",
@@ -6489,7 +7071,9 @@
     "cultural_story": "袁枚在《随园食单》中推崇此菜，认为其“炒法极妙，能去肉腥而存其真味”。相传清代文人雅士常以韭香佐酒，取其“青翠欲滴，香气袭人”之意。此菜亦被文人视为“下饭妙品”，寓意生活清雅而滋味悠长。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/293_炒肉丝_1775555548.png",
+    "image_generated_at": "2026-04-07 17:52:28"
   },
   {
     "dish_name": "炒肉片",
@@ -6512,7 +7096,9 @@
     "cultural_story": "随园主人袁枚在《随园食单》中强调火候的重要性，此菜要求“闻响即加”，体现了清代文人烹饪的精细。相传袁枚常以此菜待客，寓意生活热烈如猛火，友情鲜香如食材。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/294_炒肉片_1775555553.png",
+    "image_generated_at": "2026-04-07 17:52:34"
   },
   {
     "dish_name": "八宝肉圆",
@@ -6536,7 +7122,9 @@
     "cultural_story": "随园主人袁枚在《随园食单》中记录此菜，并提及友人致华的观点“肉圆宜切不宜斩”，反映了清代文人对于食材处理的精细讲究。这道菜体现了江南文人饮食的雅致与讲究，成为当时文人宴席上的常见佳肴。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/295_八宝肉圆_1775555559.png",
+    "image_generated_at": "2026-04-07 17:52:39"
   },
   {
     "dish_name": "空心肉圆",
@@ -6558,7 +7146,9 @@
     "cultural_story": "此菜源于清代镇江，袁枚在《随园食单》中赞其“油流去而团空心”，体现了江南文人对饮食精细的追求。传说此法为镇江厨师所创，后流传至江南各地。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/296_空心肉圆_1775555565.png",
+    "image_generated_at": "2026-04-07 17:52:45"
   },
   {
     "dish_name": "锅烧肉",
@@ -6581,7 +7171,9 @@
     "cultural_story": "袁枚在《随园食单》中推崇此菜，认为其做法简单却能保留肉的原始风味。相传文人雅士常以此菜佐酒，认为其清淡不腻，能衬托酒香，体现了文人饮食的雅致与讲究。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/297_锅烧肉_1775555570.png",
+    "image_generated_at": "2026-04-07 17:52:51"
   },
   {
     "dish_name": "酱肉",
@@ -6603,7 +7195,9 @@
     "cultural_story": "袁枚在《随园食单》中批评苏州陆稿荐酱肉“全以面为君，殊无味也”，反映清代文人饮食审美。酱肉作为文人宴席常见冷盘，其制作工艺的争议，体现了当时饮食界对“本味”与“调味”的讨论。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/298_酱肉_1775555576.png",
+    "image_generated_at": "2026-04-07 17:52:56"
   },
   {
     "dish_name": "糟肉",
@@ -6625,7 +7219,9 @@
     "cultural_story": "清代袁枚在《随园食单》中推崇糟腌，认为其能“解腻增香”。文人雅士常以糟腌小佐酒，如苏轼“糟蟹”诗云“霜余蔬甲淡中甜，春后鲥鱼美更鲜”，可见其雅致。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/299_糟肉_1775555582.png",
+    "image_generated_at": "2026-04-07 17:53:02"
   },
   {
     "dish_name": "暴腌肉",
@@ -6646,7 +7242,9 @@
     "cultural_story": "随园主人袁枚推崇简约烹饪，认为微盐擦揉能保留食材本味，与文人雅士追求自然之趣相契合，暗合“大道至简”的哲学。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/300_暴腌肉_1775555588.png",
+    "image_generated_at": "2026-04-07 17:53:08"
   },
   {
     "dish_name": "尹文端公家风肉",
@@ -6668,7 +7266,9 @@
     "cultural_story": "风肉为尹府秘制名菜，常作为贡品进献。袁枚在《随园食单》中盛赞其精妙，并提到除州风肉不及此品。相传此法源于古代文人雅士对食材保存的智慧，体现了江南饮食文化的精致与考究。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/301_尹文端公家风肉_1775555594.png",
+    "image_generated_at": "2026-04-07 17:53:14"
   },
   {
     "dish_name": "家乡肉",
@@ -6689,7 +7289,9 @@
     "cultural_story": "随园主人袁枚在《随园食单》中特别推崇此菜，认为其“淡而能鲜”体现了江南饮食的精致。相传此法源于南宋，文人雅士常以家乡肉佐酒，视为风雅之物。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/302_家乡肉_1775555600.png",
+    "image_generated_at": "2026-04-07 17:53:20"
   },
   {
     "dish_name": "笋煨火肉",
@@ -6711,7 +7313,9 @@
     "cultural_story": "清代文人袁枚在《随园食单》中记录此菜，并引席武山别驾之言，强调火腿保存需留原汤，否则风味尽失。此菜体现了清代文人对食材本味的追求与饮食哲学。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/303_笋煨火肉_1775555605.png",
+    "image_generated_at": "2026-04-07 17:53:25"
   },
   {
     "dish_name": "烧小猪",
@@ -6731,7 +7335,9 @@
     "modern_method": "选用6-7斤乳猪，清理后叉好，炭火慢烤至皮金黄，期间反复刷奶酥油。烤至皮酥肉烂，外焦里嫩。也可用秋油和酒腌制后蒸制，保持肉质鲜嫩。",
     "geo_factors": "源于满族旗人饮食，北方游牧民族擅长烧烤，炭火炙烤体现草原烹饪特色。奶酥油和秋油为北方特产，与当地物产紧密相关。",
     "cultural_story": "此菜为清代满族名菜，随园主人袁枚记载其弟龙文精通此法。满族入关后，烧烤技艺与汉族烹饪融合，成为宫廷宴席佳肴。乾隆年间，炙小猪曾作为御膳房招牌菜，体现满汉饮食文化的交融。",
-    "processed": true
+    "processed": true,
+    "image_url": "/images/dishes/304_烧小猪_1775555612.png",
+    "image_generated_at": "2026-04-07 17:53:32"
   },
   {
     "dish_name": "烧猪肉",
@@ -6752,7 +7358,9 @@
     "cultural_story": "清代袁枚在《随园食单》中详细记载此法，体现其对烹饪细节的极致追求。相传文人雅士聚会时，常以此菜佐酒，其酥脆口感与文人风骨相映成趣，成为餐桌上的雅致之选。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/305_烧猪肉_1775555617.png",
+    "image_generated_at": "2026-04-07 17:53:37"
   },
   {
     "dish_name": "排骨",
@@ -6775,7 +7383,9 @@
     "cultural_story": "随园主人袁枚在《随园食单》中记录此菜，赞其“以葱代骨，巧思也”。相传为文人宴客时改良自传统炙骨，取“葱”谐音“聪”，寓意食者智慧。",
     "processed": true,
     "longitude": 121.47,
-    "latitude": 31.23
+    "latitude": 31.23,
+    "image_url": "/images/dishes/306_排骨_1775555623.png",
+    "image_generated_at": "2026-04-07 17:53:43"
   },
   {
     "dish_name": "罗蓑肉",
@@ -6798,7 +7408,9 @@
     "cultural_story": "此菜为清代名厨聂氏所创，袁枚在《随园食单》中特别记载。聂厨以精湛刀工和调味技艺闻名，此菜体现了清代文人宴席中追求食材本味与工艺精妙的饮食风尚。",
     "processed": true,
     "longitude": 113.28,
-    "latitude": 23.13
+    "latitude": 23.13,
+    "image_url": "/images/dishes/307_罗蓑肉_1775555629.png",
+    "image_generated_at": "2026-04-07 17:53:49"
   },
   {
     "dish_name": "端州三种肉",
@@ -6820,7 +7432,9 @@
     "cultural_story": "据《随园食单》记载，此菜由端州聂、李二厨所创，后由杨二学得。袁枚推崇其家常风味，反映了清代文人饮食中追求简约、崇尚本味的审美趣味，体现了“大味必淡”的饮食哲学。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/308_端州三种肉_1775555635.png",
+    "image_generated_at": "2026-04-07 17:53:55"
   },
   {
     "dish_name": "黄芽菜煨火腿",
@@ -6843,7 +7457,9 @@
     "cultural_story": "此菜为南京朝天宫道士所创，袁枚在《随园食单》中特别记载。道士以素食理念烹饪荤菜，去油存鲜，体现文人雅士对饮食的精致追求。蜜酒娘的加入更添文人雅趣，成为江南文人宴席上的经典佳肴。",
     "processed": true,
     "longitude": 100.24,
-    "latitude": 26.87
+    "latitude": 26.87,
+    "image_url": "/images/dishes/309_黄芽菜煨火腿_1775555641.png",
+    "image_generated_at": "2026-04-07 17:54:01"
   },
   {
     "dish_name": "蜜火腿",
@@ -6864,6 +7480,8 @@
     "cultural_story": "清代袁枚在《随园食单》中盛赞此菜，并特别提到尹文端公（尹继善）苏州公馆的版本。尹继善是乾隆朝重臣，其府邸宴席代表了清代官府菜的最高水准。袁枚称此菜“香隔户便至”，足见其香气之浓郁，也反映了清代文人饮食的精致追求与对食材品质的极致苛求。",
     "processed": true,
     "longitude": 100.24,
-    "latitude": 26.87
+    "latitude": 26.87,
+    "image_url": "/images/dishes/310_蜜火腿_1775555648.png",
+    "image_generated_at": "2026-04-07 17:54:08"
   }
 ]

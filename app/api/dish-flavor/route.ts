@@ -38,14 +38,14 @@ export async function GET(request: Request) {
 
     // 定义风味类型映射 - 每个食材对应的风味和重要性
     const flavorMapping: Record<string, { flavor: string; importance: 'main' | 'important' | 'normal'; color: string }> = {
-      '豆腐脑': { flavor: '鲜', importance: 'main', color: '#27AE60' },
-      '香菇': { flavor: '鲜', importance: 'important', color: '#27AE60' },
-      '蘑菇': { flavor: '鲜', importance: 'important', color: '#27AE60' },
-      '松子仁': { flavor: '鲜', importance: 'important', color: '#27AE60' },
-      '鸡肉': { flavor: '鲜', importance: 'important', color: '#27AE60' },
+      '豆腐脑': { flavor: '鲜', importance: 'main', color: '#fbd01e' },
+      '香菇': { flavor: '鲜', importance: 'important', color: '#fbd01e' },
+      '蘑菇': { flavor: '鲜', importance: 'important', color: '#fbd01e' },
+      '松子仁': { flavor: '鲜', importance: 'important', color: '#fbd01e' },
+      '鸡肉': { flavor: '鲜', importance: 'important', color: '#fbd01e' },
       '鸡汤': { flavor: '咸', importance: 'main', color: '#2980B9' },
       '火腿': { flavor: '咸', importance: 'important', color: '#2980B9' },
-      '瓜子仁': { flavor: '甜', importance: 'normal', color: '#F39C12' },
+      '瓜子仁': { flavor: '甜', importance: 'normal', color: '#E74C3C' },
     };
 
     // 生成风味数据 - 使用真实的食材产地

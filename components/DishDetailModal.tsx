@@ -102,12 +102,12 @@ const INGREDIENT_DESC: Record<string, string> = {
 };
 
 const FLAVOR_COLORS: Record<string, string> = {
-  "酸": "#E74C3C",
-  "甜": "#F39C12",
+  "酸": "#F39C12",
+  "甜": "#E74C3C",
   "苦": "#8E44AD",
   "辣": "#C0392B",
   "咸": "#2980B9",
-  "鲜": "#27AE60",
+  "鲜": "#fbd01e",
 };
 
 const FLAVOR_ICONS: Record<string, string> = {
@@ -247,6 +247,13 @@ export default function DishDetailModal({ dish, onClose }: DishDetailModalProps)
   const [ingredientPoints, setIngredientPoints] = useState<IngredientPoint[]>([]);
   const [flavorVisible, setFlavorVisible] = useState(false);
   const [flavorData, setFlavorData] = useState<FlavorIngredientData[]>([]);
+
+  // 视频路径常量
+  const VIDEO1_PATH = "/videos/video1.mp4";
+  const VIDEO2_PATH = "/videos/video2.mp4";
+
+  // 文化故事视频显示状态
+  const [cultureVideosVisible, setCultureVideosVisible] = useState(false);
   const [dishExtraData, setDishExtraData] = useState<{
     dish_location?: Dish['dish_location'];
     ingredients_distribution?: Dish['ingredients_distribution'];
@@ -318,6 +325,15 @@ export default function DishDetailModal({ dish, onClose }: DishDetailModalProps)
   useEffect(() => {
     if (viewMode === "flavor" && flavorData.length > 0) setFlavorVisible(true);
   }, [flavorData, viewMode]);
+
+  // 文化故事模式显示视频
+  useEffect(() => {
+    if (viewMode === "culture") {
+      setCultureVideosVisible(true);
+    } else {
+      setCultureVideosVisible(false);
+    }
+  }, [viewMode]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -494,6 +510,12 @@ export default function DishDetailModal({ dish, onClose }: DishDetailModalProps)
       setCookingCompareOpen(true);
       return;
     }
+    // ✅ 文化故事：直接显示视频
+    if (preset.id === "culture") {
+      setCultureVideosVisible(true);
+      handleSend(preset.defaultQuestion, preset.id as ViewMode);
+      return;
+    }
     if (preset.hasParticle) setParticleVisible(true);
     if (preset.hasFlavor) setFlavorVisible(true);
     handleSend(preset.defaultQuestion, preset.id as ViewMode);
@@ -593,6 +615,34 @@ export default function DishDetailModal({ dish, onClose }: DishDetailModalProps)
             visible={flavorVisible}
             containerRef={mapContainerRef}
           />
+        )}
+
+        {/* 文化故事视频层 - 直接在地图上显示两个视频 */}
+        {cultureVideosVisible && (
+          <div className="culture-videos-container">
+            <div className="culture-video-item">
+              <span className="culture-video-label">古籍记载</span>
+              <video
+                src={VIDEO1_PATH}
+                controls
+                autoPlay
+                loop
+                muted
+                className="culture-video"
+              />
+            </div>
+            <div className="culture-video-item">
+              <span className="culture-video-label">现代演绎</span>
+              <video
+                src={VIDEO2_PATH}
+                controls
+                autoPlay
+                loop
+                muted
+                className="culture-video"
+              />
+            </div>
+          </div>
         )}
 
         {/* Content layer */}
@@ -957,6 +1007,49 @@ export default function DishDetailModal({ dish, onClose }: DishDetailModalProps)
           background: #8b5a2b;
           color: #fff;
           transform: scale(1.08);
+        }
+
+        /* 文化故事视频弹窗 */
+        .culture-videos-container {
+          position: absolute;
+          inset: 0;
+          z-index: 12;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 20px;
+          padding: 60px 80px;
+          box-sizing: border-box;
+          pointer-events: none;
+        }
+
+        .culture-video-item {
+          width: 100%;
+          max-width: 700px;
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          pointer-events: auto;
+        }
+
+        .culture-video-label {
+          font-size: 14px;
+          color: #fff;
+          letter-spacing: 3px;
+          font-weight: 600;
+          text-align: center;
+          text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+        }
+
+        .culture-video {
+          width: 100%;
+          max-height: 220px;
+          border-radius: 10px;
+          border: 2px solid rgba(139, 90, 43, 0.3);
+          background: #1a1a1a;
+          object-fit: contain;
+          box-shadow: 0 4px 20px rgba(0,0,0,0.3);
         }
 
         @keyframes floatPanelIn {

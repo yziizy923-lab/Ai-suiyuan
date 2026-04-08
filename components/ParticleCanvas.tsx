@@ -534,7 +534,7 @@ export default function ParticleCanvas({
     return () => cancelAnimationFrame(animFrameRef.current);
   }, [draw]);
 
-  // 鼠标事件监听
+  // 鼠标事件监听（悬浮提示、鼠标位置追踪）
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -552,8 +552,21 @@ export default function ParticleCanvas({
       setTooltip((prev) => ({ ...prev, visible: false }));
     };
 
+    canvas.addEventListener("mousemove", handleMouseMove);
+    canvas.addEventListener("mouseleave", handleMouseLeave);
+
+    return () => {
+      canvas.removeEventListener("mousemove", handleMouseMove);
+      canvas.removeEventListener("mouseleave", handleMouseLeave);
+    };
+  }, []);
+
+  // 点击检测：直接在 canvas 上监听点击事件（capture 阶段）
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas || !onIngredientClick) return;
+
     const handleClick = (e: MouseEvent) => {
-      if (!onIngredientClick) return;
       const rect = canvas.getBoundingClientRect();
       const clickX = e.clientX - rect.left;
       const clickY = e.clientY - rect.top;
@@ -565,21 +578,18 @@ export default function ParticleCanvas({
         const dy = clickY - origin.y;
         const dist = Math.sqrt(dx * dx + dy * dy);
         if (dist < 25) {
+          // 点击到产地点，阻止事件传播并处理
+          e.stopPropagation();
           onIngredientClick(origin.name, origin.ingredient, origin.color);
-          break;
+          return;
         }
       }
+      // 没有点到产地点，不阻止，让事件传到地图
     };
 
-    canvas.addEventListener("mousemove", handleMouseMove);
-    canvas.addEventListener("mouseleave", handleMouseLeave);
-    canvas.addEventListener("click", handleClick);
-
-    return () => {
-      canvas.removeEventListener("mousemove", handleMouseMove);
-      canvas.removeEventListener("mouseleave", handleMouseLeave);
-      canvas.removeEventListener("click", handleClick);
-    };
+    // 使用 capture 阶段，在地图的点击监听器之前执行
+    canvas.addEventListener("click", handleClick, true);
+    return () => canvas.removeEventListener("click", handleClick, true);
   }, [onIngredientClick]);
 
   return (

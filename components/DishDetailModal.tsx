@@ -50,6 +50,13 @@ type Message = {
   content: string;
   legendItems?: { ingredient: string; color: string; icon: string; desc: string }[];
   flavorLegendItems?: { flavor: string; color: string; icon: string; desc: string; shape: string }[];
+  /** 地理成因类型消息：显示食材产地信息 */
+  geoCauseInfo?: {
+    ingredient: string;
+    placeName: string;
+    color: string;
+    content: string;
+  };
 };
 type ViewMode = "ingredients" | "flavor" | "culture" | "geo-cause" | null;
 
@@ -214,7 +221,6 @@ const RECOMMENDED_QUESTIONS: { id: ViewMode | "compare"; label: string; icon: st
   { id: "flavor",      label: "风味分析", icon: "✨", defaultQuestion: "请分析这道菜的风味特征", hasFlavor: true },
   { id: "compare",     label: "古今对比", icon: "🍳", defaultQuestion: "" },
   { id: "culture",     label: "文化故事", icon: "📜", defaultQuestion: "请讲述这道菜的文化故事与传承" },
-  { id: "geo-cause",   label: "地理成因", icon: "🌍", defaultQuestion: "请分析食材与地理成因的关系" },
 ];
 
 export default function DishDetailModal({ dish, onClose }: DishDetailModalProps) {
@@ -245,6 +251,7 @@ export default function DishDetailModal({ dish, onClose }: DishDetailModalProps)
     dish_location?: Dish['dish_location'];
     ingredients_distribution?: Dish['ingredients_distribution'];
   } | null>(null);
+  const [geoCauseLoading, setGeoCauseLoading] = useState(false);
 
   const dishCenter = dishExtraData?.dish_location
     ? { lng: dishExtraData.dish_location.longitude, lat: dishExtraData.dish_location.latitude }
@@ -480,6 +487,8 @@ export default function DishDetailModal({ dish, onClose }: DishDetailModalProps)
   };
 
   const handleRecommendedClick = (preset: typeof RECOMMENDED_QUESTIONS[0]) => {
+    // ✅ 切换模式时关闭味觉地图
+    setFlavorVisible(false);
     // ✅ 古今对比：打开居中悬浮小弹窗，不占用聊天面板
     if (preset.id === "compare") {
       setCookingCompareOpen(true);
@@ -492,6 +501,60 @@ export default function DishDetailModal({ dish, onClose }: DishDetailModalProps)
 
   const handleInputSubmit = () => {
     if (inputValue.trim()) handleSend(inputValue.trim(), "culture");
+  };
+
+  // 处理点击食材产地粒子
+  const handleIngredientClick = async (name: string, ingredient: string, color: string) => {
+    if (!name || !ingredient) return;
+
+    setGeoCauseLoading(true);
+
+    try {
+      const res = await fetch("/api/geo-cause", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          dish: dish.name,
+          ingredient,
+          placeName: name,
+        }),
+      });
+      const data = await res.json();
+
+      // 添加地理成因消息到聊天面板
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: "ai" as const,
+          content: data.success
+            ? data.content
+            : `「${ingredient}」产自「${name}」，此地气候温润、地势平坦、水系发达，自古便是此食材的重要产区。`,
+          geoCauseInfo: {
+            ingredient,
+            placeName: name,
+            color,
+            content: data.success ? data.content : "",
+          },
+        },
+      ]);
+    } catch {
+      // 网络错误时使用默认文案
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: "ai" as const,
+          content: `「${ingredient}」产自「${name}」，此地气候温润、地势平坦、水系发达，自古便是此食材的重要产区。`,
+          geoCauseInfo: {
+            ingredient,
+            placeName: name,
+            color,
+            content: "",
+          },
+        },
+      ]);
+    } finally {
+      setGeoCauseLoading(false);
+    }
   };
 
   return (
@@ -516,6 +579,7 @@ export default function DishDetailModal({ dish, onClose }: DishDetailModalProps)
             mapRef={mapRef}
             visible={particleVisible}
             containerRef={mapContainerRef}
+            onIngredientClick={handleIngredientClick}
           />
         )}
 
@@ -636,8 +700,34 @@ export default function DishDetailModal({ dish, onClose }: DishDetailModalProps)
               {messages.map((msg, i) => (
                 <div key={i} className={`modal-msg modal-msg-${msg.role}`}>
                   {msg.role === "ai" && <span className="modal-msg-avatar">枚</span>}
-                  <div className="modal-msg-bubble">
+                  <div className={`modal-msg-bubble ${msg.geoCauseInfo ? "modal-msg-geo-cause" : ""}`}>
+                    {/* 地理成因消息头部 */}
+                    {msg.geoCauseInfo && (
+                      <div className="geo-cause-header">
+                        <div
+                          className="geo-cause-dot"
+                          style={{ background: msg.geoCauseInfo.color, boxShadow: `0 0 8px ${msg.geoCauseInfo.color}` }}
+                        />
+                        <span className="geo-cause-ingredient" style={{ color: msg.geoCauseInfo.color }}>
+                          {msg.geoCauseInfo.ingredient}
+                        </span>
+                        <span className="geo-cause-arrow">→</span>
+                        <span className="geo-cause-place">{msg.geoCauseInfo.placeName}</span>
+                      </div>
+                    )}
+                    {/* 消息内容 */}
                     <p className="modal-msg-text">{msg.content}</p>
+                    {/* 地理成因详情（如果有） */}
+                    {msg.geoCauseInfo?.content && (
+                      <div className="geo-cause-detail">
+                        <div className="geo-cause-detail-divider" />
+                        <div className="geo-cause-dimensions">
+                          <span className="geo-cause-dim" title="气候">🌦 气候</span>
+                          <span className="geo-cause-dim" title="地形">⛰ 地形</span>
+                          <span className="geo-cause-dim" title="水文">💧 水文</span>
+                        </div>
+                      </div>
+                    )}
                     {msg.role === "legend" && msg.legendItems && (
                       <div className="modal-legend">
                         <div className="modal-legend-grid">
@@ -668,13 +758,19 @@ export default function DishDetailModal({ dish, onClose }: DishDetailModalProps)
                   </div>
                 </div>
               ))}
-              {aiLoading && (
+              {(aiLoading || geoCauseLoading) && (
                 <div className="modal-msg modal-msg-ai">
                   <span className="modal-msg-avatar">枚</span>
                   <div className="modal-msg-bubble modal-msg-bubble-loading">
-                    <span className="modal-loading-dots">
-                      <span>.</span><span>.</span><span>.</span>
-                    </span>
+                    {geoCauseLoading ? (
+                      <div className="geo-cause-loading">
+                        <span className="geo-cause-loading-text">正在推演此地山川水脉……</span>
+                      </div>
+                    ) : (
+                      <span className="modal-loading-dots">
+                        <span>.</span><span>.</span><span>.</span>
+                      </span>
+                    )}
                   </div>
                 </div>
               )}
@@ -1160,6 +1256,92 @@ export default function DishDetailModal({ dish, onClose }: DishDetailModalProps)
           border-bottom-left-radius: 3px;
         }
         .modal-msg-bubble-loading { padding: 12px 18px; }
+
+        /* 地理成因消息样式 */
+        .modal-msg-geo-cause {
+          background: linear-gradient(135deg, rgba(139,90,43,0.08), rgba(244,239,230,0.95)) !important;
+          border: 1px solid rgba(139,90,43,0.3) !important;
+          padding: 12px 14px;
+        }
+
+        .geo-cause-header {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          margin-bottom: 10px;
+          padding-bottom: 8px;
+          border-bottom: 1px dashed rgba(139,90,43,0.2);
+        }
+
+        .geo-cause-dot {
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          flex-shrink: 0;
+        }
+
+        .geo-cause-ingredient {
+          font-size: 13px;
+          font-weight: 600;
+          letter-spacing: 1px;
+        }
+
+        .geo-cause-arrow {
+          color: rgba(139,90,43,0.5);
+          font-size: 12px;
+        }
+
+        .geo-cause-place {
+          color: #5a3b1f;
+          font-size: 13px;
+          font-weight: 500;
+          letter-spacing: 1px;
+        }
+
+        .geo-cause-detail {
+          margin-top: 10px;
+        }
+
+        .geo-cause-detail-divider {
+          height: 1px;
+          background: linear-gradient(to right, transparent, rgba(139,90,43,0.25), transparent);
+          margin: 10px 0;
+        }
+
+        .geo-cause-dimensions {
+          display: flex;
+          justify-content: center;
+          gap: 12px;
+        }
+
+        .geo-cause-dim {
+          font-size: 11px;
+          color: rgba(139,90,43,0.6);
+          letter-spacing: 1px;
+          padding: 3px 8px;
+          background: rgba(139,90,43,0.06);
+          border-radius: 4px;
+        }
+
+        /* 地理成因加载状态 */
+        .geo-cause-loading {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          padding: 4px 0;
+        }
+
+        .geo-cause-loading-text {
+          color: rgba(139,90,43,0.7);
+          font-size: 12px;
+          letter-spacing: 1px;
+          animation: geoCausePulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes geoCausePulse {
+          0%, 100% { opacity: 0.5; }
+          50% { opacity: 1; }
+        }
 
         .modal-msg-text {
           margin: 0;

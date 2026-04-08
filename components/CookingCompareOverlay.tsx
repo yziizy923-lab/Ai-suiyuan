@@ -404,6 +404,17 @@ function CookingCompareInline({
             <div style={{ fontSize: 36 }}>🍲</div>
             <div style={{ fontSize: 15, color: "#5a3b1f", letterSpacing: 4, fontWeight: 600 }}>{dishTitle}</div>
             <div style={{ fontSize: 12, color: "rgba(90,59,31,0.6)", letterSpacing: 2 }}>八宝入釜 · 古今一味</div>
+            {/* 完成图：古今各一张 */}
+            <div style={{ display: "flex", gap: 24, marginTop: 8 }}>
+              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
+                <img src="/images/ancient/pot/古代.png" alt="古代完成" style={{ width: 200, height: 200, borderRadius: 12, objectFit: "cover", border: "2px solid rgba(139,90,43,0.3)" }} />
+                <span style={{ fontSize: 16, color: "rgba(90,59,31,0.6)", letterSpacing: 2 }}>古</span>
+              </div>
+              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
+                <img src="/images/modern/pot/现代.png" alt="现代完成" style={{ width: 200, height: 200, borderRadius: 12, objectFit: "cover", border: "2px solid rgba(156,163,175,0.4)" }} />
+                <span style={{ fontSize: 16, color: "rgba(55,65,81,0.6)", letterSpacing: 2 }}>今</span>
+              </div>
+            </div>
             <div style={{ display: "flex", gap: 8, marginTop: 4 }}>
               <button
                 onClick={reset}
@@ -894,6 +905,17 @@ export default function CookingCompareOverlay({
                   <p style={{ margin: "0 0 24px", fontSize: 14, color: "rgba(90,59,31,0.65)", letterSpacing: 2 }}>
                     八宝入釜 · 古今一味
                   </p>
+                  {/* 完成图：古今各一张 */}
+                  <div style={{ display: "flex", gap: 32, marginBottom: 28 }}>
+                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6 }}>
+                      <img src="/images/ancient/pot/古代.png" alt="古代完成" style={{ width: 200, height: 200, borderRadius: 14, objectFit: "cover", border: "2px solid rgba(139,90,43,0.3)" }} />
+                      <span style={{ fontSize: 20, color: "rgba(90,59,31,0.6)", letterSpacing: 2 }}>古</span>
+                    </div>
+                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6 }}>
+                      <img src="/images/modern/pot/现代.png" alt="现代完成" style={{ width: 200, height: 200, borderRadius: 14, objectFit: "cover", border: "2px solid rgba(156,163,175,0.4)" }} />
+                      <span style={{ fontSize: 20, color: "rgba(55,65,81,0.6)", letterSpacing: 2 }}>今</span>
+                    </div>
+                  </div>
                   <button
                     type="button"
                     onClick={reset}

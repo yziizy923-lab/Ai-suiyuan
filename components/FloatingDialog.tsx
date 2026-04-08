@@ -23,6 +23,11 @@ interface FloatingDialogProps {
   // 粒子点击后 AI 生成的地理条件
   geoIngredientDetail?: string;
   geoIngredientLoading?: boolean;
+  // 食材产地 Tab 选中的产地信息
+  geoCauseTarget?: { ingredient: string; placeName: string } | null;
+  geoCauseText?: string;
+  geoCauseLoading?: boolean;
+  onGeoCauseClear?: () => void;
 }
 
 export default function FloatingDialog({
@@ -34,6 +39,10 @@ export default function FloatingDialog({
   onIngredientSelect,
   geoIngredientDetail = "",
   geoIngredientLoading = false,
+  geoCauseTarget = null,
+  geoCauseText = "",
+  geoCauseLoading = false,
+  onGeoCauseClear,
 }: FloatingDialogProps) {
   const [collapsed, setCollapsed] = useState(false);
   const [cookingOpen, setCookingOpen] = useState(false);
@@ -584,34 +593,142 @@ export default function FloatingDialog({
               {/* ── 食材图鉴 Tab ── */}
               {activeTab === "ingredients" && (
                 <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-                  {(Object.entries(ingredientColors) as [string, string][]).map(([name, color]) => (
-                    <div
-                      key={name}
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 10,
-                        padding: "6px 10px",
-                        background: "rgba(255,255,255,0.04)",
-                        borderRadius: 8,
-                        border: `1px solid ${color}22`,
-                      }}
-                    >
+                  {/* 选中产地时显示详情 */}
+                  {geoCauseTarget ? (
+                    <>
+                      {/* 产地信息头部 */}
                       <div
                         style={{
-                          width: 8,
-                          height: 8,
-                          borderRadius: "50%",
-                          background: color,
-                          boxShadow: `0 0 6px ${color}`,
-                          flexShrink: 0,
+                          padding: "12px",
+                          background: "rgba(255,255,255,0.05)",
+                          borderRadius: 10,
+                          border: "1px solid rgba(139,90,43,0.2)",
+                          marginBottom: 4,
                         }}
-                      />
-                      <span style={{ color: "rgba(255,255,255,0.8)", fontSize: 12, letterSpacing: "1px", flex: 1 }}>
-                        {name}
-                      </span>
-                    </div>
-                  ))}
+                      >
+                        <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
+                          <div
+                            style={{
+                              width: 10,
+                              height: 10,
+                              borderRadius: "50%",
+                              background: "#f4c542",
+                              boxShadow: "0 0 8px rgba(244,197,66,0.6)",
+                              flexShrink: 0,
+                            }}
+                          />
+                          <span style={{ color: "#f4c542", fontSize: 14, fontWeight: 600, letterSpacing: "1px" }}>
+                            {geoCauseTarget.placeName}
+                          </span>
+                        </div>
+                        <div style={{ color: "rgba(255,255,255,0.3)", fontSize: 11, letterSpacing: "2px", marginBottom: 10 }}>
+                          产出 · {geoCauseTarget.ingredient}
+                        </div>
+                        <div
+                          style={{
+                            fontSize: 10,
+                            letterSpacing: "2px",
+                            color: "rgba(244,197,66,0.5)",
+                            display: "flex",
+                            alignItems: "center",
+                            gap: 6,
+                          }}
+                        >
+                          <span style={{ display: "inline-block", width: 16, height: 1, background: "rgba(244,197,66,0.3)" }} />
+                          地理成因 · 为什么是这里
+                          <span style={{ display: "inline-block", width: 16, height: 1, background: "rgba(244,197,66,0.3)" }} />
+                        </div>
+                      </div>
+
+                      {/* 地理成因内容 */}
+                      {geoCauseLoading ? (
+                        <div style={{ display: "flex", flexDirection: "column", gap: 7 }}>
+                          {[100, 75, 88, 60].map((w, i) => (
+                            <div
+                              key={i}
+                              style={{
+                                height: 9,
+                                borderRadius: 4,
+                                background: "rgba(255,255,255,0.08)",
+                                width: `${w}%`,
+                              }}
+                            />
+                          ))}
+                          <div style={{ color: "rgba(255,255,255,0.25)", fontSize: 11, letterSpacing: "1px", marginTop: 4 }}>
+                            正在推演此地山川水脉……
+                          </div>
+                        </div>
+                      ) : geoCauseText ? (
+                        <p style={{ color: "rgba(255,255,255,0.75)", fontSize: 12, lineHeight: 2, margin: 0, letterSpacing: "0.5px" }}>
+                          {geoCauseText}
+                        </p>
+                      ) : (
+                        <p style={{ color: "rgba(255,255,255,0.35)", fontSize: 12, lineHeight: 1.8, margin: 0 }}>
+                          点击地图上的产地光点获取地理成因解释
+                        </p>
+                      )}
+
+                      {/* 清除选中按钮 */}
+                      <button
+                        onClick={() => {
+                          if (onGeoCauseClear) {
+                            onGeoCauseClear();
+                          } else if (typeof onIngredientSelect === "function") {
+                            onIngredientSelect("");
+                          }
+                        }}
+                        style={{
+                          marginTop: 4,
+                          padding: "6px 12px",
+                          borderRadius: 6,
+                          border: "1px solid rgba(139,90,43,0.25)",
+                          background: "rgba(139,90,43,0.1)",
+                          color: "rgba(244,197,66,0.7)",
+                          fontSize: 11,
+                          cursor: "pointer",
+                          letterSpacing: "1px",
+                          fontFamily: '"Noto Serif SC", "SimSun", serif',
+                        }}
+                      >
+                        ← 返回列表
+                      </button>
+                    </>
+                  ) : (
+                    /* 未选中：显示食材列表 */
+                    <>
+                      <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 11, letterSpacing: "1px", margin: "0 0 4px" }}>
+                        点击地图光点查看产地信息
+                      </p>
+                      {(Object.entries(ingredientColors) as [string, string][]).map(([name, color]) => (
+                        <div
+                          key={name}
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: 10,
+                            padding: "6px 10px",
+                            background: "rgba(255,255,255,0.04)",
+                            borderRadius: 8,
+                            border: `1px solid ${color}22`,
+                          }}
+                        >
+                          <div
+                            style={{
+                              width: 8,
+                              height: 8,
+                              borderRadius: "50%",
+                              background: color,
+                              boxShadow: `0 0 6px ${color}`,
+                              flexShrink: 0,
+                            }}
+                          />
+                          <span style={{ color: "rgba(255,255,255,0.8)", fontSize: 12, letterSpacing: "1px", flex: 1 }}>
+                            {name}
+                          </span>
+                        </div>
+                      ))}
+                    </>
+                  )}
                 </div>
               )}
             </div>

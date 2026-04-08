@@ -6,16 +6,34 @@ import CookingCompareOverlay from "./CookingCompareOverlay";
 
 type Tab = "geo" | "culture" | "ingredients" | "flavor";
 
+export interface IngredientGeoInfo {
+  name: string;
+  ingredient: string;
+  color: string;
+  geoCondition: string;
+}
+
 interface FloatingDialogProps {
   activeTab: Tab;
   onTabChange: (tab: Tab) => void;
   ingredientColors: Record<string, string>;
+  ingredientGeoInfo?: Record<string, IngredientGeoInfo>;
+  selectedIngredient?: IngredientGeoInfo | null;
+  onIngredientSelect?: (ingredientName: string) => void;
+  // 粒子点击后 AI 生成的地理条件
+  geoIngredientDetail?: string;
+  geoIngredientLoading?: boolean;
 }
 
 export default function FloatingDialog({
   activeTab,
   onTabChange,
   ingredientColors,
+  ingredientGeoInfo = {},
+  selectedIngredient,
+  onIngredientSelect,
+  geoIngredientDetail = "",
+  geoIngredientLoading = false,
 }: FloatingDialogProps) {
   const [collapsed, setCollapsed] = useState(false);
   const [cookingOpen, setCookingOpen] = useState(false);
@@ -38,16 +56,9 @@ export default function FloatingDialog({
           fontFamily: '"Noto Serif SC", "SimSun", serif',
         }}
       >
-        {/* Tab bar */}
+        {/* Tab 栏 */}
         {!collapsed && (
-          <div
-            style={{
-              display: "flex",
-              gap: 6,
-              marginBottom: 8,
-              justifyContent: "flex-end",
-            }}
-          >
+          <div style={{ display: "flex", gap: 6, marginBottom: 8, justifyContent: "flex-end" }}>
             {tabs.map((tab) => (
               <button
                 key={tab.id}
@@ -56,16 +67,12 @@ export default function FloatingDialog({
                   padding: "6px 14px",
                   borderRadius: 20,
                   border: "1px solid",
-                  borderColor:
-                    activeTab === tab.id
-                      ? "rgba(139,90,43,0.8)"
-                      : "rgba(139,90,43,0.25)",
+                  borderColor: activeTab === tab.id ? "rgba(139,90,43,0.8)" : "rgba(139,90,43,0.25)",
                   background:
                     activeTab === tab.id
                       ? "linear-gradient(135deg, #8b5a2b, #a06830)"
                       : "rgba(255,252,245,0.88)",
-                  color:
-                    activeTab === tab.id ? "#fff" : "rgba(139,90,43,0.8)",
+                  color: activeTab === tab.id ? "#fff" : "rgba(139,90,43,0.8)",
                   fontSize: 13,
                   cursor: "pointer",
                   transition: "all 0.25s ease",
@@ -86,7 +93,7 @@ export default function FloatingDialog({
           </div>
         )}
 
-        {/* Main panel */}
+        {/* 主面板 */}
         <div
           style={{
             width: collapsed ? 48 : 320,
@@ -102,7 +109,7 @@ export default function FloatingDialog({
             flexDirection: "column",
           }}
         >
-          {/* Header */}
+          {/* 头部 */}
           <div
             style={{
               padding: collapsed ? "12px 0" : "14px 18px",
@@ -135,14 +142,7 @@ export default function FloatingDialog({
               </div>
             ) : (
               <>
-                <span
-                  style={{
-                    color: "rgba(244,197,66,0.9)",
-                    fontSize: 13,
-                    letterSpacing: "3px",
-                    fontWeight: 600,
-                  }}
-                >
+                <span style={{ color: "rgba(244,197,66,0.9)", fontSize: 13, letterSpacing: "3px", fontWeight: 600 }}>
                   随园探索
                 </span>
                 <button
@@ -157,14 +157,8 @@ export default function FloatingDialog({
                     padding: "0 4px",
                     transition: "color 0.2s",
                   }}
-                  onMouseEnter={(e) =>
-                    ((e.target as HTMLElement).style.color =
-                      "rgba(255,255,255,0.8)")
-                  }
-                  onMouseLeave={(e) =>
-                    ((e.target as HTMLElement).style.color =
-                      "rgba(255,255,255,0.4)")
-                  }
+                  onMouseEnter={(e) => ((e.target as HTMLElement).style.color = "rgba(255,255,255,0.8)")}
+                  onMouseLeave={(e) => ((e.target as HTMLElement).style.color = "rgba(255,255,255,0.4)")}
                 >
                   −
                 </button>
@@ -172,10 +166,10 @@ export default function FloatingDialog({
             )}
           </div>
 
-          {/* Content */}
+          {/* 内容区 */}
           {!collapsed && (
             <div style={{ padding: "14px 18px", flex: 1 }}>
-              {/* 古今对比入口 */}
+              {/* 古今对比入口按钮 */}
               <motion.button
                 onClick={() => setCookingOpen(true)}
                 whileHover={{ scale: 1.02 }}
@@ -205,74 +199,297 @@ export default function FloatingDialog({
                 <span>古今对比 · 随园烹饪</span>
               </motion.button>
 
+              {/* ── 地理分布 Tab ── */}
               {activeTab === "geo" && (
                 <div>
-                  <p
-                    style={{
-                      color: "rgba(255,255,255,0.55)",
-                      fontSize: 12,
-                      lineHeight: 1.8,
-                      margin: "0 0 12px",
-                      letterSpacing: "1px",
-                    }}
-                  >
-                    各色粒子自食材产地飘向菜品中心，<br />
-                    汇聚成这一味随园珍馐。
-                  </p>
-                  <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                    {Object.entries(ingredientColors).map(([name, color]) => (
+                  {selectedIngredient ? (
+                    <>
+                      {/* 已选食材：展示 AI 生成的地理条件 */}
                       <div
-                        key={name}
                         style={{
-                          display: "flex",
-                          alignItems: "center",
-                          gap: 10,
+                          marginBottom: 12,
+                          padding: "14px",
+                          background: `${selectedIngredient.color}12`,
+                          borderRadius: 10,
+                          border: `1px solid ${selectedIngredient.color}35`,
                         }}
                       >
+                        {/* 食材名称 + 产地行 */}
+                        <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
+                          <div
+                            style={{
+                              width: 10,
+                              height: 10,
+                              borderRadius: "50%",
+                              background: selectedIngredient.color,
+                              boxShadow: `0 0 8px ${selectedIngredient.color}`,
+                              flexShrink: 0,
+                            }}
+                          />
+                          <span
+                            style={{
+                              color: selectedIngredient.color,
+                              fontSize: 14,
+                              fontWeight: 600,
+                              letterSpacing: "1px",
+                            }}
+                          >
+                            {selectedIngredient.ingredient}
+                          </span>
+                          <span style={{ color: "rgba(255,255,255,0.3)", fontSize: 11, marginLeft: 2 }}>
+                            · {selectedIngredient.name}
+                          </span>
+                        </div>
+
+                        {/* 地理条件区块标题 */}
                         <div
                           style={{
-                            width: 10,
-                            height: 10,
-                            borderRadius: "50%",
-                            background: color,
-                            boxShadow: `0 0 8px ${color}`,
-                            flexShrink: 0,
-                          }}
-                        />
-                        <span
-                          style={{
-                            color: "rgba(255,255,255,0.7)",
-                            fontSize: 12,
-                            letterSpacing: "1px",
+                            fontSize: 10,
+                            letterSpacing: "3px",
+                            color: "rgba(244,197,66,0.6)",
+                            marginBottom: 10,
+                            display: "flex",
+                            alignItems: "center",
+                            gap: 6,
                           }}
                         >
-                          {name}
+                          <span
+                            style={{
+                              display: "inline-block",
+                              width: 20,
+                              height: 1,
+                              background: "rgba(244,197,66,0.3)",
+                            }}
+                          />
+                          地理成因 · 气候 / 地形 / 水文
+                          <span
+                            style={{
+                              display: "inline-block",
+                              width: 20,
+                              height: 1,
+                              background: "rgba(244,197,66,0.3)",
+                            }}
+                          />
+                        </div>
+
+                        {/* 加载态 */}
+                        {geoIngredientLoading && (
+                          <>
+                            <style>{`
+                              @keyframes wst-shimmer {
+                                0%,100% { opacity: 0.3; }
+                                50% { opacity: 0.7; }
+                              }
+                            `}</style>
+                            <div style={{ display: "flex", flexDirection: "column", gap: 7, marginBottom: 8 }}>
+                              {[100, 82, 94, 70].map((w, i) => (
+                                <div
+                                  key={i}
+                                  style={{
+                                    height: 9,
+                                    borderRadius: 4,
+                                    background: "rgba(255,255,255,0.1)",
+                                    width: `${w}%`,
+                                    animation: "wst-shimmer 1.5s ease-in-out infinite",
+                                    animationDelay: `${i * 0.15}s`,
+                                  }}
+                                />
+                              ))}
+                            </div>
+                            <div
+                              style={{
+                                color: "rgba(255,255,255,0.28)",
+                                fontSize: 11,
+                                letterSpacing: "1.5px",
+                                marginTop: 4,
+                              }}
+                            >
+                              正在推演此地山川水脉……
+                            </div>
+                          </>
+                        )}
+
+                        {/* AI 生成内容 */}
+                        {!geoIngredientLoading && geoIngredientDetail && (
+                          <p
+                            style={{
+                              color: "rgba(255,255,255,0.78)",
+                              fontSize: 12,
+                              lineHeight: 2,
+                              margin: 0,
+                              letterSpacing: "0.6px",
+                            }}
+                          >
+                            {geoIngredientDetail}
+                          </p>
+                        )}
+
+                        {/* 兜底：原始 note（无 AI 内容且未加载时） */}
+                        {!geoIngredientLoading && !geoIngredientDetail && (
+                          <p
+                            style={{
+                              color: "rgba(255,255,255,0.45)",
+                              fontSize: 12,
+                              lineHeight: 1.85,
+                              margin: 0,
+                              letterSpacing: "0.5px",
+                            }}
+                          >
+                            {selectedIngredient.geoCondition}
+                          </p>
+                        )}
+                      </div>
+
+                      {/* 三个维度图标提示 */}
+                      {!geoIngredientLoading && geoIngredientDetail && (
+                        <div
+                          style={{
+                            display: "flex",
+                            gap: 6,
+                            marginBottom: 12,
+                          }}
+                        >
+                          {[
+                            { icon: "🌦", label: "气候" },
+                            { icon: "⛰", label: "地形" },
+                            { icon: "💧", label: "水文" },
+                          ].map((dim) => (
+                            <div
+                              key={dim.label}
+                              style={{
+                                flex: 1,
+                                padding: "5px 0",
+                                background: "rgba(255,255,255,0.04)",
+                                borderRadius: 6,
+                                border: "1px solid rgba(139,90,43,0.18)",
+                                display: "flex",
+                                flexDirection: "column",
+                                alignItems: "center",
+                                gap: 3,
+                              }}
+                            >
+                              <span style={{ fontSize: 14 }}>{dim.icon}</span>
+                              <span style={{ color: "rgba(255,255,255,0.35)", fontSize: 10, letterSpacing: "1px" }}>
+                                {dim.label}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+
+                      {/* 返回总览按钮 */}
+                      <button
+                        onClick={() => onIngredientSelect?.("")}
+                        style={{
+                          width: "100%",
+                          padding: "8px 12px",
+                          borderRadius: 8,
+                          border: "1px solid rgba(139,90,43,0.25)",
+                          background: "rgba(139,90,43,0.1)",
+                          color: "rgba(244,197,66,0.7)",
+                          fontSize: 11,
+                          cursor: "pointer",
+                          letterSpacing: "1px",
+                          fontFamily: '"Noto Serif SC", "SimSun", serif',
+                          marginBottom: 12,
+                        }}
+                      >
+                        ← 返回总览
+                      </button>
+                    </>
+                  ) : (
+                    /* 未选中：总览说明 + 图例 */
+                    <>
+                      <p
+                        style={{
+                          color: "rgba(255,255,255,0.55)",
+                          fontSize: 12,
+                          lineHeight: 1.8,
+                          margin: "0 0 12px",
+                          letterSpacing: "1px",
+                        }}
+                      >
+                        各色粒子自食材产地飘向菜品中心，<br />
+                        汇聚成这一味随园珍馐。
+                      </p>
+                      <p
+                        style={{
+                          color: "rgba(244,197,66,0.7)",
+                          fontSize: 11,
+                          lineHeight: 1.7,
+                          margin: "0 0 12px",
+                          letterSpacing: "0.5px",
+                        }}
+                      >
+                        点击地图上的食材粒子<br />
+                        查看气候 · 地形 · 水文地理条件
+                      </p>
+
+                      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                        {(Object.entries(ingredientColors) as [string, string][]).map((entry) => {
+                          const name: string = entry[0];
+                          const color: string = entry[1];
+                          const isSelected = Boolean(selectedIngredient) && selectedIngredient!.name === name;
+                          return (
+                            <div
+                              key={name}
+                              style={{
+                                display: "flex",
+                                alignItems: "center",
+                                gap: 10,
+                                padding: "6px 8px",
+                                background: isSelected
+                                  ? `${color}20`
+                                  : "rgba(255,255,255,0.03)",
+                                borderRadius: 8,
+                                border: isSelected
+                                  ? `1px solid ${color}50`
+                                  : "1px solid transparent",
+                                cursor: "pointer",
+                                transition: "all 0.2s ease",
+                              }}
+                              onClick={() => {
+                                const geoInfo = ingredientGeoInfo[name];
+                                if (geoInfo) onIngredientSelect?.(name);
+                              }}
+                            >
+                              <div
+                                style={{
+                                  width: 10,
+                                  height: 10,
+                                  borderRadius: "50%",
+                                  background: color,
+                                  boxShadow: `0 0 8px ${color}`,
+                                  flexShrink: 0,
+                                }}
+                              />
+                              <span style={{ color: "rgba(255,255,255,0.7)", fontSize: 12, letterSpacing: "1px" }}>
+                                {name}
+                              </span>
+                            </div>
+                          );
+                        })}
+                      </div>
+
+                      <div
+                        style={{
+                          marginTop: 14,
+                          padding: "8px 12px",
+                          background: "rgba(139,90,43,0.15)",
+                          borderRadius: 8,
+                          borderLeft: "3px solid rgba(244,197,66,0.5)",
+                        }}
+                      >
+                        <span style={{ color: "rgba(244,197,66,0.8)", fontSize: 11, letterSpacing: "1px" }}>
+                          💡 点击粒子查看产地地理成因
                         </span>
                       </div>
-                    ))}
-                  </div>
-                  <div
-                    style={{
-                      marginTop: 14,
-                      padding: "8px 12px",
-                      background: "rgba(139,90,43,0.15)",
-                      borderRadius: 8,
-                      borderLeft: "3px solid rgba(244,197,66,0.5)",
-                    }}
-                  >
-                    <span
-                      style={{
-                        color: "rgba(244,197,66,0.8)",
-                        fontSize: 11,
-                        letterSpacing: "1px",
-                      }}
-                    >
-                      💡 提示：切换地图缩放级别可欣赏粒子流动效果
-                    </span>
-                  </div>
+                    </>
+                  )}
                 </div>
               )}
 
+              {/* ── 味觉地图 Tab ── */}
               {activeTab === "flavor" && (
                 <div>
                   <p
@@ -296,14 +513,7 @@ export default function FloatingDialog({
                       { flavor: "咸", color: "#87CEEB", shape: "方形", desc: "晶体结构，网格纹理" },
                       { flavor: "鲜", color: "#FFD700", shape: "水滴形", desc: "垂落汤汁，清润流动" },
                     ].map((item) => (
-                      <div
-                        key={item.flavor}
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          gap: 10,
-                        }}
-                      >
+                      <div key={item.flavor} style={{ display: "flex", alignItems: "center", gap: 10 }}>
                         <div
                           style={{
                             width: 10,
@@ -314,13 +524,7 @@ export default function FloatingDialog({
                             flexShrink: 0,
                           }}
                         />
-                        <span
-                          style={{
-                            color: "rgba(255,255,255,0.7)",
-                            fontSize: 12,
-                            letterSpacing: "1px",
-                          }}
-                        >
+                        <span style={{ color: "rgba(255,255,255,0.7)", fontSize: 12, letterSpacing: "1px" }}>
                           {item.flavor} · {item.shape}
                         </span>
                       </div>
@@ -335,19 +539,14 @@ export default function FloatingDialog({
                       borderLeft: "3px solid rgba(244,197,66,0.5)",
                     }}
                   >
-                    <span
-                      style={{
-                        color: "rgba(244,197,66,0.8)",
-                        fontSize: 11,
-                        letterSpacing: "1px",
-                      }}
-                    >
-                      💡 提示：主料扩散范围大、脉冲强；辅料范围小、呼吸弱
+                    <span style={{ color: "rgba(244,197,66,0.8)", fontSize: 11, letterSpacing: "1px" }}>
+                      💡 主料扩散范围大、脉冲强；辅料范围小、呼吸弱
                     </span>
                   </div>
                 </div>
               )}
 
+              {/* ── 文化故事 Tab ── */}
               {activeTab === "culture" && (
                 <div>
                   <div
@@ -371,35 +570,21 @@ export default function FloatingDialog({
                     >
                       &quot;此圣祖师赐徐健庵尚书方也。尚书取方时，御膳房费一千两。&quot;
                       <br />
-                      <span
-                        style={{
-                          color: "rgba(255,255,255,0.35)",
-                          fontSize: 11,
-                          marginTop: 4,
-                          display: "block",
-                        }}
-                      >
+                      <span style={{ color: "rgba(255,255,255,0.35)", fontSize: 11, marginTop: 4, display: "block" }}>
                         —— 孟亭太守
                       </span>
                     </p>
                   </div>
-                  <p
-                    style={{
-                      color: "rgba(255,255,255,0.55)",
-                      fontSize: 12,
-                      lineHeight: 1.8,
-                      margin: 0,
-                      letterSpacing: "0.5px",
-                    }}
-                  >
+                  <p style={{ color: "rgba(255,255,255,0.55)", fontSize: 12, lineHeight: 1.8, margin: 0, letterSpacing: "0.5px" }}>
                     此菜为康熙皇帝赐予徐健庵尚书之御膳方。太守祖父楼村先生为尚书门生，故得此方流传。王太守依此方烹饪，以嫩鸡肉与香菇、蘑菇、松子等八宝共入浓鸡汤，尽显清代江南饮食之精致。
                   </p>
                 </div>
               )}
 
+              {/* ── 食材图鉴 Tab ── */}
               {activeTab === "ingredients" && (
                 <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-                  {Object.entries(ingredientColors).map(([name, color]) => (
+                  {(Object.entries(ingredientColors) as [string, string][]).map(([name, color]) => (
                     <div
                       key={name}
                       style={{
@@ -422,14 +607,7 @@ export default function FloatingDialog({
                           flexShrink: 0,
                         }}
                       />
-                      <span
-                        style={{
-                          color: "rgba(255,255,255,0.8)",
-                          fontSize: 12,
-                          letterSpacing: "1px",
-                          flex: 1,
-                        }}
-                      >
+                      <span style={{ color: "rgba(255,255,255,0.8)", fontSize: 12, letterSpacing: "1px", flex: 1 }}>
                         {name}
                       </span>
                     </div>

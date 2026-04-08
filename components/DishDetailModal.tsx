@@ -19,7 +19,6 @@ type Dish = {
   history?: string;
   originalText?: string;
   modernMethod?: string;
-  // 菜品位置数据
   dish_location?: {
     name: string;
     origin: string;
@@ -27,7 +26,6 @@ type Dish = {
     latitude: number;
     note: string;
   };
-  // 食材分布数据（可选，来自 wang_sitai_babao_doufu.json 格式）
   ingredients_distribution?: Array<{
     ingredient: string;
     category: string;
@@ -53,14 +51,13 @@ type Message = {
   legendItems?: { ingredient: string; color: string; icon: string; desc: string }[];
   flavorLegendItems?: { flavor: string; color: string; icon: string; desc: string; shape: string }[];
 };
-type ViewMode = "ingredients" | "flavor" | "compare" | "culture" | "geo-cause" | null;
+type ViewMode = "ingredients" | "flavor" | "culture" | "geo-cause" | null;
 
 interface DishDetailModalProps {
   dish: Dish;
   onClose: () => void;
 }
 
-// 食材颜色映射 - 基于食材类别
 const INGREDIENT_COLORS: Record<string, string> = {
   "鸡肉": "#FF6B6B",
   "鸡汤": "#FFB347",
@@ -73,7 +70,6 @@ const INGREDIENT_COLORS: Record<string, string> = {
   "default": "#8b5a2b",
 };
 
-// 食材图标映射
 const INGREDIENT_ICONS: Record<string, string> = {
   "鸡肉": "🐔",
   "鸡汤": "🍲",
@@ -86,7 +82,6 @@ const INGREDIENT_ICONS: Record<string, string> = {
   "default": "🥬",
 };
 
-// 获取食材对应的描述
 const INGREDIENT_DESC: Record<string, string> = {
   "鸡肉": "肉质鲜嫩，富含蛋白质",
   "鸡汤": "滋补养身，味道鲜美",
@@ -99,7 +94,6 @@ const INGREDIENT_DESC: Record<string, string> = {
   "default": "重要食材",
 };
 
-// 风味颜色映射
 const FLAVOR_COLORS: Record<string, string> = {
   "酸": "#E74C3C",
   "甜": "#F39C12",
@@ -109,7 +103,6 @@ const FLAVOR_COLORS: Record<string, string> = {
   "鲜": "#27AE60",
 };
 
-// 风味图标映射
 const FLAVOR_ICONS: Record<string, string> = {
   "酸": "⭐",
   "甜": "💫",
@@ -119,7 +112,6 @@ const FLAVOR_ICONS: Record<string, string> = {
   "鲜": "✨",
 };
 
-// 风味描述映射
 const FLAVOR_DESC: Record<string, string> = {
   "酸": "开胃解腻，刺激味蕾",
   "甜": "愉悦心情，温和甘美",
@@ -129,7 +121,6 @@ const FLAVOR_DESC: Record<string, string> = {
   "鲜": "自然鲜美，回味无穷",
 };
 
-// 风味形状映射 - 对应 FlavorDiffusionCanvas 中的形状
 const FLAVOR_SHAPES: Record<string, string> = {
   "酸": "星形",
   "甜": "圆形",
@@ -139,11 +130,9 @@ const FLAVOR_SHAPES: Record<string, string> = {
   "鲜": "水滴形",
 };
 
-// 从坐标点提取唯一的食材颜色信息
 function extractIngredientLegend(points: IngredientPoint[]): { ingredient: string; color: string; icon: string; desc: string }[] {
   const seen = new Set<string>();
   const legend: { ingredient: string; color: string; icon: string; desc: string }[] = [];
-
   for (const pt of points) {
     if (!seen.has(pt.ingredient)) {
       seen.add(pt.ingredient);
@@ -155,15 +144,12 @@ function extractIngredientLegend(points: IngredientPoint[]): { ingredient: strin
       });
     }
   }
-
   return legend;
 }
 
-// 从风味数据提取唯一的风味信息
 function extractFlavorLegend(flavorData: FlavorIngredientData[]): { flavor: string; color: string; icon: string; desc: string; shape: string }[] {
   const seen = new Set<string>();
   const legend: { flavor: string; color: string; icon: string; desc: string; shape: string }[] = [];
-
   for (const item of flavorData) {
     if (!seen.has(item.flavor)) {
       seen.add(item.flavor);
@@ -176,25 +162,14 @@ function extractFlavorLegend(flavorData: FlavorIngredientData[]): { flavor: stri
       });
     }
   }
-
   return legend;
 }
 
-// 根据菜品数据生成食材坐标点
 function generateIngredientPoints(dish: Dish): IngredientPoint[] {
   const points: IngredientPoint[] = [];
-
-  console.log('[generateIngredientPoints] dish.name:', dish.name);
-  console.log('[generateIngredientPoints] dish.ingredients_distribution:', !!dish.ingredients_distribution);
-  if (dish.ingredients_distribution) {
-    console.log('[generateIngredientPoints] ingredients count:', dish.ingredients_distribution.length);
-  }
-
-  // 如果有精确的食材分布数据
   if (dish.ingredients_distribution) {
     for (const ing of dish.ingredients_distribution) {
       const color = INGREDIENT_COLORS[ing.ingredient] || INGREDIENT_COLORS.default;
-      console.log('[generateIngredientPoints] Processing ingredient:', ing.ingredient, 'locations:', ing.distribution_locations.length);
       for (const loc of ing.distribution_locations) {
         points.push({
           lng: loc.longitude,
@@ -206,12 +181,9 @@ function generateIngredientPoints(dish: Dish): IngredientPoint[] {
       }
     }
   }
-
-  console.log('[generateIngredientPoints] Total points generated:', points.length);
   return points;
 }
 
-// 获取菜品中心坐标
 function getDishCenterCoords(dish: Dish): { lng: number; lat: number } {
   if (dish.dish_location) {
     return { lng: dish.dish_location.longitude, lat: dish.dish_location.latitude };
@@ -220,18 +192,6 @@ function getDishCenterCoords(dish: Dish): { lng: number; lat: number } {
     return { lng: dish.originCoords[0], lat: dish.originCoords[1] };
   }
   return { lng: 108, lat: 34 };
-}
-
-function parseArrayField(value: unknown): string[] {
-  if (Array.isArray(value)) return value;
-  if (typeof value === "string") {
-    try {
-      return JSON.parse(value);
-    } catch {
-      return value.split(",").map((s) => s.trim()).filter(Boolean);
-    }
-  }
-  return [];
 }
 
 async function callAI(question: string, dishName: string, originalText: string, modernMethod: string): Promise<string> {
@@ -248,10 +208,11 @@ async function callAI(question: string, dishName: string, originalText: string, 
   }
 }
 
-const RECOMMENDED_QUESTIONS: { id: ViewMode; label: string; icon: string; defaultQuestion: string; hasParticle?: boolean; hasFlavor?: boolean }[] = [
+// "compare" 已从 ViewMode 中移除，改为独立的 cookingCompareOpen 状态控制
+const RECOMMENDED_QUESTIONS: { id: ViewMode | "compare"; label: string; icon: string; defaultQuestion: string; hasParticle?: boolean; hasFlavor?: boolean }[] = [
   { id: "ingredients", label: "食材产地", icon: "🗺️", defaultQuestion: "请介绍这道菜的食材产地分布", hasParticle: true },
   { id: "flavor",      label: "风味分析", icon: "✨", defaultQuestion: "请分析这道菜的风味特征", hasFlavor: true },
-  { id: "compare",     label: "古今对比", icon: "🍳", defaultQuestion: "请对比古代做法与现代做法的异同" },
+  { id: "compare",     label: "古今对比", icon: "🍳", defaultQuestion: "" },
   { id: "culture",     label: "文化故事", icon: "📜", defaultQuestion: "请讲述这道菜的文化故事与传承" },
   { id: "geo-cause",   label: "地理成因", icon: "🌍", defaultQuestion: "请分析食材与地理成因的关系" },
 ];
@@ -267,49 +228,39 @@ export default function DishDetailModal({ dish, onClose }: DishDetailModalProps)
   const [loadingSteps, setLoadingSteps] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
 
-  // Chat state - 初始不选中任何按钮
   const [viewMode, setViewMode] = useState<ViewMode>(null);
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState("");
   const [aiLoading, setAiLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  /** 古今对比：全屏拖拽烹饪演示（覆盖地图与弹窗） */
+
+  // ✅ 独立控制古今对比悬浮小弹窗
   const [cookingCompareOpen, setCookingCompareOpen] = useState(false);
 
-  // 粒子动画状态 - 根据 viewMode 控制显示
   const [particleVisible, setParticleVisible] = useState(false);
   const [ingredientPoints, setIngredientPoints] = useState<IngredientPoint[]>([]);
-  // 风味扩散动画状态
   const [flavorVisible, setFlavorVisible] = useState(false);
   const [flavorData, setFlavorData] = useState<FlavorIngredientData[]>([]);
-  // 存储从 API 获取的菜品详细数据（包含 dish_location 和 ingredients_distribution）
   const [dishExtraData, setDishExtraData] = useState<{
     dish_location?: Dish['dish_location'];
     ingredients_distribution?: Dish['ingredients_distribution'];
   } | null>(null);
 
-  // 合并菜品数据：优先使用 API 返回的数据，其次使用传入的 dish 数据
   const dishCenter = dishExtraData?.dish_location
     ? { lng: dishExtraData.dish_location.longitude, lat: dishExtraData.dish_location.latitude }
     : getDishCenterCoords(dish);
 
-  // 加载食材分布数据并生成坐标点
   useEffect(() => {
     async function loadIngredientData() {
       if (!dish?.name) return;
-
       try {
-        // 从 API 获取食材分布数据
         const res = await fetch(`/api/dish-detail?name=${encodeURIComponent(dish.name)}`);
         const result = await res.json();
-
         if (result.success && result.data) {
-          // 存储 API 返回的数据
           setDishExtraData({
             dish_location: result.data.dish_location,
             ingredients_distribution: result.data.ingredients_distribution,
           });
-          // 使用 API 返回的数据生成坐标点
           const points = generateIngredientPoints({
             ...dish,
             ingredients_distribution: result.data.ingredients_distribution,
@@ -317,46 +268,30 @@ export default function DishDetailModal({ dish, onClose }: DishDetailModalProps)
           });
           setIngredientPoints(points);
         } else {
-          // 如果没有精确数据，使用菜品自身的食材数据
-          const points = generateIngredientPoints(dish);
-          setIngredientPoints(points);
+          setIngredientPoints(generateIngredientPoints(dish));
         }
-      } catch (error) {
-        console.error('Failed to load ingredient distribution:', error);
-        const points = generateIngredientPoints(dish);
-        setIngredientPoints(points);
+      } catch {
+        setIngredientPoints(generateIngredientPoints(dish));
       }
     }
-
     loadIngredientData();
   }, [dish]);
 
-  // 加载风味数据
   useEffect(() => {
     async function loadFlavorData() {
       if (!dish?.name) return;
-
       try {
         const res = await fetch(`/api/dish-flavor?name=${encodeURIComponent(dish.name)}`);
         const result = await res.json();
-
-        if (result.success && result.data) {
-          setFlavorData(result.data);
-        }
-      } catch (error) {
-        console.error('Failed to load flavor data:', error);
+        if (result.success && result.data) setFlavorData(result.data);
+      } catch {
+        console.error('Failed to load flavor data');
       }
     }
-
     loadFlavorData();
   }, [dish]);
 
-  // 当 viewMode 变化时控制动画显示
   useEffect(() => {
-    console.log('[DishDetail] viewMode changed to:', viewMode);
-    console.log('[DishDetail] ingredientPoints count:', ingredientPoints.length);
-    console.log('[DishDetail] dishCenter:', dishCenter);
-
     if (viewMode === "ingredients" && ingredientPoints.length > 0) {
       setParticleVisible(true);
       setFlavorVisible(false);
@@ -369,45 +304,23 @@ export default function DishDetailModal({ dish, onClose }: DishDetailModalProps)
     }
   }, [viewMode, ingredientPoints.length, flavorData.length]);
 
-  // 当 ingredientPoints 更新且 viewMode 是 "ingredients" 时，确保粒子显示
   useEffect(() => {
-    if (viewMode === "ingredients" && ingredientPoints.length > 0) {
-      console.log('[DishDetail] ingredientPoints loaded, showing particles');
-      setParticleVisible(true);
-    }
+    if (viewMode === "ingredients" && ingredientPoints.length > 0) setParticleVisible(true);
   }, [ingredientPoints, viewMode]);
 
-  // 当 flavorData 更新且 viewMode 是 "flavor" 时，确保风味动画显示
   useEffect(() => {
-    if (viewMode === "flavor" && flavorData.length > 0) {
-      console.log('[DishDetail] flavorData loaded, showing flavor diffusion');
-      setFlavorVisible(true);
-    }
+    if (viewMode === "flavor" && flavorData.length > 0) setFlavorVisible(true);
   }, [flavorData, viewMode]);
 
-  // 粒子动画触发（保留备用，现在由 viewMode 控制）
-  const triggerParticleAnimation = () => {
-    setParticleVisible(true);
-  };
-
-  // 风味动画触发
-  const triggerFlavorAnimation = () => {
-    setFlavorVisible(true);
-  };
-
-  // Scroll to bottom when messages change
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  // Init Mapbox - 改为可交互
   useEffect(() => {
     const container = mapContainerRef.current;
     if (!container) return;
     const accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
     if (!accessToken) return;
-
-    console.log('[DishDetail] Initializing map...');
 
     mapboxgl.accessToken = accessToken;
     const map = new mapboxgl.Map({
@@ -415,13 +328,12 @@ export default function DishDetailModal({ dish, onClose }: DishDetailModalProps)
       style: "mapbox://styles/mapbox/light-v11",
       center: [dishCenter.lng, dishCenter.lat],
       zoom: 5,
-      interactive: true,  // 允许拖动和缩放
+      interactive: true,
       attributionControl: false,
       projection: "mercator",
     });
 
     map.on("load", () => {
-      console.log('[DishDetail] Map loaded');
       map.getStyle()?.layers?.forEach((layer) => {
         if (layer.layout && ("text-field" in layer.layout)) {
           map.setLayoutProperty(layer.id, "text-field", ["get", "name_zh-Hans"]);
@@ -430,13 +342,10 @@ export default function DishDetailModal({ dish, onClose }: DishDetailModalProps)
           map.setPaintProperty(layer.id, "background-color", "#e8dcc8");
         }
       });
-
-      // 添加菜品位置标记
       const el = document.createElement("div");
-      el.innerHTML = `
-        <div style="width:20px;height:20px;background:linear-gradient(135deg,#d44444,#a83232);
-          border:3px solid rgba(255,255,255,0.9);border-radius:50%;
-          box-shadow:0 2px 8px rgba(0,0,0,0.3);"></div>`;
+      el.innerHTML = `<div style="width:20px;height:20px;background:linear-gradient(135deg,#d44444,#a83232);
+        border:3px solid rgba(255,255,255,0.9);border-radius:50%;
+        box-shadow:0 2px 8px rgba(0,0,0,0.3);"></div>`;
       new mapboxgl.Marker({ element: el })
         .setLngLat([dishCenter.lng, dishCenter.lat])
         .addTo(map);
@@ -444,35 +353,33 @@ export default function DishDetailModal({ dish, onClose }: DishDetailModalProps)
     });
 
     mapRef.current = map;
-    console.log('[DishDetail] mapRef.current set:', !!mapRef.current);
-    return () => {
-      map.remove();
-      mapRef.current = null;
-    };
-  }, []);  // 只初始化一次
+    return () => { map.remove(); mapRef.current = null; };
+  }, []);
 
-  // 当 API 数据加载完成后，平滑飞到正确的菜品位置
   useEffect(() => {
     if (!dishExtraData?.dish_location || !mapRef.current) return;
-
     const map = mapRef.current;
     const { longitude, latitude } = dishExtraData.dish_location;
-
-    console.log('[DishDetail] Flying to dish location:', longitude, latitude);
-
-    // 地图加载完成后飞到正确位置
     if (map.isStyleLoaded()) {
       map.flyTo({ center: [longitude, latitude], zoom: 5, duration: 1500 });
     } else {
-      map.once("load", () => {
-        map.flyTo({ center: [longitude, latitude], zoom: 5, duration: 1500 });
-      });
+      map.once("load", () => map.flyTo({ center: [longitude, latitude], zoom: 5, duration: 1500 }));
     }
   }, [dishExtraData?.dish_location]);
 
-  // Generate image
+  const hasValidImage = (url: string | undefined): boolean => {
+    if (!url) return false;
+    if (url.includes('picsum.photos')) return false;
+    return url.startsWith('data:') || url.startsWith('/') || url.startsWith('http');
+  };
+
   useEffect(() => {
     if (!dish) return;
+    if (hasValidImage(dish.image)) {
+      setImageUrl(dish.image);
+      setIsGeneratingImage(false);
+      return;
+    }
     const generateImage = async () => {
       setIsGeneratingImage(true);
       setImageError(null);
@@ -480,14 +387,11 @@ export default function DishDetailModal({ dish, onClose }: DishDetailModalProps)
         const response = await fetch("/api/generate-dish-image", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ dish: dish.name, desc: dish.desc || "", ancient: dish.history || "" }),
+          body: JSON.stringify({ dish: dish.name, desc: dish.desc || "", ancient: dish.history || "", saveToDb: true }),
         });
         const data = await response.json();
-        if (data.success && data.imageUrl) {
-          setImageUrl(data.imageUrl);
-        } else {
-          setImageError(data.error || "生成失败");
-        }
+        if (data.success && data.imageUrl) setImageUrl(data.imageUrl);
+        else setImageError(data.error || "生成失败");
       } catch {
         setImageError("网络错误");
       } finally {
@@ -497,7 +401,6 @@ export default function DishDetailModal({ dish, onClose }: DishDetailModalProps)
     generateImage();
   }, [dish]);
 
-  // Load cooking steps
   const loadCookingSteps = async () => {
     setLoadingSteps(true);
     try {
@@ -517,7 +420,6 @@ export default function DishDetailModal({ dish, onClose }: DishDetailModalProps)
     }
   };
 
-  // Send message
   const handleSend = async (question: string, forceView?: ViewMode) => {
     if (!question.trim()) return;
     const targetView = forceView || viewMode;
@@ -527,11 +429,9 @@ export default function DishDetailModal({ dish, onClose }: DishDetailModalProps)
     setInputValue("");
     setAiLoading(true);
 
-    // Switch view based on keywords (only if not null)
     const viewMap: Record<string, Exclude<ViewMode, null>> = {
       "食材": "ingredients", "产地": "ingredients",
       "风味": "flavor", "分析": "flavor",
-      "古今": "compare", "对比": "compare",
       "文化": "culture", "故事": "culture",
       "地理": "geo-cause", "成因": "geo-cause",
     };
@@ -551,33 +451,25 @@ export default function DishDetailModal({ dish, onClose }: DishDetailModalProps)
       const aiMsg: Message = { role: "ai", content: aiContent };
       setMessages((prev) => [...prev, aiMsg]);
 
-      // 如果是食材产地问题，回答完成后自动添加图例说明
       if (finalView === "ingredients" && ingredientPoints.length > 0) {
         const legendItems = extractIngredientLegend(ingredientPoints);
-        const legendContent = `图例说明：图中各色光点代表不同食材所在产地——`;
-        const legendMsg: Message = {
-          role: "legend",
-          content: legendContent,
-          legendItems,
-        };
-        // 延迟添加，让 AI 回复先显示
         setTimeout(() => {
-          setMessages((prev) => [...prev, legendMsg]);
+          setMessages((prev) => [...prev, {
+            role: "legend",
+            content: "图例说明：图中各色光点代表不同食材所在产地——",
+            legendItems,
+          }]);
         }, 300);
       }
 
-      // 如果是风味分析问题，回答完成后自动添加图例说明
       if (finalView === "flavor" && flavorData.length > 0) {
         const legendItems = extractFlavorLegend(flavorData);
-        const legendContent = `风味图例：`;
-        const legendMsg: Message = {
-          role: "flavor-legend",
-          content: legendContent,
-          flavorLegendItems: legendItems,
-        };
-        // 延迟添加，让 AI 回复先显示
         setTimeout(() => {
-          setMessages((prev) => [...prev, legendMsg]);
+          setMessages((prev) => [...prev, {
+            role: "flavor-legend",
+            content: "风味图例：",
+            flavorLegendItems: legendItems,
+          }]);
         }, 300);
       }
     } catch {
@@ -587,29 +479,19 @@ export default function DishDetailModal({ dish, onClose }: DishDetailModalProps)
     }
   };
 
-  // Click recommended button
   const handleRecommendedClick = (preset: typeof RECOMMENDED_QUESTIONS[0]) => {
+    // ✅ 古今对比：打开居中悬浮小弹窗，不占用聊天面板
     if (preset.id === "compare") {
-      setViewMode("compare");
       setCookingCompareOpen(true);
       return;
     }
-    // 如果是"食材产地"按钮，先触发粒子动画
-    if (preset.hasParticle) {
-      triggerParticleAnimation();
-    }
-    // 如果是"风味分析"按钮，先触发动画
-    if (preset.hasFlavor) {
-      triggerFlavorAnimation();
-    }
-    handleSend(preset.defaultQuestion, preset.id);
+    if (preset.hasParticle) setParticleVisible(true);
+    if (preset.hasFlavor) setFlavorVisible(true);
+    handleSend(preset.defaultQuestion, preset.id as ViewMode);
   };
 
-  // Handle free input submit
   const handleInputSubmit = () => {
-    if (inputValue.trim()) {
-      handleSend(inputValue.trim(), "culture");
-    }
+    if (inputValue.trim()) handleSend(inputValue.trim(), "culture");
   };
 
   return (
@@ -622,10 +504,10 @@ export default function DishDetailModal({ dish, onClose }: DishDetailModalProps)
           </svg>
         </button>
 
-        {/* Left: map background */}
+        {/* Map background */}
         <div className="modal-map" ref={mapContainerRef} />
 
-        {/* 粒子动画层 - 食材产地 */}
+        {/* 粒子动画层 */}
         {ingredientPoints.length > 0 && (
           <ParticleCanvas
             ingredientPoints={ingredientPoints}
@@ -637,7 +519,7 @@ export default function DishDetailModal({ dish, onClose }: DishDetailModalProps)
           />
         )}
 
-        {/* 风味扩散动画层 - 风味分析 */}
+        {/* 风味扩散动画层 */}
         {flavorData.length > 0 && (
           <FlavorDiffusionCanvas
             ingredientData={flavorData}
@@ -649,13 +531,11 @@ export default function DishDetailModal({ dish, onClose }: DishDetailModalProps)
           />
         )}
 
-        {/* Centered content layer */}
+        {/* Content layer */}
         <div className="modal-content-layer">
-          {/* Left silk scroll with image */}
+          {/* Left silk scroll */}
           <div className="modal-scroll">
-            {/* Dish name above image */}
             <h2 className="modal-scroll-title">{dish.name}</h2>
-
             <div className="modal-image-area">
               {isGeneratingImage ? (
                 <div className="modal-img-loading">
@@ -674,11 +554,7 @@ export default function DishDetailModal({ dish, onClose }: DishDetailModalProps)
               <div className="modal-img-vignette" />
               <div className="modal-img-frame" />
             </div>
-
-            {/* Divider line */}
             <div className="modal-scroll-divider" />
-
-            {/* Text info below image: original text */}
             <div className="modal-scroll-info">
               {dish.originalText && (
                 <div className="modal-info-row modal-info-original">
@@ -705,10 +581,35 @@ export default function DishDetailModal({ dish, onClose }: DishDetailModalProps)
             </div>
           </div>
 
+          {/* ✅ 古今对比悬浮小弹窗 — 居中浮于地图上，左右面板之间 */}
+          {cookingCompareOpen && (
+            <div className="cooking-float-backdrop" onClick={() => setCookingCompareOpen(false)}>
+              <div
+                className="cooking-float-panel"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {/* 小弹窗关闭按钮 */}
+                <button
+                  className="cooking-float-close"
+                  onClick={() => setCookingCompareOpen(false)}
+                  aria-label="关闭古今对比"
+                >
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                    <path d="M2 2L14 14M14 2L2 14" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                  </svg>
+                </button>
+                <CookingCompareOverlay
+                  open={true}
+                  onClose={() => setCookingCompareOpen(false)}
+                  dishTitle={dish.name}
+                  inline={true}
+                />
+              </div>
+            </div>
+          )}
 
-            {/* Right: Q&A chat panel */}
+          {/* Right Q&A chat panel */}
           <div className="modal-chat-panel">
-            {/* Recommended buttons */}
             <div className="modal-rec-bar">
               {RECOMMENDED_QUESTIONS.map((q) => (
                 <button
@@ -722,10 +623,9 @@ export default function DishDetailModal({ dish, onClose }: DishDetailModalProps)
               ))}
             </div>
 
-            {/* Divider */}
             <div className="modal-chat-divider" />
 
-            {/* Message stream */}
+            {/* ✅ 聊天面板只渲染正常消息流，不再嵌入 CookingCompareOverlay */}
             <div className="modal-msg-stream">
               {messages.length === 0 && (
                 <div className="modal-msg-empty">
@@ -781,7 +681,6 @@ export default function DishDetailModal({ dish, onClose }: DishDetailModalProps)
               <div ref={messagesEndRef} />
             </div>
 
-            {/* Input area */}
             <div className="modal-chat-input-area">
               <input
                 type="text"
@@ -865,7 +764,6 @@ export default function DishDetailModal({ dish, onClose }: DishDetailModalProps)
           animation: slideUp 0.35s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
-        /* Close button — top right corner */
         .modal-close {
           position: absolute;
           top: 20px;
@@ -890,7 +788,6 @@ export default function DishDetailModal({ dish, onClose }: DishDetailModalProps)
           transform: scale(1.08);
         }
 
-        /* Map background */
         .modal-map {
           position: absolute;
           inset: 0;
@@ -900,7 +797,6 @@ export default function DishDetailModal({ dish, onClose }: DishDetailModalProps)
           z-index: 0;
         }
 
-        /* Content layer on top of map, but below particles */
         .modal-content-layer {
           position: absolute;
           inset: 0;
@@ -910,11 +806,66 @@ export default function DishDetailModal({ dish, onClose }: DishDetailModalProps)
           justify-content: space-between;
           padding: 40px 48px;
           gap: 24px;
-          pointer-events: none; /* 让鼠标事件穿透到地图 */
+          pointer-events: none;
         }
 
         .modal-content-layer > * {
-          pointer-events: auto; /* 子元素可以捕获鼠标事件 */
+          pointer-events: auto;
+        }
+
+        /* ✅ 古今对比悬浮弹窗 — 透明遮罩撑满中间区域，弹窗居中 */
+        .cooking-float-backdrop {
+          position: absolute;
+          inset: 0;
+          z-index: 10;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          pointer-events: auto;
+          /* 不加 background，保持地图可见；点击空白处关闭 */
+        }
+
+        .cooking-float-panel {
+          position: relative;
+          width: min(600px, 60vw);
+          height: min(580px, 82vh);
+          border-radius: 14px;
+          overflow: hidden;
+          box-shadow:
+            0 8px 40px rgba(0, 0, 0, 0.28),
+            0 2px 12px rgba(139, 90, 43, 0.15);
+          border: 1px solid rgba(139, 90, 43, 0.2);
+          animation: floatPanelIn 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        /* 小弹窗的关闭按钮 — 右上角 */
+        .cooking-float-close {
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          z-index: 20;
+          width: 28px;
+          height: 28px;
+          border-radius: 50%;
+          background: rgba(255, 252, 245, 0.92);
+          border: 1px solid rgba(139, 90, 43, 0.3);
+          color: #8b5a2b;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.2s;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .cooking-float-close:hover {
+          background: #8b5a2b;
+          color: #fff;
+          transform: scale(1.08);
+        }
+
+        @keyframes floatPanelIn {
+          from { opacity: 0; transform: scale(0.92) translateY(12px); }
+          to   { opacity: 1; transform: scale(1) translateY(0); }
         }
 
         .modal-scroll-title {
@@ -924,10 +875,8 @@ export default function DishDetailModal({ dish, onClose }: DishDetailModalProps)
           text-align: center;
           margin: 0;
           padding-bottom: 4px;
-          /* 与下方图片之间保持紧凑 */
         }
 
-        /* Left silk scroll：略窄于原先；内边距只留卷轴木边，内容区尽量铺满 */
         .modal-scroll {
           width: min(30vw, 320px);
           max-width: 100%;
@@ -940,7 +889,6 @@ export default function DishDetailModal({ dish, onClose }: DishDetailModalProps)
           display: flex;
           flex-direction: column;
           align-items: stretch;
-          /* 上/下略留，左右仅避开绢轴两侧木纹，约 6%～8% */
           padding: 4% 4%;
           gap: 14px;
         }
@@ -989,7 +937,6 @@ export default function DishDetailModal({ dish, onClose }: DishDetailModalProps)
           display: block;
           filter: sepia(5%) contrast(1.05);
           transition: transform 0.6s;
-          /* 不用径向遮罩，避免画面缩成中间一条；边缘由 vignette 轻扫 */
         }
 
         .modal-img-vignette {
@@ -1014,7 +961,6 @@ export default function DishDetailModal({ dish, onClose }: DishDetailModalProps)
           margin: 10px auto 8px;
         }
 
-        /* Info below image in scroll */
         .modal-scroll-info {
           display: flex;
           flex-direction: column;
@@ -1065,7 +1011,6 @@ export default function DishDetailModal({ dish, onClose }: DishDetailModalProps)
           border: 1px solid rgba(139,90,43,0.2);
         }
 
-        /* Right Q&A：只占约四成宽，中间留白露地图 */
         .modal-chat-panel {
           flex: 0 0 min(26%, 380px);
           width: min(26%, 380px);
@@ -1081,7 +1026,6 @@ export default function DishDetailModal({ dish, onClose }: DishDetailModalProps)
           box-shadow: inset 0 2px 8px rgba(139,90,43,0.06);
         }
 
-        /* Recommended bar */
         .modal-rec-bar {
           display: flex;
           flex-direction: column;
@@ -1127,7 +1071,6 @@ export default function DishDetailModal({ dish, onClose }: DishDetailModalProps)
           flex-shrink: 0;
         }
 
-        /* Message stream */
         .modal-msg-stream {
           flex: 1;
           overflow-y: auto;
@@ -1216,9 +1159,7 @@ export default function DishDetailModal({ dish, onClose }: DishDetailModalProps)
           border: 1px solid rgba(139,90,43,0.2);
           border-bottom-left-radius: 3px;
         }
-        .modal-msg-bubble-loading {
-          padding: 12px 18px;
-        }
+        .modal-msg-bubble-loading { padding: 12px 18px; }
 
         .modal-msg-text {
           margin: 0;
@@ -1234,7 +1175,6 @@ export default function DishDetailModal({ dish, onClose }: DishDetailModalProps)
         .modal-loading-dots span:nth-child(2) { animation-delay: 0.2s; }
         .modal-loading-dots span:nth-child(3) { animation-delay: 0.4s; }
 
-        /* Legend section in chat */
         .modal-legend {
           margin-top: 12px;
           padding-top: 12px;
@@ -1265,10 +1205,7 @@ export default function DishDetailModal({ dish, onClose }: DishDetailModalProps)
           box-shadow: 0 0 6px currentColor;
         }
 
-        .modal-legend-icon {
-          font-size: 14px;
-          flex-shrink: 0;
-        }
+        .modal-legend-icon { font-size: 14px; flex-shrink: 0; }
 
         .modal-legend-name {
           font-weight: 600;
@@ -1291,56 +1228,6 @@ export default function DishDetailModal({ dish, onClose }: DishDetailModalProps)
           text-align: center;
         }
 
-        /* Flavor legend section in chat */
-        .modal-flavor-legend {
-          margin-top: 12px;
-          padding-top: 12px;
-          border-top: 1px dashed rgba(139,90,43,0.2);
-        }
-
-        .modal-flavor-legend-grid {
-          display: flex;
-          flex-direction: column;
-          gap: 8px;
-        }
-
-        .modal-flavor-legend-item {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          padding: 6px 10px;
-          background: rgba(255,252,245,0.6);
-          border-radius: 8px;
-          border: 1px solid rgba(139,90,43,0.1);
-        }
-
-        .modal-flavor-legend-dot {
-          width: 10px;
-          height: 10px;
-          border-radius: 50%;
-          flex-shrink: 0;
-          box-shadow: 0 0 6px currentColor;
-        }
-
-        .modal-flavor-legend-icon {
-          font-size: 14px;
-          flex-shrink: 0;
-        }
-
-        .modal-flavor-legend-name {
-          font-weight: 600;
-          color: #5c2d0a;
-          font-size: 12px;
-          min-width: 40px;
-        }
-
-        .modal-flavor-legend-desc {
-          color: #7a6a5a;
-          font-size: 11px;
-          flex: 1;
-        }
-
-        /* Input area */
         .modal-chat-input-area {
           padding: 12px 16px;
           border-top: 1px solid rgba(139,90,43,0.1);
@@ -1384,83 +1271,6 @@ export default function DishDetailModal({ dish, onClose }: DishDetailModalProps)
         }
         .modal-chat-send-btn:disabled { opacity: 0.6; cursor: not-allowed; }
 
-        /* Old detail styles - kept for reference, will remove unused */
-        .modal-detail {
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          gap: 20px;
-          height: 90%;
-          overflow-y: auto;
-        }
-
-        /* Old action buttons */
-        .modal-actions {
-          display: flex;
-          gap: 12px;
-          margin-top: auto;
-          padding-top: 8px;
-          flex-wrap: wrap;
-        }
-
-        .modal-btn {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          padding: 10px 20px;
-          border-radius: 8px;
-          font-size: 14px;
-          font-family: inherit;
-          cursor: pointer;
-          transition: all 0.3s;
-          border: 2px solid transparent;
-          letter-spacing: 1px;
-        }
-
-        .modal-btn-cooking {
-          background: linear-gradient(135deg, #8b5a2b, #a06830);
-          color: #fff;
-          border-color: #8b5a2b;
-        }
-        .modal-btn-cooking:hover {
-          background: linear-gradient(135deg, #a06830, #b07838);
-          transform: translateY(-2px);
-          box-shadow: 0 6px 20px rgba(139,90,43,0.3);
-        }
-        .modal-btn-cooking:disabled { opacity: 0.7; cursor: wait; }
-
-        .modal-btn-explore {
-          background: rgba(255,252,245,0.92);
-          color: #8b5a2b;
-          border-color: rgba(139,90,43,0.3);
-        }
-        .modal-btn-explore:hover {
-          background: rgba(139,90,43,0.1);
-          border-color: #8b5a2b;
-          transform: translateY(-2px);
-        }
-
-        .modal-btn-compare {
-          background: rgba(255,252,245,0.92);
-          color: #8b5a2b;
-          border-color: rgba(139,90,43,0.3);
-        }
-        .modal-btn-compare:hover {
-          background: rgba(139,90,43,0.1);
-          border-color: #8b5a2b;
-          transform: translateY(-2px);
-        }
-
-        .modal-btn-spinner {
-          width: 18px;
-          height: 18px;
-          border: 2px solid rgba(255,255,255,0.3);
-          border-top-color: #fff;
-          border-radius: 50%;
-          animation: spin 1s linear infinite;
-        }
-
-        /* Spinner */
         .modal-spinner {
           width: 36px;
           height: 36px;
@@ -1470,7 +1280,6 @@ export default function DishDetailModal({ dish, onClose }: DishDetailModalProps)
           animation: spin 1s linear infinite;
         }
 
-        /* Cooking overlay */
         .modal-cooking-overlay {
           position: absolute;
           inset: 0;
@@ -1645,7 +1454,6 @@ export default function DishDetailModal({ dish, onClose }: DishDetailModalProps)
             gap: 20px;
           }
           .modal-scroll { width: 100%; height: 45%; }
-          .modal-detail { height: auto; }
           .modal-chat-panel {
             flex: 1 1 auto;
             width: 100%;
@@ -1653,15 +1461,12 @@ export default function DishDetailModal({ dish, onClose }: DishDetailModalProps)
             min-width: 0;
             height: 45%;
           }
+          .cooking-float-panel {
+            width: min(360px, 88vw);
+            height: min(480px, 65vh);
+          }
         }
       `}</style>
-
-      {/* 古今对比全屏烹饪演示 — 覆盖整个页面包括地图 */}
-      <CookingCompareOverlay
-        open={cookingCompareOpen}
-        onClose={() => setCookingCompareOpen(false)}
-        dishTitle={dish.name}
-      />
     </div>
   );
 }

@@ -6,10 +6,10 @@ import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import ParticleCanvas, { type IngredientPoint } from "@/components/ParticleCanvas";
 import FlavorDiffusionCanvas, { type FlavorType, type ImportanceLevel } from "@/components/FlavorDiffusionCanvas";
-import FloatingDialog from "@/components/FloatingDialog";
+import FloatingDialog, { type IngredientGeoInfo } from "@/components/FloatingDialog";
+import CookingCompareOverlay from "@/components/CookingCompareOverlay";
 import dishData from "@/data/wang_sitai_babao_doufu.json";
 
-// 烹饪模式：八宝食材配置
 const COOKING_INGREDIENTS = [
   { id: "tofu", name: "豆腐脑", emoji: "🧈" },
   { id: "chicken", name: "鸡肉", emoji: "🍗" },
@@ -133,39 +133,48 @@ export default function WangSitaiPage() {
   const geoCauseCacheRef = useRef<Map<string, string>>(new Map());
   const flowAnimRef = useRef<number | null>(null);
 
-  // 烹饪模式状态
+  // 粒子点击 → 对话面板地理条件
+  const [geoIngredientDetail, setGeoIngredientDetail] = useState<string>("");
+  const [geoIngredientLoading, setGeoIngredientLoading] = useState(false);
+  const geoIngredientCacheRef = useRef<Map<string, string>>(new Map());
+
   const [cookingMode, setCookingMode] = useState(false);
-  const [inPotIds, setInPotIds] = useState<string[]>([]);
-  const [isFinished, setIsFinished] = useState(false);
+  const [selectedIngredient, setSelectedIngredient] = useState<IngredientGeoInfo | null>(null);
 
-  // 烹饪完成检测
-  useEffect(() => {
-    if (inPotIds.length === COOKING_INGREDIENTS.length && COOKING_INGREDIENTS.length > 0) {
-      setTimeout(() => setIsFinished(true), 800);
-    }
-  }, [inPotIds]);
-
-  // 烹饪拖拽结束处理
-  const handleCookingDragEnd = useCallback(
-    (ingredientId: string, clientX: number, clientY: number) => {
-      const isOverPot = clientX > window.innerWidth / 2 - 180 &&
-                       clientX < window.innerWidth / 2 + 180 &&
-                       clientY > window.innerHeight / 2 - 180 &&
-                       clientY < window.innerHeight / 2 + 180;
-
-      if (isOverPot && !inPotIds.includes(ingredientId)) {
-        setInPotIds((prev) => [...prev, ingredientId]);
+  const ingredientGeoInfo: Record<string, IngredientGeoInfo> = (() => {
+    const info: Record<string, IngredientGeoInfo> = {};
+    (dishData.ingredients_distribution as Array<{
+      ingredient: string;
+      category: string;
+      distribution_locations: Array<{
+        name: string;
+        longitude: number;
+        latitude: number;
+        note: string;
+      }>;
+    }>).forEach((ing) => {
+      const locations = ing.distribution_locations;
+      if (locations.length > 0) {
+        const geoCondition = locations
+          .map((loc) => `${loc.name}：${loc.note}`)
+          .join("；");
+        info[locations[0].name] = {
+          name: locations[0].name,
+          ingredient: ing.ingredient,
+          color: INGREDIENT_COLORS[ing.ingredient] || "#ffffff",
+          geoCondition,
+        };
       }
-    },
-    [inPotIds]
-  );
+    });
+    return info;
+  })();
 
-  // 重置烹饪状态
-  const resetCooking = useCallback(() => {
-    setInPotIds([]);
-    setIsFinished(false);
-    setCookingMode(false);
-  }, []);
+  const findIngredientGeoInfo = (name: string): IngredientGeoInfo | null => {
+    for (const locName in ingredientGeoInfo) {
+      if (locName === name) return ingredientGeoInfo[locName];
+    }
+    return null;
+  };
 
   const ingredientPoints: IngredientPoint[] = (
     dishData.ingredients_distribution as Array<{
@@ -227,19 +236,63 @@ export default function WangSitaiPage() {
     }));
   });
 
+  // ── 粒子点击：拉取地理条件 ───────────────────────────────────────────────
+  const fetchIngredientGeoDetail = useCallback(
+    async (placeName: string, ingredient: string, lng: number, lat: number) => {
+      const key = `${ingredient}::${placeName}`;
+      const hit = geoIngredientCacheRef.current.get(key);
+      if (hit) {
+        setGeoIngredientDetail(hit);
+        return;
+      }
+
+      setGeoIngredientLoading(true);
+      setGeoIngredientDetail("");
+      const preset = getGeoPreset(placeName);
+
+      try {
+        const res = await fetch("/api/geo-cause", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            dish: dishData.dish_name,
+            ingredient,
+            placeName,
+            lng,
+            lat,
+            context: {
+              rivers: preset?.rivers ?? [],
+              terrain: preset?.terrain ?? [],
+              climate: preset?.climate ?? [],
+              notes: preset?.notes ?? [],
+            },
+            promptHint:
+              "请从气候（温湿度、降水、霜期）、地形（海拔、坡向、土壤）、水文（水系、灌溉）三个维度，分析此产地为何适合出产该食材，语言简练，每维度1-2句。",
+          }),
+        });
+        const data = await res.json();
+        if (!data?.success || !data?.content) throw new Error(data?.error || "生成失败");
+        geoIngredientCacheRef.current.set(key, data.content);
+        setGeoIngredientDetail(data.content);
+      } catch {
+        setGeoIngredientDetail("暂无详细地理条件数据，请稍后重试。");
+      } finally {
+        setGeoIngredientLoading(false);
+      }
+    },
+    []
+  );
+
   const runFlowAnimation = useCallback((map: mapboxgl.Map, layerId: string) => {
     if (flowAnimRef.current) cancelAnimationFrame(flowAnimRef.current);
     let t = 0;
     const tick = () => {
       t = (t + 1) % 200;
-      // 让 dash 位移产生“流动”错觉
       const a = 1 + (t % 20) * 0.1;
       const b = 2 + ((t + 7) % 20) * 0.1;
       try {
         map.setPaintProperty(layerId, "line-dasharray", [a, b]);
-      } catch {
-        // ignore (map may be gone)
-      }
+      } catch { /* ignore */ }
       flowAnimRef.current = requestAnimationFrame(tick);
     };
     flowAnimRef.current = requestAnimationFrame(tick);
@@ -256,12 +309,10 @@ export default function WangSitaiPage() {
       if (!map) return;
       const id = preset?.id;
 
-      // fly to region
       if (preset) {
         map.flyTo({ center: preset.flyTo.center, zoom: preset.flyTo.zoom, duration: 1200, essential: true });
       }
 
-      // filters
       const riverHL = "wst-rivers-highlight";
       const basinHL = "wst-basins-outline";
       const climateHL = "wst-climate-highlight";
@@ -272,28 +323,18 @@ export default function WangSitaiPage() {
         map.setFilter(basinHL, id ? ["==", ["get", "place"], id] : ["==", ["get", "place"], "__none__"]);
         map.setFilter(climateHL, id ? ["==", ["get", "place"], id] : ["==", ["get", "place"], "__none__"]);
         map.setPaintProperty(terrainBase, "fill-opacity", 0);
-      } catch {
-        // layers may not exist yet
-      }
+      } catch { /* layers may not exist yet */ }
 
-      // flow animation on highlighted river
       if (preset) runFlowAnimation(map, riverHL);
       else stopFlowAnimation();
 
-      // climate flash
       if (preset) {
         try {
           map.setPaintProperty(climateHL, "fill-opacity", 0.22);
           window.setTimeout(() => {
-            try {
-              map.setPaintProperty(climateHL, "fill-opacity", 0.12);
-            } catch {
-              // ignore
-            }
+            try { map.setPaintProperty(climateHL, "fill-opacity", 0.12); } catch { /* ignore */ }
           }, 520);
-        } catch {
-          // ignore
-        }
+        } catch { /* ignore */ }
       }
     },
     [runFlowAnimation, stopFlowAnimation]
@@ -336,9 +377,7 @@ export default function WangSitaiPage() {
           }),
         });
         const data = await res.json();
-        if (!data?.success || !data?.content) {
-          throw new Error(data?.error || "生成失败");
-        }
+        if (!data?.success || !data?.content) throw new Error(data?.error || "生成失败");
         geoCauseCacheRef.current.set(cacheKey, data.content);
         setGeoCauseText(data.content);
       } catch (e: any) {
@@ -429,7 +468,6 @@ export default function WangSitaiPage() {
         document.head.appendChild(style);
       }
 
-      // Ingredient markers
       ingredientPoints.forEach((pt) => {
         const el = document.createElement("div");
         el.className = "wst-marker-wrap";
@@ -487,7 +525,6 @@ export default function WangSitaiPage() {
         markersRef.current.push(marker);
       });
 
-      // Dish center marker
       const dishEl = document.createElement("div");
       dishEl.className = "wst-dish-marker-wrap";
       const dishDot = document.createElement("div");
@@ -519,7 +556,6 @@ export default function WangSitaiPage() {
         .addTo(map);
       dishMarkerRef.current.togglePopup();
 
-      // Fit bounds to show all markers — no right padding (full-screen map)
       const bounds = new mapboxgl.LngLatBounds();
       ingredientPoints.forEach((pt) => bounds.extend([pt.lng, pt.lat]));
       bounds.extend([DISH_CENTER_LNG, DISH_CENTER_LAT]);
@@ -531,7 +567,6 @@ export default function WangSitaiPage() {
     [ingredientPoints, openGeoCause]
   );
 
-  // Init map
   useEffect(() => {
     if (!mapContainerRef.current || mapRef.current) return;
 
@@ -575,86 +610,64 @@ export default function WangSitaiPage() {
         }
       });
 
-      // --- 地理成因：面状/线状标注图层（示意） ---
-      // 水系（示意）
       if (!map.getSource("wst-rivers")) {
         map.addSource("wst-rivers", {
           type: "geojson",
           data: {
             type: "FeatureCollection",
             features: [
-              // 南京：长江（示意线）
               {
                 type: "Feature",
                 properties: { place: "nanjing", kind: "river", name: "长江" },
                 geometry: {
                   type: "LineString",
                   coordinates: [
-                    [116.8, 31.6],
-                    [118.2, 31.9],
-                    [118.78, 32.06],
-                    [119.6, 32.2],
-                    [121.2, 31.4],
+                    [116.8, 31.6], [118.2, 31.9], [118.78, 32.06],
+                    [119.6, 32.2], [121.2, 31.4],
                   ],
                 },
               },
-              // 高邮：大运河（示意线）
               {
                 type: "Feature",
                 properties: { place: "gaoyou", kind: "canal", name: "京杭大运河" },
                 geometry: {
                   type: "LineString",
                   coordinates: [
-                    [118.9, 33.2],
-                    [119.1, 32.95],
-                    [119.45, 32.78],
-                    [119.6, 32.5],
-                    [119.9, 32.2],
+                    [118.9, 33.2], [119.1, 32.95], [119.45, 32.78],
+                    [119.6, 32.5], [119.9, 32.2],
                   ],
                 },
               },
-              // 金华：婺江（示意线）
               {
                 type: "Feature",
                 properties: { place: "jinhua", kind: "river", name: "婺江" },
                 geometry: {
                   type: "LineString",
                   coordinates: [
-                    [118.7, 29.0],
-                    [119.2, 29.08],
-                    [119.65, 29.09],
-                    [120.0, 29.25],
-                    [120.5, 29.3],
+                    [118.7, 29.0], [119.2, 29.08], [119.65, 29.09],
+                    [120.0, 29.25], [120.5, 29.3],
                   ],
                 },
               },
-              // 庆元：浙南山溪（示意线）
               {
                 type: "Feature",
                 properties: { place: "qingyuan", kind: "river", name: "瓯江上游支流" },
                 geometry: {
                   type: "LineString",
                   coordinates: [
-                    [118.6, 27.4],
-                    [118.85, 27.55],
-                    [119.07, 27.63],
-                    [119.35, 27.8],
-                    [119.6, 27.95],
+                    [118.6, 27.4], [118.85, 27.55], [119.07, 27.63],
+                    [119.35, 27.8], [119.6, 27.95],
                   ],
                 },
               },
-              // 伊春：松花江水系（示意线）
               {
                 type: "Feature",
                 properties: { place: "yichun", kind: "river", name: "松花江水系" },
                 geometry: {
                   type: "LineString",
                   coordinates: [
-                    [126.2, 47.2],
-                    [127.3, 47.45],
-                    [128.9, 47.73],
-                    [130.2, 47.85],
-                    [131.0, 47.7],
+                    [126.2, 47.2], [127.3, 47.45], [128.9, 47.73],
+                    [130.2, 47.85], [131.0, 47.7],
                   ],
                 },
               },
@@ -690,62 +703,34 @@ export default function WangSitaiPage() {
         });
       }
 
-      // 地形（示意：低海拔浅色、高海拔深色）
       if (!map.getSource("wst-terrain")) {
         map.addSource("wst-terrain", {
           type: "geojson",
           data: {
             type: "FeatureCollection",
             features: [
-              // 东部低海拔（示意）
               {
                 type: "Feature",
                 properties: { elev: 120 },
                 geometry: {
                   type: "Polygon",
-                  coordinates: [
-                    [
-                      [108.0, 20.0],
-                      [123.0, 20.0],
-                      [123.0, 35.5],
-                      [108.0, 35.5],
-                      [108.0, 20.0],
-                    ],
-                  ],
+                  coordinates: [[[108.0,20.0],[123.0,20.0],[123.0,35.5],[108.0,35.5],[108.0,20.0]]],
                 },
               },
-              // 东北山地/林海（示意）
               {
                 type: "Feature",
                 properties: { elev: 620 },
                 geometry: {
                   type: "Polygon",
-                  coordinates: [
-                    [
-                      [122.0, 41.0],
-                      [135.0, 41.0],
-                      [135.0, 53.0],
-                      [122.0, 53.0],
-                      [122.0, 41.0],
-                    ],
-                  ],
+                  coordinates: [[[122.0,41.0],[135.0,41.0],[135.0,53.0],[122.0,53.0],[122.0,41.0]]],
                 },
               },
-              // 西部高海拔（示意）
               {
                 type: "Feature",
                 properties: { elev: 2400 },
                 geometry: {
                   type: "Polygon",
-                  coordinates: [
-                    [
-                      [73.5, 18.0],
-                      [108.0, 18.0],
-                      [108.0, 54.0],
-                      [73.5, 54.0],
-                      [73.5, 18.0],
-                    ],
-                  ],
+                  coordinates: [[[73.5,18.0],[108.0,18.0],[108.0,54.0],[73.5,54.0],[73.5,18.0]]],
                 },
               },
             ],
@@ -759,22 +744,16 @@ export default function WangSitaiPage() {
           source: "wst-terrain",
           paint: {
             "fill-color": [
-              "interpolate",
-              ["linear"],
-              ["get", "elev"],
-              0,
-              "rgba(210,230,210,0.75)",
-              800,
-              "rgba(200,210,230,0.75)",
-              3000,
-              "rgba(210,200,230,0.75)",
+              "interpolate", ["linear"], ["get", "elev"],
+              0, "rgba(210,230,210,0.75)",
+              800, "rgba(200,210,230,0.75)",
+              3000, "rgba(210,200,230,0.75)",
             ],
             "fill-opacity": 0,
           },
         });
       }
 
-      // 盆地范围（示意：金衢盆地）
       if (!map.getSource("wst-basins")) {
         map.addSource("wst-basins", {
           type: "geojson",
@@ -786,15 +765,7 @@ export default function WangSitaiPage() {
                 properties: { place: "jinhua", name: "金衢盆地（示意）" },
                 geometry: {
                   type: "Polygon",
-                  coordinates: [
-                    [
-                      [118.9, 28.7],
-                      [120.3, 28.7],
-                      [120.3, 29.6],
-                      [118.9, 29.6],
-                      [118.9, 28.7],
-                    ],
-                  ],
+                  coordinates: [[[118.9,28.7],[120.3,28.7],[120.3,29.6],[118.9,29.6],[118.9,28.7]]],
                 },
               },
             ],
@@ -806,10 +777,7 @@ export default function WangSitaiPage() {
           id: "wst-basins-fill",
           type: "fill",
           source: "wst-basins",
-          paint: {
-            "fill-color": "rgba(140,200,140,0.7)",
-            "fill-opacity": 0,
-          },
+          paint: { "fill-color": "rgba(140,200,140,0.7)", "fill-opacity": 0 },
         });
       }
       if (!map.getLayer("wst-basins-outline")) {
@@ -826,93 +794,22 @@ export default function WangSitaiPage() {
         });
       }
 
-      // 气候示意（湿润 vs 干燥，粗略分区）
       if (!map.getSource("wst-climate")) {
         map.addSource("wst-climate", {
           type: "geojson",
           data: {
             type: "FeatureCollection",
             features: [
-              {
-                type: "Feature",
-                properties: { zone: "humid", place: "jinhua" },
-                geometry: {
-                  type: "Polygon",
-                  coordinates: [
-                    [
-                      [105.0, 22.0],
-                      [123.5, 22.0],
-                      [123.5, 32.5],
-                      [105.0, 32.5],
-                      [105.0, 22.0],
-                    ],
-                  ],
-                },
-              },
-              {
-                type: "Feature",
-                properties: { zone: "humid", place: "qingyuan" },
-                geometry: {
-                  type: "Polygon",
-                  coordinates: [
-                    [
-                      [105.0, 22.0],
-                      [123.5, 22.0],
-                      [123.5, 32.5],
-                      [105.0, 32.5],
-                      [105.0, 22.0],
-                    ],
-                  ],
-                },
-              },
-              {
-                type: "Feature",
-                properties: { zone: "humid", place: "gaoyou" },
-                geometry: {
-                  type: "Polygon",
-                  coordinates: [
-                    [
-                      [105.0, 22.0],
-                      [123.5, 22.0],
-                      [123.5, 32.5],
-                      [105.0, 32.5],
-                      [105.0, 22.0],
-                    ],
-                  ],
-                },
-              },
-              {
-                type: "Feature",
-                properties: { zone: "humid", place: "nanjing" },
-                geometry: {
-                  type: "Polygon",
-                  coordinates: [
-                    [
-                      [105.0, 22.0],
-                      [123.5, 22.0],
-                      [123.5, 32.5],
-                      [105.0, 32.5],
-                      [105.0, 22.0],
-                    ],
-                  ],
-                },
-              },
-              {
-                type: "Feature",
-                properties: { zone: "dry", place: "yichun" },
-                geometry: {
-                  type: "Polygon",
-                  coordinates: [
-                    [
-                      [100.0, 33.0],
-                      [135.0, 33.0],
-                      [135.0, 54.0],
-                      [100.0, 54.0],
-                      [100.0, 33.0],
-                    ],
-                  ],
-                },
-              },
+              { type: "Feature", properties: { zone: "humid", place: "jinhua" },
+                geometry: { type: "Polygon", coordinates: [[[105.0,22.0],[123.5,22.0],[123.5,32.5],[105.0,32.5],[105.0,22.0]]] } },
+              { type: "Feature", properties: { zone: "humid", place: "qingyuan" },
+                geometry: { type: "Polygon", coordinates: [[[105.0,22.0],[123.5,22.0],[123.5,32.5],[105.0,32.5],[105.0,22.0]]] } },
+              { type: "Feature", properties: { zone: "humid", place: "gaoyou" },
+                geometry: { type: "Polygon", coordinates: [[[105.0,22.0],[123.5,22.0],[123.5,32.5],[105.0,32.5],[105.0,22.0]]] } },
+              { type: "Feature", properties: { zone: "humid", place: "nanjing" },
+                geometry: { type: "Polygon", coordinates: [[[105.0,22.0],[123.5,22.0],[123.5,32.5],[105.0,32.5],[105.0,22.0]]] } },
+              { type: "Feature", properties: { zone: "dry", place: "yichun" },
+                geometry: { type: "Polygon", coordinates: [[[100.0,33.0],[135.0,33.0],[135.0,54.0],[100.0,54.0],[100.0,33.0]]] } },
             ],
           },
         });
@@ -925,12 +822,9 @@ export default function WangSitaiPage() {
           source: "wst-climate",
           paint: {
             "fill-color": [
-              "match",
-              ["get", "zone"],
-              "humid",
-              "rgba(100,200,120,0.75)",
-              "dry",
-              "rgba(230,210,90,0.75)",
+              "match", ["get", "zone"],
+              "humid", "rgba(100,200,120,0.75)",
+              "dry", "rgba(230,210,90,0.75)",
               "rgba(200,200,200,0.5)",
             ],
             "fill-opacity": 0,
@@ -945,12 +839,9 @@ export default function WangSitaiPage() {
           filter: ["==", ["get", "place"], "__none__"],
           paint: {
             "fill-color": [
-              "match",
-              ["get", "zone"],
-              "humid",
-              "rgba(100,200,120,0.9)",
-              "dry",
-              "rgba(230,210,90,0.9)",
+              "match", ["get", "zone"],
+              "humid", "rgba(100,200,120,0.9)",
+              "dry", "rgba(230,210,90,0.9)",
               "rgba(200,200,200,0.6)",
             ],
             "fill-opacity": 0.12,
@@ -1022,10 +913,8 @@ export default function WangSitaiPage() {
         fontFamily: '"Noto Serif SC", "SimSun", serif',
       }}
     >
-      {/* Map background */}
       <div ref={mapContainerRef} className="wang-sitai-map" style={{ position: "absolute", inset: 0 }} />
 
-      {/* Particle canvas overlay */}
       <ParticleCanvas
         ingredientPoints={ingredientPoints}
         dishCenterLng={DISH_CENTER_LNG}
@@ -1033,9 +922,18 @@ export default function WangSitaiPage() {
         mapRef={mapRef}
         visible={particleVisible}
         containerRef={mapContainerRef}
+        onIngredientClick={(name, ingredient, color) => {
+          const geoInfo = findIngredientGeoInfo(name);
+          if (geoInfo) {
+            setSelectedIngredient(geoInfo);
+            // 清空上次内容，触发新一轮 AI 生成
+            setGeoIngredientDetail("");
+            const pt = ingredientPoints.find((p) => p.name === name);
+            if (pt) fetchIngredientGeoDetail(name, ingredient, pt.lng, pt.lat);
+          }
+        }}
       />
 
-      {/* Flavor diffusion canvas overlay */}
       <FlavorDiffusionCanvas
         ingredientData={flavorData}
         dishCenterLng={DISH_CENTER_LNG}
@@ -1045,7 +943,7 @@ export default function WangSitaiPage() {
         containerRef={mapContainerRef}
       />
 
-      {/* Top nav */}
+      {/* 顶部导航 */}
       <nav
         style={{
           position: "fixed",
@@ -1094,7 +992,7 @@ export default function WangSitaiPage() {
         </div>
       </nav>
 
-      {/* Title card (top-left) */}
+      {/* 标题卡片 */}
       <div
         style={{
           position: "fixed",
@@ -1118,14 +1016,7 @@ export default function WangSitaiPage() {
             boxShadow: "0 8px 32px rgba(0,0,0,0.3)",
           }}
         >
-          <div
-            style={{
-              color: "rgba(244,197,66,0.7)",
-              fontSize: 11,
-              letterSpacing: "4px",
-              marginBottom: 10,
-            }}
-          >
+          <div style={{ color: "rgba(244,197,66,0.7)", fontSize: 11, letterSpacing: "4px", marginBottom: 10 }}>
             随园食单 · 珍馐
           </div>
           <h1
@@ -1141,26 +1032,11 @@ export default function WangSitaiPage() {
           >
             {dishData.dish_name}
           </h1>
-          <p
-            style={{
-              color: "rgba(255,255,255,0.6)",
-              fontSize: 13,
-              lineHeight: 1.9,
-              margin: 0,
-              letterSpacing: "0.5px",
-            }}
-          >
+          <p style={{ color: "rgba(255,255,255,0.6)", fontSize: 13, lineHeight: 1.9, margin: 0, letterSpacing: "0.5px" }}>
             {dishData.modern_translation.slice(0, 60)}
             {dishData.modern_translation.length > 60 ? "…" : ""}
           </p>
-          <div
-            style={{
-              display: "flex",
-              gap: 8,
-              flexWrap: "wrap",
-              marginTop: 14,
-            }}
-          >
+          <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 14 }}>
             {dishData.taste_tags.map((tag) => (
               <span
                 key={tag}
@@ -1181,7 +1057,7 @@ export default function WangSitaiPage() {
         </div>
       </div>
 
-      {/* Yuanmei quote card (bottom-left) */}
+      {/* 袁枚原文 */}
       <div
         style={{
           position: "fixed",
@@ -1206,32 +1082,15 @@ export default function WangSitaiPage() {
             boxShadow: "0 4px 20px rgba(0,0,0,0.1)",
           }}
         >
-          <div
-            style={{
-              color: "#8b5a2b",
-              fontSize: 11,
-              letterSpacing: "3px",
-              marginBottom: 10,
-            }}
-          >
-            袁枚原文
-          </div>
-          <p
-            style={{
-              color: "#3a3430",
-              fontSize: 13,
-              lineHeight: 2,
-              margin: 0,
-              fontStyle: "italic",
-            }}
-          >
+          <div style={{ color: "#8b5a2b", fontSize: 11, letterSpacing: "3px", marginBottom: 10 }}>袁枚原文</div>
+          <p style={{ color: "#3a3430", fontSize: 13, lineHeight: 2, margin: 0, fontStyle: "italic" }}>
             {dishData.original_text.slice(0, 80)}
             {dishData.original_text.length > 80 ? "…" : ""}
           </p>
         </div>
       </div>
 
-      {/* Stats ribbon */}
+      {/* 底部统计栏 */}
       <div
         style={{
           position: "fixed",
@@ -1258,22 +1117,10 @@ export default function WangSitaiPage() {
           { label: "所属菜系", value: dishData.category },
         ].map((stat) => (
           <div key={stat.label} style={{ display: "flex", gap: 8, alignItems: "baseline" }}>
-            <span
-              style={{
-                color: "rgba(255,255,255,0.4)",
-                fontSize: 11,
-                letterSpacing: "2px",
-              }}
-            >
+            <span style={{ color: "rgba(255,255,255,0.4)", fontSize: 11, letterSpacing: "2px" }}>
               {stat.label}
             </span>
-            <span
-              style={{
-                color: "rgba(244,197,66,0.85)",
-                fontSize: 13,
-                letterSpacing: "1px",
-              }}
-            >
+            <span style={{ color: "rgba(244,197,66,0.85)", fontSize: 13, letterSpacing: "1px" }}>
               {stat.value}
             </span>
           </div>
@@ -1296,14 +1143,26 @@ export default function WangSitaiPage() {
         </div>
       </div>
 
-      {/* Floating dialog (bottom-right) */}
+      {/* 右下角浮动面板 */}
       <FloatingDialog
         activeTab={activeTab}
         onTabChange={(tab) => setActiveTab(tab)}
         ingredientColors={INGREDIENT_COLORS}
+        ingredientGeoInfo={ingredientGeoInfo}
+        selectedIngredient={selectedIngredient}
+        onIngredientSelect={(name) => {
+          if (name) {
+            const geoInfo = findIngredientGeoInfo(name);
+            if (geoInfo) setSelectedIngredient(geoInfo);
+          } else {
+            setSelectedIngredient(null);
+          }
+        }}
+        geoIngredientDetail={geoIngredientDetail}
+        geoIngredientLoading={geoIngredientLoading}
       />
 
-      {/* 地理成因浮动卡片（点击产地出现） */}
+      {/* 地理成因悬浮卡（ingredients tab 点击产地） */}
       {activeTab === "ingredients" && geoCauseOpen && geoTarget && (
         <div
           style={{
@@ -1416,456 +1275,13 @@ export default function WangSitaiPage() {
       )}
 
       {/* 古今对比烹饪弹窗 */}
-      <AnimatePresence>
-        {cookingMode && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            style={{
-              position: "fixed",
-              inset: 0,
-              zIndex: 1000,
-              overflow: "hidden",
-              fontFamily: '"Noto Serif SC", "SimSun", serif',
-            }}
-          >
-            {/* 左半边：随园古境 */}
-            <div
-              style={{
-                position: "absolute",
-                inset: 0,
-                left: 0,
-                right: "50%",
-                background: "linear-gradient(135deg, #1a1510 0%, #2d2318 50%, #3d3025 100%)",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <h2
-                style={{
-                  position: "absolute",
-                  top: 40,
-                  left: 40,
-                  color: "#f4c542",
-                  fontSize: 24,
-                  fontFamily: '"Noto Serif SC", serif',
-                  letterSpacing: "4px",
-                }}
-              >
-                随园古境
-              </h2>
+      <CookingCompareOverlay
+        open={cookingMode}
+        onClose={() => setCookingMode(false)}
+        dishTitle="王太守八宝豆腐"
+        ingredients={COOKING_INGREDIENTS.map((i) => ({ id: i.id, label: i.name }))}
+      />
 
-              {/* 古风锅 */}
-              <div
-                style={{
-                  position: "relative",
-                  width: 320,
-                  height: 320,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                {/* 锅轮廓 */}
-                <div
-                  style={{
-                    position: "absolute",
-                    width: 280,
-                    height: 280,
-                    borderRadius: "50% 50% 45% 45% / 60% 60% 40% 40%",
-                    background: "radial-gradient(ellipse at 30% 20%, #8B6914, #5C4510)",
-                    boxShadow: "inset 0 -20px 40px rgba(0,0,0,0.4), 0 10px 40px rgba(0,0,0,0.5)",
-                    border: "4px solid #6B4E0A",
-                  }}
-                />
-                {/* 锅内汤汁 */}
-                <div
-                  style={{
-                    position: "absolute",
-                    width: 220,
-                    height: 220,
-                    borderRadius: "50%",
-                    background: "radial-gradient(ellipse at 40% 40%, #D4A574, #8B6914)",
-                    boxShadow: "inset 0 0 30px rgba(139,105,20,0.6)",
-                    opacity: 0.85,
-                  }}
-                />
-
-                {/* 锅内食材 */}
-                <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                  {inPotIds.map((id, index) => {
-                    const item = COOKING_INGREDIENTS.find((i) => i.id === id);
-                    if (!item) return null;
-                    const angle = (index / COOKING_INGREDIENTS.length) * Math.PI * 2;
-                    const radius = 60;
-                    const x = Math.cos(angle) * radius;
-                    const y = Math.sin(angle) * radius;
-                    return (
-                      <motion.div
-                        key={`ancient-${id}`}
-                        initial={{ opacity: 0, scale: 0.5, y: -50 }}
-                        animate={{ opacity: 1, scale: 1, y: 0 }}
-                        style={{
-                          position: "absolute",
-                          fontSize: 32,
-                          filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.4))",
-                          transform: `translate(${x}px, ${y}px)`,
-                        }}
-                      >
-                        {item.emoji}
-                      </motion.div>
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* 古境提示 */}
-              <p
-                style={{
-                  marginTop: 40,
-                  color: "rgba(244,197,66,0.5)",
-                  fontSize: 13,
-                  letterSpacing: "2px",
-                  fontFamily: '"Noto Serif SC", serif',
-                }}
-              >
-                感应镜像 · 静待烹饪
-              </p>
-
-              {/* 左侧已放入的食材 */}
-              <div
-                style={{
-                  position: "absolute",
-                  left: 30,
-                  top: "50%",
-                  transform: "translateY(-50%)",
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 12,
-                }}
-              >
-                {COOKING_INGREDIENTS.map((item) => {
-                  const isInPot = inPotIds.includes(item.id);
-                  return (
-                    <div
-                      key={`ancient-side-${item.id}`}
-                      style={{
-                        width: 56,
-                        height: 56,
-                        background: isInPot ? "rgba(139,90,43,0.3)" : "rgba(139,90,43,0.1)",
-                        borderRadius: 12,
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        opacity: isInPot ? 0.6 : 0.3,
-                        border: "1px solid rgba(139,90,43,0.2)",
-                        transition: "all 0.3s ease",
-                      }}
-                    >
-                      <span style={{ fontSize: 24 }}>{item.emoji}</span>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* 右半边：现代实验室 */}
-            <div
-              style={{
-                position: "absolute",
-                inset: 0,
-                left: "50%",
-                right: 0,
-                background: "linear-gradient(135deg, #1a2030 0%, #1e2a3a 50%, #252f40 100%)",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <h2
-                style={{
-                  position: "absolute",
-                  top: 40,
-                  right: 40,
-                  color: "#ffffff",
-                  fontSize: 24,
-                  letterSpacing: "4px",
-                  fontWeight: 300,
-                }}
-              >
-                现代实验室
-              </h2>
-
-              {/* 现代锅 */}
-              <div
-                style={{
-                  position: "relative",
-                  width: 320,
-                  height: 320,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                {/* 现代锅体 */}
-                <div
-                  style={{
-                    position: "absolute",
-                    width: 260,
-                    height: 260,
-                    borderRadius: "50%",
-                    background: "linear-gradient(145deg, #3a4555, #252f3d)",
-                    boxShadow: "inset 0 0 40px rgba(0,0,0,0.3), 0 8px 30px rgba(0,0,0,0.4)",
-                    border: "3px solid #4a5568",
-                  }}
-                />
-                {/* 现代汤汁 */}
-                <div
-                  style={{
-                    position: "absolute",
-                    width: 200,
-                    height: 200,
-                    borderRadius: "50%",
-                    background: "radial-gradient(ellipse at 40% 40%, #FFD700, #D4A574)",
-                    boxShadow: "inset 0 0 25px rgba(212,165,116,0.5)",
-                    opacity: 0.8,
-                  }}
-                />
-
-                {/* 现代食材 */}
-                <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                  {inPotIds.map((id, index) => {
-                    const item = COOKING_INGREDIENTS.find((i) => i.id === id);
-                    if (!item) return null;
-                    const angle = (index / COOKING_INGREDIENTS.length) * Math.PI * 2;
-                    const radius = 60;
-                    const x = Math.cos(angle) * radius;
-                    const y = Math.sin(angle) * radius;
-                    return (
-                      <motion.div
-                        key={`modern-${id}`}
-                        initial={{ opacity: 0, scale: 0.5 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        style={{
-                          position: "absolute",
-                          fontSize: 32,
-                          filter: "drop-shadow(0 2px 8px rgba(100,200,255,0.4))",
-                          transform: `translate(${x}px, ${y}px)`,
-                        }}
-                      >
-                        {item.emoji}
-                      </motion.div>
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* 可拖拽食材列表 */}
-              <div
-                style={{
-                  position: "absolute",
-                  right: 40,
-                  top: "50%",
-                  transform: "translateY(-50%)",
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 12,
-                  zIndex: 10,
-                }}
-              >
-                {COOKING_INGREDIENTS.map((item) => {
-                  const isInPot = inPotIds.includes(item.id);
-                  return (
-                    <motion.div
-                      key={`drag-${item.id}`}
-                      drag={!isInPot}
-                      dragSnapToOrigin
-                      onDragEnd={(e, info) => {
-                        const point = (info as unknown as { point: { x: number; y: number } }).point;
-                        handleCookingDragEnd(item.id, point.x, point.y);
-                      }}
-                      whileHover={!isInPot ? { scale: 1.1 } : {}}
-                      whileDrag={!isInPot ? { scale: 1.2, zIndex: 100 } : {}}
-                      style={{
-                        width: 64,
-                        height: 64,
-                        background: isInPot ? "rgba(255,255,255,0.05)" : "rgba(255,255,255,0.12)",
-                        borderRadius: 16,
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        opacity: isInPot ? 0.3 : 1,
-                        cursor: isInPot ? "default" : "grab",
-                        border: isInPot ? "1px solid rgba(255,255,255,0.1)" : "1px solid rgba(100,200,255,0.3)",
-                        backdropFilter: "blur(12px)",
-                        boxShadow: isInPot ? "none" : "0 4px 20px rgba(100,200,255,0.15)",
-                        pointerEvents: isInPot ? "none" : "auto",
-                      }}
-                    >
-                      <span style={{ fontSize: 28 }}>{item.emoji}</span>
-                      <span style={{ fontSize: 10, color: "rgba(255,255,255,0.6)", marginTop: 2 }}>{item.name}</span>
-                    </motion.div>
-                  );
-                })}
-              </div>
-
-              {/* 进度指示 */}
-              <div
-                style={{
-                  position: "absolute",
-                  bottom: 80,
-                  left: "50%",
-                  transform: "translateX(-50%)",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 12,
-                }}
-              >
-                <div style={{ display: "flex", gap: 6 }}>
-                  {COOKING_INGREDIENTS.map((item) => (
-                    <div
-                      key={`dot-${item.id}`}
-                      style={{
-                        width: 10,
-                        height: 10,
-                        borderRadius: "50%",
-                        background: inPotIds.includes(item.id) ? "#FFD700" : "rgba(255,255,255,0.2)",
-                        boxShadow: inPotIds.includes(item.id) ? "0 0 8px #FFD700" : "none",
-                        transition: "all 0.3s ease",
-                      }}
-                    />
-                  ))}
-                </div>
-                <span style={{ color: "rgba(255,255,255,0.5)", fontSize: 12, letterSpacing: "2px" }}>
-                  {inPotIds.length} / {COOKING_INGREDIENTS.length}
-                </span>
-              </div>
-            </div>
-
-            {/* 关闭按钮 */}
-            <button
-              onClick={() => setCookingMode(false)}
-              style={{
-                position: "fixed",
-                top: 20,
-                left: "50%",
-                transform: "translateX(-50%)",
-                zIndex: 1001,
-                background: "rgba(255,255,255,0.1)",
-                backdropFilter: "blur(12px)",
-                border: "1px solid rgba(255,255,255,0.2)",
-                color: "rgba(255,255,255,0.8)",
-                padding: "10px 24px",
-                borderRadius: 24,
-                fontSize: 13,
-                letterSpacing: "3px",
-                cursor: "pointer",
-                transition: "all 0.25s ease",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = "rgba(255,255,255,0.2)";
-                e.currentTarget.style.borderColor = "rgba(255,255,255,0.4)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = "rgba(255,255,255,0.1)";
-                e.currentTarget.style.borderColor = "rgba(255,255,255,0.2)";
-              }}
-            >
-              ✕ 关闭
-            </button>
-
-            {/* 完成覆盖层 */}
-            {isFinished && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                style={{
-                  position: "fixed",
-                  inset: 0,
-                  background: "rgba(0,0,0,0.85)",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  zIndex: 1002,
-                }}
-              >
-                <motion.div
-                  initial={{ scale: 0.8, y: 50 }}
-                  animate={{ scale: 1, y: 0 }}
-                  transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-                  style={{
-                    background: "linear-gradient(135deg, rgba(139,90,43,0.3), rgba(92,45,10,0.4))",
-                    border: "2px solid rgba(244,197,66,0.5)",
-                    borderRadius: 20,
-                    padding: "40px 60px",
-                    textAlign: "center",
-                    backdropFilter: "blur(20px)",
-                    boxShadow: "0 20px 60px rgba(0,0,0,0.5)",
-                  }}
-                >
-                  <div style={{ fontSize: 64, marginBottom: 20 }}>🍲</div>
-                  <h3
-                    style={{
-                      color: "#f4c542",
-                      fontSize: 28,
-                      fontFamily: '"Noto Serif SC", serif',
-                      letterSpacing: "6px",
-                      marginBottom: 16,
-                    }}
-                  >
-                    王太守八宝豆腐
-                  </h3>
-                  <p
-                    style={{
-                      color: "rgba(255,255,255,0.7)",
-                      fontSize: 14,
-                      letterSpacing: "3px",
-                      marginBottom: 30,
-                    }}
-                  >
-                    八宝齐聚 · 随园珍馐
-                  </p>
-                  <button
-                    onClick={resetCooking}
-                    style={{
-                      background: "linear-gradient(135deg, #8b5a2b, #a06830)",
-                      border: "1px solid rgba(244,197,66,0.5)",
-                      color: "#fff",
-                      padding: "12px 32px",
-                      borderRadius: 24,
-                      fontSize: 14,
-                      letterSpacing: "3px",
-                      cursor: "pointer",
-                      fontFamily: '"Noto Serif SC", serif',
-                      transition: "all 0.25s ease",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = "translateY(-2px)";
-                      e.currentTarget.style.boxShadow = "0 8px 24px rgba(139,90,43,0.4)";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = "translateY(0)";
-                      e.currentTarget.style.boxShadow = "none";
-                    }}
-                  >
-                    返回地图
-                  </button>
-                </motion.div>
-              </motion.div>
-            )}
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Ensure map canvas fills correctly */}
       <style>{`
         .mapboxgl-canvas { outline: none !important; }
         .wst-marker-wrap:hover { z-index: 999 !important; }

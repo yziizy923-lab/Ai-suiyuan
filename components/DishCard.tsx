@@ -26,14 +26,29 @@ export function DishCard({ dish, index, onClick, variant = "default" }: DishCard
   const [isGenerating, setIsGenerating] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // 组件挂载时自动生成图片
+  // 检查图片是否有效（非空且不是占位符）
+  const hasValidImage = (url: string | undefined): boolean => {
+    if (!url) return false;
+    // 排除占位符图片
+    if (url.includes('picsum.photos')) return false;
+    // Base64 data URL 或实际 URL 都视为有效
+    return url.startsWith('data:') || url.startsWith('/') || url.startsWith('http');
+  };
+
+  // 组件挂载时优先使用数据库图片，仅在无图片时生成
   useEffect(() => {
-    const generateImage = async () => {
+    const initImage = async () => {
+      // 1. 优先使用数据库已有图片
+      if (hasValidImage(dish.image)) {
+        setImageUrl(dish.image);
+        return;
+      }
+
+      // 2. 数据库无图片，调用 API 生成并保存到数据库
       if (isGenerating || imageUrl) return;
 
       setIsGenerating(true);
       try {
-        // 用 POST + JSON，避免袁枚原文/现代做法过长导致 GET URL 被截断
         const response = await fetch('/api/generate-dish-image', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -42,8 +57,18 @@ export function DishCard({ dish, index, onClick, variant = "default" }: DishCard
             desc: dish.desc || '',
             ancient: dish.originalText || '',
             method: dish.modernMethod || '',
+            saveToDb: true,
           }),
         });
+
+        // 检查响应状态
+        if (!response.ok) {
+          const errorText = await response.text().catch(() => '无法解析错误');
+          console.error('[DishCard] API 错误:', response.status, errorText);
+          setError(`请求失败 (${response.status})`);
+          return;
+        }
+
         const data = await response.json();
 
         if (data.success && data.imageUrl) {
@@ -52,14 +77,15 @@ export function DishCard({ dish, index, onClick, variant = "default" }: DishCard
           setError(data.error || '生成失败');
         }
       } catch (err) {
+        console.error('[DishCard] 网络错误:', err);
         setError('网络错误');
       } finally {
         setIsGenerating(false);
       }
     };
 
-    generateImage();
-  }, [dish.id, dish.name, dish.desc, dish.originalText, dish.modernMethod]);
+    initImage();
+  }, [dish.id, dish.name, dish.desc, dish.image, dish.originalText, dish.modernMethod]);
 
   return (
     <>

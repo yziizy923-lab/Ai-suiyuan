@@ -7,17 +7,35 @@ interface DetailImageProps {
   dishDesc: string;
   originalText?: string;
   modernMethod?: string;
+  /** 优先使用此图片 URL（如从数据库获取的） */
+  imageUrl?: string;
   fallbackSrc?: string;
   className?: string;
 }
 
-export function DetailImage({ dishName, dishDesc, originalText, modernMethod, fallbackSrc, className }: DetailImageProps) {
-  const [imageUrl, setImageUrl] = useState<string | null>(null);
+export function DetailImage({ dishName, dishDesc, originalText, modernMethod, imageUrl: dbImageUrl, fallbackSrc, className }: DetailImageProps) {
+  const [imageUrl, setImageUrl] = useState<string | null | undefined>(null);
   const [isGenerating, setIsGenerating] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  // 检查图片是否有效（非空且不是占位符）
+  const hasValidImage = (url: string | undefined | null): boolean => {
+    if (!url) return false;
+    if (url.includes('picsum.photos')) return false;
+    return url.startsWith('data:') || url.startsWith('/') || url.startsWith('http');
+  };
+
   useEffect(() => {
-    const generateImage = async () => {
+    const initImage = async () => {
+      const validDbUrl = dbImageUrl;
+      // 1. 优先使用传入的图片 URL（来自数据库）
+      if (hasValidImage(validDbUrl)) {
+        setImageUrl(validDbUrl);
+        setIsGenerating(false);
+        return;
+      }
+
+      // 2. 数据库无图片，调用 API 生成并保存到数据库
       setIsGenerating(true);
       setError(null);
 
@@ -30,6 +48,7 @@ export function DetailImage({ dishName, dishDesc, originalText, modernMethod, fa
             desc: dishDesc || '',
             ancient: originalText || '',
             method: modernMethod || '',
+            saveToDb: true,
           }),
         });
         const data = await response.json();
@@ -46,8 +65,8 @@ export function DetailImage({ dishName, dishDesc, originalText, modernMethod, fa
       }
     };
 
-    generateImage();
-  }, [dishName, dishDesc, originalText, modernMethod]);
+    initImage();
+  }, [dishName, dishDesc, originalText, modernMethod, dbImageUrl]);
 
   if (isGenerating) {
     return (

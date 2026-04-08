@@ -4,6 +4,7 @@ import { useRouter, useParams } from "next/navigation";
 import { useEffect, useState, useRef } from "react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
+import CookingCompareOverlay from "@/components/CookingCompareOverlay";
 
 type Dish = {
   id: number;
@@ -83,6 +84,8 @@ export default function DishDetailPage() {
   // 动画状态
   const [currentStep, setCurrentStep] = useState(0);
   const animationIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  // 古今对比弹窗状态
+  const [cookingMode, setCookingMode] = useState(false);
 
   // 地图背景引用 - 必须在所有 useEffect 之前声明，避免早期返回导致 Hooks 顺序变化
   const mapContainerRef = useRef<HTMLDivElement>(null);
@@ -231,7 +234,7 @@ export default function DishDetailPage() {
 
         // 设置地图语言为中文
         map.getStyle().layers?.forEach((layer: mapboxgl.Layer) => {
-          if (layer.layout && layer.layout['text-field']) {
+          if (layer.layout && 'text-field' in layer.layout) {
             map.setLayoutProperty(layer.id, 'text-field', ['get', 'name_zh-Hans']);
           }
         });
@@ -596,7 +599,7 @@ export default function DishDetailPage() {
 
       {/* 右侧三个按键 */}
       <div className={`right-actions ${showContent ? 'visible' : ''}`}>
-        <button className="right-action-btn" title="古今对比" onClick={() => router.push(`/dish/${dishId}/compare`)}>
+        <button className="right-action-btn" title="古今对比" onClick={() => setCookingMode(true)}>
           <span className="right-action-icon">🔄</span>
           <span className="right-action-text">古今对比</span>
         </button>
@@ -1586,6 +1589,13 @@ export default function DishDetailPage() {
           .action-btn .btn-text { display: none; }
         }
       `}</style>
+
+      {/* 古今对比弹窗 - 使用统一的 CookingCompareOverlay 组件 */}
+      <CookingCompareOverlay
+        open={cookingMode}
+        onClose={() => setCookingMode(false)}
+        dishTitle={dish?.name || "菜品"}
+      />
     </div>
   );
 }

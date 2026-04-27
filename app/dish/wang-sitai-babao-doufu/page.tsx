@@ -353,7 +353,6 @@ export default function WangSitaiPage() {
       const cached = geoCauseCacheRef.current.get(cacheKey);
       if (cached) {
         setGeoCauseText(cached);
-        setGeoCauseLoading(false);
         return;
       }
 
@@ -883,7 +882,6 @@ export default function WangSitaiPage() {
         if (el) el.classList.remove("hidden");
       });
       dishMarkerRef.current?.getElement().classList.remove("hidden");
-      // 不重置 geoCauseOpen，保留上次选中的产地信息
     } else if (activeTab === "flavor") {
       setParticleVisible(false);
       setFlavorParticleVisible(true);
@@ -1162,15 +1160,119 @@ export default function WangSitaiPage() {
         }}
         geoIngredientDetail={geoIngredientDetail}
         geoIngredientLoading={geoIngredientLoading}
-        geoCauseTarget={geoTarget}
-        geoCauseText={geoCauseText}
-        geoCauseLoading={geoCauseLoading}
-        onGeoCauseClear={() => {
-          setGeoTarget(null);
-          setGeoCauseText("");
-          setGeoCauseLoading(false);
-        }}
       />
+
+      {/* 地理成因悬浮卡（ingredients tab 点击产地） */}
+      {activeTab === "ingredients" && geoCauseOpen && geoTarget && (
+        <div
+          style={{
+            position: "fixed",
+            top: 96,
+            right: 22,
+            zIndex: 520,
+            width: 360,
+            maxWidth: "calc(100vw - 44px)",
+            background: "rgba(255,252,245,0.72)",
+            backdropFilter: "blur(14px)",
+            border: "1px solid rgba(139,90,43,0.28)",
+            borderRadius: 12,
+            boxShadow: "0 10px 30px rgba(0,0,0,0.18)",
+            overflow: "hidden",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 10,
+              padding: "12px 14px",
+              borderBottom: "1px solid rgba(139,90,43,0.18)",
+              background: "linear-gradient(180deg, rgba(45,38,32,0.10), rgba(45,38,32,0))",
+            }}
+          >
+            <div style={{ minWidth: 0 }}>
+              <div
+                style={{
+                  fontSize: 13,
+                  fontWeight: 700,
+                  letterSpacing: "1px",
+                  color: "#5a3b1f",
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                }}
+                title={`${geoTarget.ingredient} · ${geoTarget.placeName}`}
+              >
+                {geoTarget.ingredient} · {geoTarget.placeName}
+              </div>
+              <div style={{ fontSize: 11, color: "rgba(90,59,31,0.7)", letterSpacing: "2px", marginTop: 2 }}>
+                地理成因 · 为什么是这里
+              </div>
+            </div>
+            <button
+              onClick={() => {
+                setGeoCauseOpen(false);
+                stopFlowAnimation();
+                applyGeoHighlight(null);
+              }}
+              style={{
+                marginLeft: "auto",
+                background: "rgba(45,38,32,0.06)",
+                border: "1px solid rgba(139,90,43,0.25)",
+                color: "rgba(90,59,31,0.9)",
+                borderRadius: 8,
+                padding: "6px 10px",
+                cursor: "pointer",
+                letterSpacing: "2px",
+                fontSize: 12,
+              }}
+            >
+              关闭
+            </button>
+          </div>
+
+          <div style={{ padding: "12px 14px 14px" }}>
+            {geoCauseLoading ? (
+              <div style={{ color: "rgba(58,52,48,0.75)", fontSize: 13, lineHeight: 1.9, letterSpacing: "0.5px" }}>
+                正在推演此地山川水脉与风土……
+              </div>
+            ) : geoCauseError ? (
+              <div style={{ color: "#8b2b2b", fontSize: 13, lineHeight: 1.9 }}>
+                {geoCauseError}
+                <div style={{ marginTop: 10 }}>
+                  <button
+                    onClick={() => openGeoCause(geoTarget)}
+                    style={{
+                      background: "rgba(139,90,43,0.12)",
+                      border: "1px solid rgba(139,90,43,0.25)",
+                      color: "#8b5a2b",
+                      borderRadius: 8,
+                      padding: "6px 10px",
+                      cursor: "pointer",
+                      letterSpacing: "2px",
+                      fontSize: 12,
+                    }}
+                  >
+                    重试
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div
+                style={{
+                  color: "rgba(58,52,48,0.92)",
+                  fontSize: 13,
+                  lineHeight: 2,
+                  letterSpacing: "0.6px",
+                  fontFamily: '"Noto Serif SC", "SimSun", serif',
+                }}
+              >
+                {geoCauseText || "点击任一产地光点，即可生成地理成因解释。"}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* 古今对比烹饪弹窗 */}
       <CookingCompareOverlay

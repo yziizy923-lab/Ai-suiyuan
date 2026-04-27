@@ -20,8 +20,8 @@
     "processed": true,
     "longitude": 116.63,
     "latitude": 23.66,
-    "image_url": "/images/dishes/1_牛肉_1775551676.png",
-    "image_generated_at": "2026-04-07 16:47:56"
+    "image_url": "/images/dishes/00001_牛肉.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "牛舌 ",
@@ -44,8 +44,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/2_牛舌__1775551683.png",
-    "image_generated_at": "2026-04-07 16:48:04"
+    "image_url": "/images/dishes/00002_牛舌.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "羊头",
@@ -69,8 +69,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/3_羊头_1775551694.png",
-    "image_generated_at": "2026-04-07 16:48:14"
+    "image_url": "/images/dishes/00003_羊头.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "羊蹄",
@@ -94,8 +94,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/4_羊蹄_1775551702.png",
-    "image_generated_at": "2026-04-07 16:48:22"
+    "image_url": "/images/dishes/00004_羊蹄.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "羊羹 ",
@@ -120,8 +120,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/5_羊羹__1775551709.png",
-    "image_generated_at": "2026-04-07 16:48:30"
+    "image_url": "/images/dishes/00005_羊羹.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "羊肚羹",
@@ -143,8 +143,8 @@
     "geo_factors": "羊肚菜源于北方游牧民族饮食，以华北地区羊肉品质最佳。北方气候寒冷，人们喜食温补羊肉，且炒制技术讲究火候，使羊肚脆嫩，体现北方饮食的粗犷与精细结合。",
     "cultural_story": "清代钱王与沙方伯家以锅烧羊肉闻名，袁枚在《随园食单》中特别提及，可见其技艺精湛。羊肚在古代被视为珍贵食材，文人雅士常以羊肚宴客，象征生活富足，也体现了清代饮食文化的精致追求。",
     "processed": true,
-    "image_url": "/images/dishes/6_羊肚羹_1775553400.png",
-    "image_generated_at": "2026-04-07 17:16:40"
+    "image_url": "/images/dishes/00006_羊肚羹.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "红煨羊肉 ",
@@ -167,8 +167,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/7_红煨羊肉__1775553407.png",
-    "image_generated_at": "2026-04-07 17:16:47"
+    "image_url": "/images/dishes/00007_红煨羊肉.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "炒羊肉丝 ",
@@ -190,8 +190,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/8_炒羊肉丝__1775553414.png",
-    "image_generated_at": "2026-04-07 17:16:55"
+    "image_url": "/images/dishes/00008_炒羊肉丝.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "烧羊肉",
@@ -211,8 +211,8 @@
     "geo_factors": "此菜源于北方游牧民族烹饪方式，适合北方寒冷气候。北方草原羊肉质紧实肥美，适合直接明火烤制，体现当地物产与气候特点。",
     "cultural_story": "相传宋仁宗深夜思念家乡美食，御厨烤制此菜。羊肉在火上烤制时香气四溢，缓解了皇帝的思乡之情。此菜成为宫廷御膳，体现了古代文人雅士对美食与情感的关联。",
     "processed": true,
-    "image_url": "/images/dishes/9_烧羊肉_1775553422.png",
-    "image_generated_at": "2026-04-07 17:17:02"
+    "image_url": "/images/dishes/00009_烧羊肉.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "全羊",
@@ -233,8 +233,8 @@
     "processed": true,
     "longitude": 105.0,
     "latitude": 38.0,
-    "image_url": "/images/dishes/10_全羊_1775553429.png",
-    "image_generated_at": "2026-04-07 17:17:09"
+    "image_url": "/images/dishes/00010_全羊.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "鹿肉",
@@ -255,8 +255,8 @@
     "processed": true,
     "longitude": 125.0,
     "latitude": 45.0,
-    "image_url": "/images/dishes/11_鹿肉_1775553437.png",
-    "image_generated_at": "2026-04-07 17:17:17"
+    "image_url": "/images/dishes/00011_鹿肉.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "鹿筋二法",
@@ -282,8 +282,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/12_鹿筋二法_1775553447.png",
-    "image_generated_at": "2026-04-07 17:17:27"
+    "image_url": "/images/dishes/00012_鹿筋二法.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "獐肉",
@@ -304,8 +304,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/13_獐肉_1775553454.png",
-    "image_generated_at": "2026-04-07 17:17:34"
+    "image_url": "/images/dishes/00013_獐肉.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "果子狸",
@@ -328,8 +328,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/14_果子狸_1775553461.png",
-    "image_generated_at": "2026-04-07 17:17:42"
+    "image_url": "/images/dishes/00014_果子狸.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "假牛乳",
@@ -351,8 +351,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/15_假牛乳_1775553469.png",
-    "image_generated_at": "2026-04-07 17:17:49"
+    "image_url": "/images/dishes/00015_假牛乳.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "鹿尾",
@@ -374,8 +374,8 @@
     "processed": true,
     "longitude": 125.0,
     "latitude": 45.0,
-    "image_url": "/images/dishes/16_鹿尾_1775553476.png",
-    "image_generated_at": "2026-04-07 17:17:56"
+    "image_url": "/images/dishes/00016_鹿尾.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "笋脯",
@@ -398,8 +398,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/17_笋脯_1775553483.png",
-    "image_generated_at": "2026-04-07 17:18:04"
+    "image_url": "/images/dishes/00017_笋脯.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "天目笋",
@@ -420,8 +420,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/18_天目笋_1775553491.png",
-    "image_generated_at": "2026-04-07 17:18:11"
+    "image_url": "/images/dishes/00018_天目笋.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "玉兰片",
@@ -444,8 +444,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/19_玉兰片_1775553498.png",
-    "image_generated_at": "2026-04-07 17:18:19"
+    "image_url": "/images/dishes/00019_玉兰片.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "素火腿",
@@ -467,8 +467,8 @@
     "processed": true,
     "longitude": 100.24,
     "latitude": 26.87,
-    "image_url": "/images/dishes/20_素火腿_1775553506.png",
-    "image_generated_at": "2026-04-07 17:18:26"
+    "image_url": "/images/dishes/00020_素火腿.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "宣城笋脯",
@@ -487,8 +487,8 @@
     "geo_factors": "宣城地处皖南山区，气候湿润，竹林茂盛，盛产优质竹笋。当地土壤肥沃，雨量充沛，为笋尖的生长提供了得天独厚的自然条件，使其肉质肥厚，品质上乘。",
     "cultural_story": "清代袁枚在《随园食单》中盛赞宣城笋尖，称其与天目笋齐名。文人雅士常以笋尖入诗，赞其清雅。宣城笋尖也曾作为贡品，深受皇室喜爱，成为江南饮食文化中的珍品。",
     "processed": true,
-    "image_url": "/images/dishes/21_宣城笋脯_1775553513.png",
-    "image_generated_at": "2026-04-07 17:18:33"
+    "image_url": "/images/dishes/00021_宣城笋脯.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "人参笋",
@@ -510,8 +510,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/22_人参笋_1775553520.png",
-    "image_generated_at": "2026-04-07 17:18:40"
+    "image_url": "/images/dishes/00022_人参笋.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "笋油",
@@ -533,8 +533,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/23_笋油_1775553527.png",
-    "image_generated_at": "2026-04-07 17:18:48"
+    "image_url": "/images/dishes/00023_笋油.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "虾油",
@@ -556,8 +556,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/24_虾油_1775553535.png",
-    "image_generated_at": "2026-04-07 17:18:55"
+    "image_url": "/images/dishes/00024_虾油.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "喇虎酱",
@@ -580,8 +580,8 @@
     "processed": true,
     "longitude": 108.94,
     "latitude": 34.34,
-    "image_url": "/images/dishes/25_喇虎酱_1775553542.png",
-    "image_generated_at": "2026-04-07 17:19:03"
+    "image_url": "/images/dishes/00025_喇虎酱.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "熏鱼子",
@@ -604,8 +604,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/26_熏鱼子_1775553550.png",
-    "image_generated_at": "2026-04-07 17:19:10"
+    "image_url": "/images/dishes/00026_熏鱼子.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "腌冬菜、黄芽菜",
@@ -628,8 +628,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/27_腌冬菜、黄芽菜_1775553557.png",
-    "image_generated_at": "2026-04-07 17:19:17"
+    "image_url": "/images/dishes/00027_腌冬菜、黄芽菜.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "莴苣",
@@ -652,8 +652,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/28_莴苣_1775553564.png",
-    "image_generated_at": "2026-04-07 17:19:24"
+    "image_url": "/images/dishes/00028_莴苣.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "香干菜",
@@ -677,8 +677,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/29_香干菜_1775553572.png",
-    "image_generated_at": "2026-04-07 17:19:32"
+    "image_url": "/images/dishes/00029_香干菜.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "冬芥",
@@ -701,8 +701,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/30_冬芥_1775553580.png",
-    "image_generated_at": "2026-04-07 17:19:40"
+    "image_url": "/images/dishes/00030_冬芥.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "春芥",
@@ -724,8 +724,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/31_春芥_1775553587.png",
-    "image_generated_at": "2026-04-07 17:19:48"
+    "image_url": "/images/dishes/00031_春芥.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "芥头",
@@ -747,8 +747,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/32_芥头_1775553595.png",
-    "image_generated_at": "2026-04-07 17:19:55"
+    "image_url": "/images/dishes/00032_芥头.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "芝麻菜",
@@ -770,8 +770,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/33_芝麻菜_1775553603.png",
-    "image_generated_at": "2026-04-07 17:20:03"
+    "image_url": "/images/dishes/00033_芝麻菜.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "腐干丝",
@@ -794,8 +794,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/34_腐干丝_1775553610.png",
-    "image_generated_at": "2026-04-07 17:20:10"
+    "image_url": "/images/dishes/00034_腐干丝.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "风瘪菜",
@@ -815,8 +815,8 @@
     "geo_factors": "冬菜心源于北方冬季腌制菜的传统，北方冬季寒冷干燥，适合蔬菜风干保存，当地盛产大白菜，为冬菜心提供了优质原料。",
     "cultural_story": "清代袁枚在《随园食单》中记载此菜，文人雅士常以冬菜心佐酒，因其香气独特，被誉为“菜中珍品”。相传乾隆南巡时，曾品尝此菜，赞其“咸香扑鼻，回味悠长”。",
     "processed": true,
-    "image_url": "/images/dishes/35_风瘪菜_1775553618.png",
-    "image_generated_at": "2026-04-07 17:20:18"
+    "image_url": "/images/dishes/00035_风瘪菜.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "酸菜",
@@ -840,8 +840,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/36_酸菜_1775553626.png",
-    "image_generated_at": "2026-04-07 17:20:26"
+    "image_url": "/images/dishes/00036_酸菜.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "台菜心",
@@ -864,8 +864,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/37_台菜心_1775553633.png",
-    "image_generated_at": "2026-04-07 17:20:34"
+    "image_url": "/images/dishes/00037_台菜心.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "大头菜",
@@ -887,8 +887,8 @@
     "processed": true,
     "longitude": 118.78,
     "latitude": 32.06,
-    "image_url": "/images/dishes/38_大头菜_1775553641.png",
-    "image_generated_at": "2026-04-07 17:20:41"
+    "image_url": "/images/dishes/00038_大头菜.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "萝卜",
@@ -911,8 +911,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/39_萝卜_1775553649.png",
-    "image_generated_at": "2026-04-07 17:20:49"
+    "image_url": "/images/dishes/00039_萝卜.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "乳腐",
@@ -935,8 +935,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/40_乳腐_1775553656.png",
-    "image_generated_at": "2026-04-07 17:20:56"
+    "image_url": "/images/dishes/00040_乳腐.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "酱炒三果",
@@ -960,8 +960,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/41_酱炒三果_1775553664.png",
-    "image_generated_at": "2026-04-07 17:21:04"
+    "image_url": "/images/dishes/00041_酱炒三果.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "酱石花",
@@ -983,8 +983,8 @@
     "processed": true,
     "longitude": 118.3,
     "latitude": 26.08,
-    "image_url": "/images/dishes/42_酱石花_1775553672.png",
-    "image_generated_at": "2026-04-07 17:21:12"
+    "image_url": "/images/dishes/00042_酱石花.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "石花糕",
@@ -1007,8 +1007,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/43_石花糕_1775553679.png",
-    "image_generated_at": "2026-04-07 17:21:20"
+    "image_url": "/images/dishes/00043_石花糕.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "小松菌",
@@ -1031,8 +1031,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/44_小松菌_1775553687.png",
-    "image_generated_at": "2026-04-07 17:21:27"
+    "image_url": "/images/dishes/00044_小松菌.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "吐［虫失］",
@@ -1055,8 +1055,8 @@
     "processed": true,
     "longitude": 118.8,
     "latitude": 32.06,
-    "image_url": "/images/dishes/45_吐［虫失］_1775553695.png",
-    "image_generated_at": "2026-04-07 17:21:36"
+    "image_url": "/images/dishes/00045_吐［虫失］.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "海蛰",
@@ -1079,8 +1079,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/46_海蛰_1775553703.png",
-    "image_generated_at": "2026-04-07 17:21:43"
+    "image_url": "/images/dishes/00046_海蛰.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "虾子鱼",
@@ -1102,8 +1102,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/47_虾子鱼_1775553710.png",
-    "image_generated_at": "2026-04-07 17:21:50"
+    "image_url": "/images/dishes/00047_虾子鱼.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "酱姜",
@@ -1127,8 +1127,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/48_酱姜_1775553717.png",
-    "image_generated_at": "2026-04-07 17:21:57"
+    "image_url": "/images/dishes/00048_酱姜.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "酱瓜",
@@ -1151,8 +1151,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/49_酱瓜_1775553724.png",
-    "image_generated_at": "2026-04-07 17:22:05"
+    "image_url": "/images/dishes/00049_酱瓜.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "新蚕豆",
@@ -1174,8 +1174,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/50_新蚕豆_1775553731.png",
-    "image_generated_at": "2026-04-07 17:22:11"
+    "image_url": "/images/dishes/00050_新蚕豆.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "腌蛋",
@@ -1197,8 +1197,8 @@
     "processed": true,
     "longitude": 118.8,
     "latitude": 32.06,
-    "image_url": "/images/dishes/51_腌蛋_1775553739.png",
-    "image_generated_at": "2026-04-07 17:22:19"
+    "image_url": "/images/dishes/00051_腌蛋.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "混套",
@@ -1221,8 +1221,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/52_混套_1775553746.png",
-    "image_generated_at": "2026-04-07 17:22:27"
+    "image_url": "/images/dishes/00052_混套.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "茭瓜脯",
@@ -1244,8 +1244,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/53_茭瓜脯_1775553754.png",
-    "image_generated_at": "2026-04-07 17:22:34"
+    "image_url": "/images/dishes/00053_茭瓜脯.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "牛首腐干",
@@ -1268,8 +1268,8 @@
     "processed": true,
     "longitude": 118.78,
     "latitude": 32.06,
-    "image_url": "/images/dishes/54_牛首腐干_1775553762.png",
-    "image_generated_at": "2026-04-07 17:22:42"
+    "image_url": "/images/dishes/00054_牛首腐干.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "酱王瓜",
@@ -1291,8 +1291,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/55_酱王瓜_1775553769.png",
-    "image_generated_at": "2026-04-07 17:22:49"
+    "image_url": "/images/dishes/00055_酱王瓜.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "燕窝",
@@ -1316,8 +1316,8 @@
     "processed": true,
     "longitude": 110.28,
     "latitude": 25.28,
-    "image_url": "/images/dishes/56_燕窝_1775553778.png",
-    "image_generated_at": "2026-04-07 17:22:58"
+    "image_url": "/images/dishes/00056_燕窝.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "海参三法",
@@ -1342,8 +1342,8 @@
     "processed": true,
     "longitude": 122.0,
     "latitude": 37.5,
-    "image_url": "/images/dishes/57_海参三法_1775553788.png",
-    "image_generated_at": "2026-04-07 17:23:08"
+    "image_url": "/images/dishes/00057_海参三法.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "鱼翅二法",
@@ -1368,8 +1368,8 @@
     "processed": true,
     "longitude": 114.17,
     "latitude": 22.32,
-    "image_url": "/images/dishes/58_鱼翅二法_1775553798.png",
-    "image_generated_at": "2026-04-07 17:23:18"
+    "image_url": "/images/dishes/00058_鱼翅二法.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "鳆鱼",
@@ -1393,8 +1393,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/59_鳆鱼_1775553806.png",
-    "image_generated_at": "2026-04-07 17:23:26"
+    "image_url": "/images/dishes/00059_鳆鱼.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "淡菜",
@@ -1417,8 +1417,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/60_淡菜_1775553814.png",
-    "image_generated_at": "2026-04-07 17:23:34"
+    "image_url": "/images/dishes/00060_淡菜.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "海",
@@ -1440,8 +1440,8 @@
     "processed": true,
     "longitude": 122.0,
     "latitude": 37.5,
-    "image_url": "/images/dishes/61_海_1775553821.png",
-    "image_generated_at": "2026-04-07 17:23:41"
+    "image_url": "/images/dishes/00061_海.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "乌鱼蛋",
@@ -1464,8 +1464,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/62_乌鱼蛋_1775553828.png",
-    "image_generated_at": "2026-04-07 17:23:49"
+    "image_url": "/images/dishes/00062_乌鱼蛋.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "江瑶柱",
@@ -1484,8 +1484,8 @@
     "geo_factors": "宁波地处东海之滨，海域盛产江瑶柱等贝类，水质优良，为江瑶柱提供了理想的生长环境，使其肉质肥美鲜嫩。",
     "cultural_story": "清代袁枚在《随园食单》中特别提到江瑶柱的烹饪要点，强调其“鲜脆在柱”，体现了文人雅士对食材本味的追求。宁波文人常以江瑶柱入宴，象征清雅与品位。",
     "processed": true,
-    "image_url": "/images/dishes/63_江瑶柱_1775553835.png",
-    "image_generated_at": "2026-04-07 17:23:55"
+    "image_url": "/images/dishes/00063_江瑶柱.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "蛎黄",
@@ -1508,8 +1508,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/64_蛎黄_1775553842.png",
-    "image_generated_at": "2026-04-07 17:24:02"
+    "image_url": "/images/dishes/00064_蛎黄.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "龙井茶",
@@ -1531,8 +1531,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/65_龙井茶_1775553849.png",
-    "image_generated_at": "2026-04-07 17:24:10"
+    "image_url": "/images/dishes/00065_龙井茶.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "常州阳羡茶",
@@ -1553,8 +1553,8 @@
     "processed": true,
     "longitude": 118.8,
     "latitude": 32.06,
-    "image_url": "/images/dishes/66_常州阳羡茶_1775553857.png",
-    "image_generated_at": "2026-04-07 17:24:17"
+    "image_url": "/images/dishes/00066_常州阳羡茶.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "洞庭君山茶",
@@ -1575,8 +1575,8 @@
     "processed": true,
     "longitude": 112.94,
     "latitude": 28.23,
-    "image_url": "/images/dishes/67_洞庭君山茶_1775553864.png",
-    "image_generated_at": "2026-04-07 17:24:25"
+    "image_url": "/images/dishes/00067_洞庭君山茶.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "金坛于酒",
@@ -1599,8 +1599,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/68_金坛于酒_1775553872.png",
-    "image_generated_at": "2026-04-07 17:24:32"
+    "image_url": "/images/dishes/00068_金坛于酒.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "德州卢酒",
@@ -1623,8 +1623,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/69_德州卢酒_1775553879.png",
-    "image_generated_at": "2026-04-07 17:24:39"
+    "image_url": "/images/dishes/00069_德州卢酒.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "四川郫筒酒",
@@ -1647,8 +1647,8 @@
     "processed": true,
     "longitude": 104.07,
     "latitude": 30.67,
-    "image_url": "/images/dishes/70_四川郫筒酒_1775553886.png",
-    "image_generated_at": "2026-04-07 17:24:47"
+    "image_url": "/images/dishes/00070_四川郫筒酒.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "绍兴酒",
@@ -1671,8 +1671,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/71_绍兴酒_1775553894.png",
-    "image_generated_at": "2026-04-07 17:24:54"
+    "image_url": "/images/dishes/00071_绍兴酒.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "湖州南浔酒",
@@ -1695,8 +1695,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/72_湖州南浔酒_1775553901.png",
-    "image_generated_at": "2026-04-07 17:25:01"
+    "image_url": "/images/dishes/00072_湖州南浔酒.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "常州兰陵酒",
@@ -1719,8 +1719,8 @@
     "processed": true,
     "longitude": 119.97,
     "latitude": 31.81,
-    "image_url": "/images/dishes/73_常州兰陵酒_1775553908.png",
-    "image_generated_at": "2026-04-07 17:25:08"
+    "image_url": "/images/dishes/00073_常州兰陵酒.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "溧阳乌饭酒",
@@ -1743,8 +1743,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/74_溧阳乌饭酒_1775553916.png",
-    "image_generated_at": "2026-04-07 17:25:16"
+    "image_url": "/images/dishes/00074_溧阳乌饭酒.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "苏州陈三白",
@@ -1767,8 +1767,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/75_苏州陈三白_1775553925.png",
-    "image_generated_at": "2026-04-07 17:25:25"
+    "image_url": "/images/dishes/00075_苏州陈三白.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "金华酒",
@@ -1791,8 +1791,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/76_金华酒_1775553932.png",
-    "image_generated_at": "2026-04-07 17:25:33"
+    "image_url": "/images/dishes/00076_金华酒.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "山西汾酒",
@@ -1816,8 +1816,8 @@
     "processed": true,
     "longitude": 112.55,
     "latitude": 37.87,
-    "image_url": "/images/dishes/77_山西汾酒_1775553942.png",
-    "image_generated_at": "2026-04-07 17:25:42"
+    "image_url": "/images/dishes/00077_山西汾酒.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "鳗面",
@@ -1842,8 +1842,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/78_鳗面_1775553950.png",
-    "image_generated_at": "2026-04-07 17:25:50"
+    "image_url": "/images/dishes/00078_鳗面.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "温面",
@@ -1866,8 +1866,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/79_温面_1775553957.png",
-    "image_generated_at": "2026-04-07 17:25:57"
+    "image_url": "/images/dishes/00079_温面.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "鳝面",
@@ -1889,8 +1889,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/80_鳝面_1775553964.png",
-    "image_generated_at": "2026-04-07 17:26:04"
+    "image_url": "/images/dishes/00080_鳝面.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "裙带面",
@@ -1912,8 +1912,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/81_裙带面_1775553972.png",
-    "image_generated_at": "2026-04-07 17:26:12"
+    "image_url": "/images/dishes/00081_裙带面.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "素面",
@@ -1936,8 +1936,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/82_素面_1775553981.png",
-    "image_generated_at": "2026-04-07 17:26:21"
+    "image_url": "/images/dishes/00082_素面.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "蓑衣饼",
@@ -1961,8 +1961,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/83_蓑衣饼_1775553989.png",
-    "image_generated_at": "2026-04-07 17:26:29"
+    "image_url": "/images/dishes/00083_蓑衣饼.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "虾饼",
@@ -1986,8 +1986,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/149_虾饼_1775554518.png",
-    "image_generated_at": "2026-04-07 17:35:18"
+    "image_url": "/images/dishes/00149_虾饼.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "薄饼",
@@ -2011,8 +2011,8 @@
     "processed": true,
     "longitude": 116.99,
     "latitude": 36.67,
-    "image_url": "/images/dishes/85_薄饼_1775554006.png",
-    "image_generated_at": "2026-04-07 17:26:46"
+    "image_url": "/images/dishes/00085_薄饼.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "面老鼠",
@@ -2035,8 +2035,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/86_面老鼠_1775554013.png",
-    "image_generated_at": "2026-04-07 17:26:53"
+    "image_url": "/images/dishes/00086_面老鼠.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "颠不棱即肉饺也",
@@ -2059,8 +2059,8 @@
     "processed": true,
     "longitude": 113.28,
     "latitude": 23.13,
-    "image_url": "/images/dishes/87_颠不棱即肉饺也_1775554021.png",
-    "image_generated_at": "2026-04-07 17:27:01"
+    "image_url": "/images/dishes/00087_颠不棱即肉饺也.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "韭合",
@@ -2081,8 +2081,8 @@
     "geo_factors": "韭菜是中国广泛种植的蔬菜，南北各地均有产出，尤其在北方冬季作为常见食材。此菜体现了北方以面食为主、就地取材的烹饪传统。",
     "cultural_story": "清代袁枚在《随园食单》中记录此菜，反映了他对家常小吃的重视。文人雅士常以简朴食材烹制美味，体现“大道至简”的饮食哲学，此菜亦成为江南文人宴席中的清雅点缀。",
     "processed": true,
-    "image_url": "/images/dishes/88_韭合_1775554028.png",
-    "image_generated_at": "2026-04-07 17:27:08"
+    "image_url": "/images/dishes/00088_韭合.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "糖饼（又名面衣）",
@@ -2105,8 +2105,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/89_糖饼（又名面衣）_1775554035.png",
-    "image_generated_at": "2026-04-07 17:27:15"
+    "image_url": "/images/dishes/00089_糖饼（又名面衣）.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "烧饼",
@@ -2131,8 +2131,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/90_烧饼_1775554043.png",
-    "image_generated_at": "2026-04-07 17:27:23"
+    "image_url": "/images/dishes/00090_烧饼.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "千层馒头",
@@ -2155,8 +2155,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/91_千层馒头_1775554050.png",
-    "image_generated_at": "2026-04-07 17:27:30"
+    "image_url": "/images/dishes/00091_千层馒头.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "面茶",
@@ -2180,8 +2180,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/92_面茶_1775554058.png",
-    "image_generated_at": "2026-04-07 17:27:38"
+    "image_url": "/images/dishes/00092_面茶.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "杏酪",
@@ -2204,8 +2204,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/93_杏酪_1775554065.png",
-    "image_generated_at": "2026-04-07 17:27:45"
+    "image_url": "/images/dishes/00093_杏酪.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "粉衣",
@@ -2228,8 +2228,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/94_粉衣_1775554073.png",
-    "image_generated_at": "2026-04-07 17:27:53"
+    "image_url": "/images/dishes/00094_粉衣.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "竹叶粽",
@@ -2251,8 +2251,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/95_竹叶粽_1775554080.png",
-    "image_generated_at": "2026-04-07 17:28:00"
+    "image_url": "/images/dishes/00095_竹叶粽.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "萝卜汤圆",
@@ -2276,8 +2276,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/96_萝卜汤圆_1775554088.png",
-    "image_generated_at": "2026-04-07 17:28:08"
+    "image_url": "/images/dishes/00096_萝卜汤圆.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "水粉汤圆",
@@ -2302,8 +2302,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/97_水粉汤圆_1775554096.png",
-    "image_generated_at": "2026-04-07 17:28:16"
+    "image_url": "/images/dishes/00097_水粉汤圆.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "脂油糕",
@@ -2326,8 +2326,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/98_脂油糕_1775554104.png",
-    "image_generated_at": "2026-04-07 17:28:24"
+    "image_url": "/images/dishes/00098_脂油糕.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "雪花糕",
@@ -2350,8 +2350,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/99_雪花糕_1775554111.png",
-    "image_generated_at": "2026-04-07 17:28:32"
+    "image_url": "/images/dishes/00099_雪花糕.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "软香糕",
@@ -2374,8 +2374,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/100_软香糕_1775554119.png",
-    "image_generated_at": "2026-04-07 17:28:39"
+    "image_url": "/images/dishes/00100_软香糕.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "百果糕",
@@ -2398,8 +2398,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/101_百果糕_1775554127.png",
-    "image_generated_at": "2026-04-07 17:28:47"
+    "image_url": "/images/dishes/00101_百果糕.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "栗糕",
@@ -2424,8 +2424,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/102_栗糕_1775554135.png",
-    "image_generated_at": "2026-04-07 17:28:55"
+    "image_url": "/images/dishes/00102_栗糕.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "青糕、青团",
@@ -2447,8 +2447,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/103_青糕、青团_1775554142.png",
-    "image_generated_at": "2026-04-07 17:29:03"
+    "image_url": "/images/dishes/00103_青糕、青团.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "合欢饼",
@@ -2470,8 +2470,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/104_合欢饼_1775554150.png",
-    "image_generated_at": "2026-04-07 17:29:10"
+    "image_url": "/images/dishes/00104_合欢饼.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "鸡豆糕",
@@ -2493,8 +2493,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/105_鸡豆糕_1775554158.png",
-    "image_generated_at": "2026-04-07 17:29:18"
+    "image_url": "/images/dishes/00105_鸡豆糕.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "鸡豆粥",
@@ -2517,8 +2517,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/106_鸡豆粥_1775554166.png",
-    "image_generated_at": "2026-04-07 17:29:26"
+    "image_url": "/images/dishes/00106_鸡豆粥.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "金团",
@@ -2540,8 +2540,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/107_金团_1775554173.png",
-    "image_generated_at": "2026-04-07 17:29:33"
+    "image_url": "/images/dishes/00107_金团.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "麻团",
@@ -2564,8 +2564,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/108_麻团_1775554181.png",
-    "image_generated_at": "2026-04-07 17:29:41"
+    "image_url": "/images/dishes/00108_麻团.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "芋粉团",
@@ -2588,8 +2588,8 @@
     "processed": true,
     "longitude": 118.78,
     "latitude": 32.06,
-    "image_url": "/images/dishes/109_芋粉团_1775554188.png",
-    "image_generated_at": "2026-04-07 17:29:48"
+    "image_url": "/images/dishes/00109_芋粉团.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "熟藕",
@@ -2612,8 +2612,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/110_熟藕_1775554198.png",
-    "image_generated_at": "2026-04-07 17:29:58"
+    "image_url": "/images/dishes/00110_熟藕.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "新栗、新菱",
@@ -2634,8 +2634,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/111_新栗、新菱_1775554205.png",
-    "image_generated_at": "2026-04-07 17:30:06"
+    "image_url": "/images/dishes/00111_新栗、新菱.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "莲子",
@@ -2657,8 +2657,8 @@
     "processed": true,
     "longitude": 118.3,
     "latitude": 26.08,
-    "image_url": "/images/dishes/112_莲子_1775554213.png",
-    "image_generated_at": "2026-04-07 17:30:13"
+    "image_url": "/images/dishes/00112_莲子.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "芋",
@@ -2680,8 +2680,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/113_芋_1775554220.png",
-    "image_generated_at": "2026-04-07 17:30:21"
+    "image_url": "/images/dishes/00113_芋.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "萧美人点心",
@@ -2702,8 +2702,8 @@
     "geo_factors": "仪真地处长江与运河交汇处，自古为繁华商埠，物产丰饶，盛产优质稻麦，为面粉点心提供了优质原料，当地饮食文化精致讲究，催生了萧美人这样的点心名师。",
     "cultural_story": "萧美人是清代乾隆年间著名的点心师傅，其点心因精致美味而闻名遐迩，甚至有文人雅士专门为其题诗作赋。传说乾隆皇帝南巡时，也曾品尝过她的点心，赞不绝口，使其声名远播，成为当时江南饮食文化的一张名片。",
     "processed": true,
-    "image_url": "/images/dishes/114_萧美人点心_1775554228.png",
-    "image_generated_at": "2026-04-07 17:30:28"
+    "image_url": "/images/dishes/00114_萧美人点心.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "刘方伯月饼",
@@ -2729,8 +2729,8 @@
     "processed": true,
     "longitude": 116.99,
     "latitude": 36.67,
-    "image_url": "/images/dishes/115_刘方伯月饼_1775554235.png",
-    "image_generated_at": "2026-04-07 17:30:36"
+    "image_url": "/images/dishes/00115_刘方伯月饼.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "陶方伯十景点心",
@@ -2753,8 +2753,8 @@
     "processed": true,
     "longitude": 116.99,
     "latitude": 36.67,
-    "image_url": "/images/dishes/116_陶方伯十景点心_1775554243.png",
-    "image_generated_at": "2026-04-07 17:30:43"
+    "image_url": "/images/dishes/00116_陶方伯十景点心.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "杨中丞西洋饼",
@@ -2778,8 +2778,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/117_杨中丞西洋饼_1775554253.png",
-    "image_generated_at": "2026-04-07 17:30:53"
+    "image_url": "/images/dishes/00117_杨中丞西洋饼.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "白云片",
@@ -2802,8 +2802,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/118_白云片_1775554260.png",
-    "image_generated_at": "2026-04-07 17:31:01"
+    "image_url": "/images/dishes/00118_白云片.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "风枵",
@@ -2826,8 +2826,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/119_风枵_1775554267.png",
-    "image_generated_at": "2026-04-07 17:31:08"
+    "image_url": "/images/dishes/00119_风枵.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "三层玉带糕",
@@ -2850,8 +2850,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/120_三层玉带糕_1775554275.png",
-    "image_generated_at": "2026-04-07 17:31:15"
+    "image_url": "/images/dishes/00120_三层玉带糕.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "运司糕",
@@ -2874,8 +2874,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/121_运司糕_1775554285.png",
-    "image_generated_at": "2026-04-07 17:31:25"
+    "image_url": "/images/dishes/00121_运司糕.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "沙糕",
@@ -2898,8 +2898,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/122_沙糕_1775554292.png",
-    "image_generated_at": "2026-04-07 17:31:33"
+    "image_url": "/images/dishes/00122_沙糕.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "小馒头、小馄饨",
@@ -2923,8 +2923,8 @@
     "processed": true,
     "longitude": 119.42,
     "latitude": 32.39,
-    "image_url": "/images/dishes/123_小馒头、小馄饨_1775554300.png",
-    "image_generated_at": "2026-04-07 17:31:40"
+    "image_url": "/images/dishes/00123_小馒头、小馄饨.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "雪蒸糕法",
@@ -2948,8 +2948,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/124_雪蒸糕法_1775554310.png",
-    "image_generated_at": "2026-04-07 17:31:50"
+    "image_url": "/images/dishes/00124_雪蒸糕法.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "作酥饼法",
@@ -2972,8 +2972,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/125_作酥饼法_1775554319.png",
-    "image_generated_at": "2026-04-07 17:32:00"
+    "image_url": "/images/dishes/00125_作酥饼法.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "天然饼",
@@ -2996,8 +2996,8 @@
     "processed": true,
     "longitude": 108.94,
     "latitude": 34.34,
-    "image_url": "/images/dishes/126_天然饼_1775554329.png",
-    "image_generated_at": "2026-04-07 17:32:09"
+    "image_url": "/images/dishes/00126_天然饼.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "花边月饼",
@@ -3020,8 +3020,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/127_花边月饼_1775554339.png",
-    "image_generated_at": "2026-04-07 17:32:19"
+    "image_url": "/images/dishes/00127_花边月饼.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "制馒头法",
@@ -3043,8 +3043,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/128_制馒头法_1775554349.png",
-    "image_generated_at": "2026-04-07 17:32:29"
+    "image_url": "/images/dishes/00128_制馒头法.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "扬州洪府粽子",
@@ -3067,8 +3067,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/129_扬州洪府粽子_1775554358.png",
-    "image_generated_at": "2026-04-07 17:32:39"
+    "image_url": "/images/dishes/00129_扬州洪府粽子.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "刀鱼二法",
@@ -3094,8 +3094,8 @@
     "processed": true,
     "longitude": 118.78,
     "latitude": 32.06,
-    "image_url": "/images/dishes/130_刀鱼二法_1775554368.png",
-    "image_generated_at": "2026-04-07 17:32:48"
+    "image_url": "/images/dishes/00130_刀鱼二法.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "鲥鱼",
@@ -3119,8 +3119,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/131_鲥鱼_1775554375.png",
-    "image_generated_at": "2026-04-07 17:32:56"
+    "image_url": "/images/dishes/00131_鲥鱼.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "鲟鱼",
@@ -3145,8 +3145,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/132_鲟鱼_1775554385.png",
-    "image_generated_at": "2026-04-07 17:33:05"
+    "image_url": "/images/dishes/00132_鲟鱼.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "黄鱼",
@@ -3170,8 +3170,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/133_黄鱼_1775554395.png",
-    "image_generated_at": "2026-04-07 17:33:15"
+    "image_url": "/images/dishes/00133_黄鱼.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "班鱼",
@@ -3195,8 +3195,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/134_班鱼_1775554402.png",
-    "image_generated_at": "2026-04-07 17:33:23"
+    "image_url": "/images/dishes/00134_班鱼.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "假蟹",
@@ -3220,8 +3220,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/135_假蟹_1775554410.png",
-    "image_generated_at": "2026-04-07 17:33:30"
+    "image_url": "/images/dishes/00135_假蟹.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "汤鳗",
@@ -3245,8 +3245,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/136_汤鳗_1775554419.png",
-    "image_generated_at": "2026-04-07 17:33:39"
+    "image_url": "/images/dishes/00136_汤鳗.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "红煨鳗",
@@ -3270,8 +3270,8 @@
     "processed": true,
     "longitude": 119.42,
     "latitude": 32.39,
-    "image_url": "/images/dishes/137_红煨鳗_1775554429.png",
-    "image_generated_at": "2026-04-07 17:33:49"
+    "image_url": "/images/dishes/00137_红煨鳗.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "炸鳗",
@@ -3294,8 +3294,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/138_炸鳗_1775554437.png",
-    "image_generated_at": "2026-04-07 17:33:57"
+    "image_url": "/images/dishes/00138_炸鳗.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "生炒甲鱼",
@@ -3319,8 +3319,8 @@
     "processed": true,
     "longitude": 114.48,
     "latitude": 38.03,
-    "image_url": "/images/dishes/139_生炒甲鱼_1775554444.png",
-    "image_generated_at": "2026-04-07 17:34:04"
+    "image_url": "/images/dishes/00139_生炒甲鱼.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "酱炒甲鱼",
@@ -3344,8 +3344,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/140_酱炒甲鱼_1775554452.png",
-    "image_generated_at": "2026-04-07 17:34:12"
+    "image_url": "/images/dishes/00140_酱炒甲鱼.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "带骨甲鱼",
@@ -3369,8 +3369,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/141_带骨甲鱼_1775554459.png",
-    "image_generated_at": "2026-04-07 17:34:19"
+    "image_url": "/images/dishes/00141_带骨甲鱼.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "青盐甲鱼",
@@ -3396,8 +3396,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/142_青盐甲鱼_1775554466.png",
-    "image_generated_at": "2026-04-07 17:34:26"
+    "image_url": "/images/dishes/00142_青盐甲鱼.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "汤煨甲鱼",
@@ -3421,8 +3421,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/143_汤煨甲鱼_1775554473.png",
-    "image_generated_at": "2026-04-07 17:34:34"
+    "image_url": "/images/dishes/00143_汤煨甲鱼.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "全壳甲鱼",
@@ -3445,8 +3445,8 @@
     "processed": true,
     "longitude": 116.99,
     "latitude": 36.67,
-    "image_url": "/images/dishes/144_全壳甲鱼_1775554481.png",
-    "image_generated_at": "2026-04-07 17:34:41"
+    "image_url": "/images/dishes/00144_全壳甲鱼.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "鳝丝羹",
@@ -3470,8 +3470,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/145_鳝丝羹_1775554488.png",
-    "image_generated_at": "2026-04-07 17:34:48"
+    "image_url": "/images/dishes/00145_鳝丝羹.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "炒鳝",
@@ -3492,8 +3492,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/146_炒鳝_1775554495.png",
-    "image_generated_at": "2026-04-07 17:34:56"
+    "image_url": "/images/dishes/00146_炒鳝.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "段鳝",
@@ -3517,8 +3517,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/147_段鳝_1775554503.png",
-    "image_generated_at": "2026-04-07 17:35:03"
+    "image_url": "/images/dishes/00147_段鳝.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "虾圆",
@@ -3541,8 +3541,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/148_虾圆_1775554510.png",
-    "image_generated_at": "2026-04-07 17:35:10"
+    "image_url": "/images/dishes/00148_虾圆.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "虾饼",
@@ -3564,7 +3564,9 @@
     "cultural_story": "清代袁枚在《随园食单》中记载虾饼，赞其‘鲜美异常’。相传江南文人雅士常以虾饼佐茶，其制作过程讲究‘捶’的功夫，暗合文人追求‘匠心’的审美情趣。",
     "processed": true,
     "longitude": 120.15,
-    "latitude": 30.28
+    "latitude": 30.28,
+    "image_url": "/images/dishes/00149_虾饼.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "醉虾",
@@ -3588,8 +3590,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/150_醉虾_1775554525.png",
-    "image_generated_at": "2026-04-07 17:35:25"
+    "image_url": "/images/dishes/00150_醉虾.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "炒虾",
@@ -3612,8 +3614,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/151_炒虾_1775554533.png",
-    "image_generated_at": "2026-04-07 17:35:33"
+    "image_url": "/images/dishes/00151_炒虾.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "蟹",
@@ -3635,8 +3637,8 @@
     "processed": true,
     "longitude": 119.42,
     "latitude": 32.39,
-    "image_url": "/images/dishes/152_蟹_1775554541.png",
-    "image_generated_at": "2026-04-07 17:35:41"
+    "image_url": "/images/dishes/00152_蟹.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "蟹羹",
@@ -3658,8 +3660,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/153_蟹羹_1775554549.png",
-    "image_generated_at": "2026-04-07 17:35:49"
+    "image_url": "/images/dishes/00153_蟹羹.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "炒蟹粉",
@@ -3680,8 +3682,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/154_炒蟹粉_1775554556.png",
-    "image_generated_at": "2026-04-07 17:35:57"
+    "image_url": "/images/dishes/00154_炒蟹粉.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "剥壳蒸蟹",
@@ -3704,8 +3706,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/155_剥壳蒸蟹_1775554564.png",
-    "image_generated_at": "2026-04-07 17:36:05"
+    "image_url": "/images/dishes/00155_剥壳蒸蟹.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "蛤蜊",
@@ -3727,8 +3729,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/156_蛤蜊_1775554573.png",
-    "image_generated_at": "2026-04-07 17:36:13"
+    "image_url": "/images/dishes/00156_蛤蜊.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "蚶",
@@ -3752,8 +3754,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/157_蚶_1775554580.png",
-    "image_generated_at": "2026-04-07 17:36:20"
+    "image_url": "/images/dishes/00157_蚶.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "［虫车］蛼［虫敖］",
@@ -3777,8 +3779,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/158_［虫车］蛼［虫敖］_1775554589.png",
-    "image_generated_at": "2026-04-07 17:36:29"
+    "image_url": "/images/dishes/00158_［虫车］蛼［虫敖］.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "程泽弓蛏干",
@@ -3800,8 +3802,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/159_程泽弓蛏干_1775554597.png",
-    "image_generated_at": "2026-04-07 17:36:37"
+    "image_url": "/images/dishes/00159_程泽弓蛏干.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "鲜蛏",
@@ -3824,8 +3826,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/160_鲜蛏_1775554604.png",
-    "image_generated_at": "2026-04-07 17:36:45"
+    "image_url": "/images/dishes/00160_鲜蛏.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "水鸡",
@@ -3849,8 +3851,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/161_水鸡_1775554612.png",
-    "image_generated_at": "2026-04-07 17:36:52"
+    "image_url": "/images/dishes/00161_水鸡.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "熏蛋",
@@ -3872,8 +3874,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/162_熏蛋_1775554620.png",
-    "image_generated_at": "2026-04-07 17:37:00"
+    "image_url": "/images/dishes/00162_熏蛋.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "茶叶蛋",
@@ -3896,8 +3898,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/163_茶叶蛋_1775554627.png",
-    "image_generated_at": "2026-04-07 17:37:08"
+    "image_url": "/images/dishes/00163_茶叶蛋.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "边鱼",
@@ -3922,8 +3924,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/164_边鱼_1775554635.png",
-    "image_generated_at": "2026-04-07 17:37:16"
+    "image_url": "/images/dishes/00164_边鱼.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "鲫鱼",
@@ -3945,8 +3947,8 @@
     "geo_factors": "鲫鱼广泛分布于中国淡水水域，六合龙池因水质优良，所产鲫鱼肉质细嫩，成为地方特色。通州地区的煨制技艺则体现了当地对鱼骨酥烂的烹饪追求。",
     "cultural_story": "清代文人袁枚在《随园食单》中推崇清蒸鲫鱼，认为其能体现'真味'。他特别提到六合龙池鲫鱼，反映了清代文人对食材本味的追求。鲫鱼在江南文化中象征'吉庆'，常出现在文人宴席，体现了饮食与文化的紧密联系。",
     "processed": true,
-    "image_url": "/images/dishes/165_鲫鱼_1775554646.png",
-    "image_generated_at": "2026-04-07 17:37:26"
+    "image_url": "/images/dishes/00165_鲫鱼.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "白鱼",
@@ -3969,8 +3971,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/166_白鱼_1775554654.png",
-    "image_generated_at": "2026-04-07 17:37:34"
+    "image_url": "/images/dishes/00166_白鱼.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "季鱼",
@@ -3994,8 +3996,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/167_季鱼_1775554661.png",
-    "image_generated_at": "2026-04-07 17:37:41"
+    "image_url": "/images/dishes/00167_季鱼.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "土步鱼",
@@ -4017,8 +4019,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/168_土步鱼_1775554669.png",
-    "image_generated_at": "2026-04-07 17:37:49"
+    "image_url": "/images/dishes/00168_土步鱼.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "鱼松",
@@ -4042,8 +4044,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/169_鱼松_1775554676.png",
-    "image_generated_at": "2026-04-07 17:37:56"
+    "image_url": "/images/dishes/00169_鱼松.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "鱼圆",
@@ -4069,8 +4071,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/170_鱼圆_1775554686.png",
-    "image_generated_at": "2026-04-07 17:38:06"
+    "image_url": "/images/dishes/00170_鱼圆.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "鱼片",
@@ -4094,8 +4096,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/171_鱼片_1775554694.png",
-    "image_generated_at": "2026-04-07 17:38:14"
+    "image_url": "/images/dishes/00171_鱼片.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "连鱼豆腐",
@@ -4120,8 +4122,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/172_连鱼豆腐_1775554701.png",
-    "image_generated_at": "2026-04-07 17:38:21"
+    "image_url": "/images/dishes/00172_连鱼豆腐.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "醋搂鱼",
@@ -4145,8 +4147,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/173_醋搂鱼_1775554709.png",
-    "image_generated_at": "2026-04-07 17:38:29"
+    "image_url": "/images/dishes/00173_醋搂鱼.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "银鱼",
@@ -4169,8 +4171,8 @@
     "processed": true,
     "longitude": 120.3,
     "latitude": 31.57,
-    "image_url": "/images/dishes/174_银鱼_1775554716.png",
-    "image_generated_at": "2026-04-07 17:38:36"
+    "image_url": "/images/dishes/00174_银鱼.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "台鲞",
@@ -4190,8 +4192,8 @@
     "geo_factors": "台州松门地处沿海，盛产优质鲞鱼，当地气候适宜晒制，肉质肥美软嫩，成为台鲞的优质产地，体现了沿海物产与饮食风味的紧密联系。",
     "cultural_story": "清代袁枚在《随园食单》中详述台鲞的烹饪法，可见其文人雅士对食材的讲究。绍兴人将鲞冻视为冬季佳肴，既保留了鲞的鲜味，又增添了冻品的爽滑，体现了江南饮食的精致与智慧。",
     "processed": true,
-    "image_url": "/images/dishes/175_台鲞_1775554724.png",
-    "image_generated_at": "2026-04-07 17:38:44"
+    "image_url": "/images/dishes/00175_台鲞.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "糟鲞",
@@ -4214,8 +4216,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/176_糟鲞_1775554731.png",
-    "image_generated_at": "2026-04-07 17:38:51"
+    "image_url": "/images/dishes/00176_糟鲞.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "虾子勒鲞",
@@ -4238,8 +4240,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/177_虾子勒鲞_1775554739.png",
-    "image_generated_at": "2026-04-07 17:38:59"
+    "image_url": "/images/dishes/00177_虾子勒鲞.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "鱼脯",
@@ -4263,8 +4265,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/178_鱼脯_1775554747.png",
-    "image_generated_at": "2026-04-07 17:39:07"
+    "image_url": "/images/dishes/00178_鱼脯.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "家常煎鱼",
@@ -4287,8 +4289,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/179_家常煎鱼_1775554754.png",
-    "image_generated_at": "2026-04-07 17:39:14"
+    "image_url": "/images/dishes/00179_家常煎鱼.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "黄姑鱼",
@@ -4308,8 +4310,8 @@
     "geo_factors": "岳州（今岳阳）地处洞庭湖畔，水网密布，盛产小型淡水鱼，当地渔民以晒干法保存鱼类，便于长途运输，形成独特的风味。",
     "cultural_story": "清代文人袁枚在《随园食单》中记载此菜，称其'味最鲜'，反映江南文人对食材本味的追求。黄姑鱼因袁枚的推崇，成为文人宴席上的雅致小菜，体现'不时不食'的饮食哲学。",
     "processed": true,
-    "image_url": "/images/dishes/180_黄姑鱼_1775554762.png",
-    "image_generated_at": "2026-04-07 17:39:22"
+    "image_url": "/images/dishes/00180_黄姑鱼.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "白片鸡",
@@ -4330,8 +4332,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/181_白片鸡_1775554770.png",
-    "image_generated_at": "2026-04-07 17:39:30"
+    "image_url": "/images/dishes/00181_白片鸡.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "鸡松",
@@ -4356,8 +4358,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/182_鸡松_1775554780.png",
-    "image_generated_at": "2026-04-07 17:39:40"
+    "image_url": "/images/dishes/00182_鸡松.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "生炮鸡",
@@ -4382,8 +4384,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/183_生炮鸡_1775554787.png",
-    "image_generated_at": "2026-04-07 17:39:47"
+    "image_url": "/images/dishes/00183_生炮鸡.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "鸡粥",
@@ -4407,8 +4409,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/184_鸡粥_1775554797.png",
-    "image_generated_at": "2026-04-07 17:39:57"
+    "image_url": "/images/dishes/00184_鸡粥.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "焦鸡",
@@ -4433,8 +4435,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/185_焦鸡_1775554804.png",
-    "image_generated_at": "2026-04-07 17:40:05"
+    "image_url": "/images/dishes/00185_焦鸡.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "捶鸡",
@@ -4457,8 +4459,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/186_捶鸡_1775554812.png",
-    "image_generated_at": "2026-04-07 17:40:12"
+    "image_url": "/images/dishes/00186_捶鸡.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "炒鸡片",
@@ -4482,8 +4484,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/187_炒鸡片_1775554819.png",
-    "image_generated_at": "2026-04-07 17:40:19"
+    "image_url": "/images/dishes/00187_炒鸡片.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "蒸小鸡",
@@ -4508,8 +4510,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/188_蒸小鸡_1775554826.png",
-    "image_generated_at": "2026-04-07 17:40:27"
+    "image_url": "/images/dishes/00188_蒸小鸡.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "酱鸡",
@@ -4531,8 +4533,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/189_酱鸡_1775554834.png",
-    "image_generated_at": "2026-04-07 17:40:34"
+    "image_url": "/images/dishes/00189_酱鸡.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "鸡丁",
@@ -4556,8 +4558,8 @@
     "processed": true,
     "longitude": 104.07,
     "latitude": 30.67,
-    "image_url": "/images/dishes/190_鸡丁_1775554841.png",
-    "image_generated_at": "2026-04-07 17:40:42"
+    "image_url": "/images/dishes/00190_鸡丁.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "鸡圆",
@@ -4581,8 +4583,8 @@
     "processed": true,
     "longitude": 119.42,
     "latitude": 32.39,
-    "image_url": "/images/dishes/191_鸡圆_1775554849.png",
-    "image_generated_at": "2026-04-07 17:40:49"
+    "image_url": "/images/dishes/00191_鸡圆.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "蘑菇煨鸡",
@@ -4606,8 +4608,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/192_蘑菇煨鸡_1775554856.png",
-    "image_generated_at": "2026-04-07 17:40:56"
+    "image_url": "/images/dishes/00192_蘑菇煨鸡.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "梨炒鸡",
@@ -4631,8 +4633,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/193_梨炒鸡_1775554864.png",
-    "image_generated_at": "2026-04-07 17:41:04"
+    "image_url": "/images/dishes/00193_梨炒鸡.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "假野鸡卷",
@@ -4657,8 +4659,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/194_假野鸡卷_1775554871.png",
-    "image_generated_at": "2026-04-07 17:41:11"
+    "image_url": "/images/dishes/00194_假野鸡卷.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "黄芽菜炒鸡",
@@ -4685,8 +4687,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/195_黄芽菜炒鸡_1775554878.png",
-    "image_generated_at": "2026-04-07 17:41:19"
+    "image_url": "/images/dishes/00195_黄芽菜炒鸡.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "栗子炒鸡",
@@ -4709,8 +4711,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/196_栗子炒鸡_1775554886.png",
-    "image_generated_at": "2026-04-07 17:41:26"
+    "image_url": "/images/dishes/00196_栗子炒鸡.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "灼八块",
@@ -4733,8 +4735,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/197_灼八块_1775554894.png",
-    "image_generated_at": "2026-04-07 17:41:34"
+    "image_url": "/images/dishes/00197_灼八块.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "珍珠团",
@@ -4759,8 +4761,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/198_珍珠团_1775554901.png",
-    "image_generated_at": "2026-04-07 17:41:41"
+    "image_url": "/images/dishes/00198_珍珠团.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "黄芪蒸鸡治疗",
@@ -4782,8 +4784,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/199_黄芪蒸鸡治疗_1775554909.png",
-    "image_generated_at": "2026-04-07 17:41:49"
+    "image_url": "/images/dishes/00199_黄芪蒸鸡治疗.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "卤鸡",
@@ -4809,8 +4811,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/200_卤鸡_1775554917.png",
-    "image_generated_at": "2026-04-07 17:41:57"
+    "image_url": "/images/dishes/00200_卤鸡.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "蒋鸡",
@@ -4835,8 +4837,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/201_蒋鸡_1775554924.png",
-    "image_generated_at": "2026-04-07 17:42:04"
+    "image_url": "/images/dishes/00201_蒋鸡.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "唐鸡",
@@ -4860,8 +4862,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/202_唐鸡_1775554934.png",
-    "image_generated_at": "2026-04-07 17:42:14"
+    "image_url": "/images/dishes/00202_唐鸡.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "鸡肝",
@@ -4883,8 +4885,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/203_鸡肝_1775554941.png",
-    "image_generated_at": "2026-04-07 17:42:21"
+    "image_url": "/images/dishes/00203_鸡肝.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "鸡血",
@@ -4907,8 +4909,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/204_鸡血_1775554948.png",
-    "image_generated_at": "2026-04-07 17:42:28"
+    "image_url": "/images/dishes/00204_鸡血.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "鸡丝",
@@ -4934,8 +4936,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/205_鸡丝_1775554955.png",
-    "image_generated_at": "2026-04-07 17:42:36"
+    "image_url": "/images/dishes/00205_鸡丝.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "糟鸡",
@@ -4958,8 +4960,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/206_糟鸡_1775554962.png",
-    "image_generated_at": "2026-04-07 17:42:42"
+    "image_url": "/images/dishes/00206_糟鸡.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "鸡肾",
@@ -4981,8 +4983,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/207_鸡肾_1775554969.png",
-    "image_generated_at": "2026-04-07 17:42:49"
+    "image_url": "/images/dishes/00207_鸡肾.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "鸡蛋",
@@ -5005,8 +5007,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/208_鸡蛋_1775554978.png",
-    "image_generated_at": "2026-04-07 17:42:59"
+    "image_url": "/images/dishes/00208_鸡蛋.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "野鸡五法",
@@ -5030,8 +5032,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/209_野鸡五法_1775554988.png",
-    "image_generated_at": "2026-04-07 17:43:08"
+    "image_url": "/images/dishes/00209_野鸡五法.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "赤炖肉鸡",
@@ -5055,8 +5057,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/210_赤炖肉鸡_1775554996.png",
-    "image_generated_at": "2026-04-07 17:43:16"
+    "image_url": "/images/dishes/00210_赤炖肉鸡.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "鸽子",
@@ -5078,8 +5080,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/211_鸽子_1775555003.png",
-    "image_generated_at": "2026-04-07 17:43:24"
+    "image_url": "/images/dishes/00211_鸽子.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "鸽蛋",
@@ -5101,8 +5103,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/212_鸽蛋_1775555011.png",
-    "image_generated_at": "2026-04-07 17:43:31"
+    "image_url": "/images/dishes/00212_鸽蛋.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "野鸭",
@@ -5125,8 +5127,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/213_野鸭_1775555018.png",
-    "image_generated_at": "2026-04-07 17:43:39"
+    "image_url": "/images/dishes/00213_野鸭.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "蒸鸭",
@@ -5150,8 +5152,8 @@
     "processed": true,
     "longitude": 114.48,
     "latitude": 38.03,
-    "image_url": "/images/dishes/214_蒸鸭_1775555026.png",
-    "image_generated_at": "2026-04-07 17:43:46"
+    "image_url": "/images/dishes/00214_蒸鸭.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "鸭糊涂",
@@ -5175,8 +5177,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/215_鸭糊涂_1775555034.png",
-    "image_generated_at": "2026-04-07 17:43:54"
+    "image_url": "/images/dishes/00215_鸭糊涂.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "卤鸭",
@@ -5199,8 +5201,8 @@
     "processed": true,
     "longitude": 113.28,
     "latitude": 23.13,
-    "image_url": "/images/dishes/216_卤鸭_1775555042.png",
-    "image_generated_at": "2026-04-07 17:44:02"
+    "image_url": "/images/dishes/00216_卤鸭.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "鸭脯",
@@ -5225,8 +5227,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/217_鸭脯_1775555050.png",
-    "image_generated_at": "2026-04-07 17:44:10"
+    "image_url": "/images/dishes/00217_鸭脯.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "烧鸭",
@@ -5248,8 +5250,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/218_烧鸭_1775555057.png",
-    "image_generated_at": "2026-04-07 17:44:17"
+    "image_url": "/images/dishes/00218_烧鸭.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "挂卤鸭",
@@ -5271,8 +5273,8 @@
     "processed": true,
     "longitude": 118.78,
     "latitude": 32.06,
-    "image_url": "/images/dishes/219_挂卤鸭_1775555064.png",
-    "image_generated_at": "2026-04-07 17:44:24"
+    "image_url": "/images/dishes/00219_挂卤鸭.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "干蒸鸭",
@@ -5295,8 +5297,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/220_干蒸鸭_1775555072.png",
-    "image_generated_at": "2026-04-07 17:44:32"
+    "image_url": "/images/dishes/00220_干蒸鸭.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "野鸭团",
@@ -5319,8 +5321,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/221_野鸭团_1775555079.png",
-    "image_generated_at": "2026-04-07 17:44:40"
+    "image_url": "/images/dishes/00221_野鸭团.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "徐鸭",
@@ -5344,8 +5346,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/222_徐鸭_1775555090.png",
-    "image_generated_at": "2026-04-07 17:44:50"
+    "image_url": "/images/dishes/00222_徐鸭.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "煨麻雀",
@@ -5368,8 +5370,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/223_煨麻雀_1775555097.png",
-    "image_generated_at": "2026-04-07 17:44:57"
+    "image_url": "/images/dishes/00223_煨麻雀.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "煨鹩鹑、黄雀",
@@ -5392,8 +5394,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/224_煨鹩鹑、黄雀_1775555105.png",
-    "image_generated_at": "2026-04-07 17:45:05"
+    "image_url": "/images/dishes/00224_煨鹩鹑、黄雀.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "云林鹅",
@@ -5419,8 +5421,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/225_云林鹅_1775555115.png",
-    "image_generated_at": "2026-04-07 17:45:15"
+    "image_url": "/images/dishes/00225_云林鹅.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "蒋侍郎豆腐",
@@ -5445,8 +5447,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/226_蒋侍郎豆腐_1775555125.png",
-    "image_generated_at": "2026-04-07 17:45:25"
+    "image_url": "/images/dishes/00226_蒋侍郎豆腐.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "杨中丞豆腐",
@@ -5471,8 +5473,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/227_杨中丞豆腐_1775555133.png",
-    "image_generated_at": "2026-04-07 17:45:33"
+    "image_url": "/images/dishes/00227_杨中丞豆腐.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "张恺豆腐",
@@ -5495,8 +5497,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/228_张恺豆腐_1775555140.png",
-    "image_generated_at": "2026-04-07 17:45:41"
+    "image_url": "/images/dishes/00228_张恺豆腐.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "庆元豆腐",
@@ -5518,8 +5520,8 @@
     "processed": true,
     "longitude": 113.28,
     "latitude": 23.13,
-    "image_url": "/images/dishes/229_庆元豆腐_1775555148.png",
-    "image_generated_at": "2026-04-07 17:45:48"
+    "image_url": "/images/dishes/00229_庆元豆腐.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "芙蓉豆腐",
@@ -5543,8 +5545,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/230_芙蓉豆腐_1775555156.png",
-    "image_generated_at": "2026-04-07 17:45:56"
+    "image_url": "/images/dishes/00230_芙蓉豆腐.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "王太守八宝豆腐",
@@ -5571,8 +5573,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/231_王太守八宝豆腐_1775555163.png",
-    "image_generated_at": "2026-04-07 17:46:04"
+    "image_url": "/images/dishes/00231_王太守八宝豆腐.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "程立万豆腐",
@@ -5594,8 +5596,8 @@
     "processed": true,
     "longitude": 119.42,
     "latitude": 32.39,
-    "image_url": "/images/dishes/232_程立万豆腐_1775555173.png",
-    "image_generated_at": "2026-04-07 17:46:13"
+    "image_url": "/images/dishes/00232_程立万豆腐.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "冻豆腐",
@@ -5620,8 +5622,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/233_冻豆腐_1775555183.png",
-    "image_generated_at": "2026-04-07 17:46:23"
+    "image_url": "/images/dishes/00233_冻豆腐.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "虾油豆腐",
@@ -5644,8 +5646,8 @@
     "geo_factors": "虾油豆腐源于沿海地区，因盛产虾酱、虾油等调味品，当地物产丰富，善用海鲜调味，形成独特的咸鲜风味。",
     "cultural_story": "袁枚在《随园食单》中推崇此菜，认为虾油比酱油更添鲜味。清代文人常以豆腐入菜，取其淡雅中见真味，体现了文人饮食的精致与雅趣。",
     "processed": true,
-    "image_url": "/images/dishes/234_虾油豆腐_1775555191.png",
-    "image_generated_at": "2026-04-07 17:46:31"
+    "image_url": "/images/dishes/00234_虾油豆腐.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "蕨菜",
@@ -5667,8 +5669,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/235_蕨菜_1775555198.png",
-    "image_generated_at": "2026-04-07 17:46:38"
+    "image_url": "/images/dishes/00235_蕨菜.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "葛仙米",
@@ -5691,8 +5693,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/236_葛仙米_1775555206.png",
-    "image_generated_at": "2026-04-07 17:46:46"
+    "image_url": "/images/dishes/00236_葛仙米.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "石发",
@@ -5716,8 +5718,8 @@
     "processed": true,
     "longitude": 114.3,
     "latitude": 30.58,
-    "image_url": "/images/dishes/237_石发_1775555213.png",
-    "image_generated_at": "2026-04-07 17:46:53"
+    "image_url": "/images/dishes/00237_石发.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "素烧鹅",
@@ -5742,8 +5744,8 @@
     "processed": true,
     "longitude": 113.28,
     "latitude": 23.13,
-    "image_url": "/images/dishes/238_素烧鹅_1775555221.png",
-    "image_generated_at": "2026-04-07 17:47:01"
+    "image_url": "/images/dishes/00238_素烧鹅.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "芹",
@@ -5765,8 +5767,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/239_芹_1775555228.png",
-    "image_generated_at": "2026-04-07 17:47:09"
+    "image_url": "/images/dishes/00239_芹.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "豆芽",
@@ -5788,8 +5790,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/240_豆芽_1775555235.png",
-    "image_generated_at": "2026-04-07 17:47:15"
+    "image_url": "/images/dishes/00240_豆芽.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "茭",
@@ -5812,8 +5814,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/241_茭_1775555241.png",
-    "image_generated_at": "2026-04-07 17:47:21"
+    "image_url": "/images/dishes/00241_茭.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "青菜",
@@ -5836,8 +5838,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/242_青菜_1775555246.png",
-    "image_generated_at": "2026-04-07 17:47:26"
+    "image_url": "/images/dishes/00242_青菜.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "台菜",
@@ -5861,8 +5863,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/243_台菜_1775555252.png",
-    "image_generated_at": "2026-04-07 17:47:32"
+    "image_url": "/images/dishes/00243_台菜.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "白菜",
@@ -5885,8 +5887,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/244_白菜_1775555258.png",
-    "image_generated_at": "2026-04-07 17:47:38"
+    "image_url": "/images/dishes/00244_白菜.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "黄芽菜",
@@ -5907,8 +5909,8 @@
     "geo_factors": "北方食材因气候寒冷，肉质紧实，适合醋和虾米提鲜，体现北方饮食的厚重与酸鲜结合的特点。",
     "cultural_story": "随园主人袁枚注重食材本味，主张“一熟便吃”，强调烹饪的时效性，反映文人追求自然、反对过度加工的饮食哲学，也暗合北方人豪爽直接的饮食性格。",
     "processed": true,
-    "image_url": "/images/dishes/245_黄芽菜_1775555263.png",
-    "image_generated_at": "2026-04-07 17:47:43"
+    "image_url": "/images/dishes/00245_黄芽菜.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "瓢儿菜",
@@ -5930,8 +5932,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/246_瓢儿菜_1775555269.png",
-    "image_generated_at": "2026-04-07 17:47:49"
+    "image_url": "/images/dishes/00246_瓢儿菜.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "波菜",
@@ -5953,8 +5955,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/247_波菜_1775555275.png",
-    "image_generated_at": "2026-04-07 17:47:55"
+    "image_url": "/images/dishes/00247_波菜.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "蘑菇",
@@ -5974,8 +5976,8 @@
     "geo_factors": "蘑菇在中国各地均有出产，但口蘑多产于北方草原，尤其是张家口一带，故称“口蘑”。鸡腿蘑则广泛分布于温带地区，适应性强，是常见的食用菌。",
     "cultural_story": "清代袁枚在《随园食单》中特别提到蘑菇的烹饪方法，可见其文人雅士对食材的讲究。蘑菇自古被视为山珍，象征自然馈赠，文人常以蘑菇入诗，表达对田园生活的向往。",
     "processed": true,
-    "image_url": "/images/dishes/248_蘑菇_1775555281.png",
-    "image_generated_at": "2026-04-07 17:48:01"
+    "image_url": "/images/dishes/00248_蘑菇.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "松菌",
@@ -5998,8 +6000,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/249_松菌_1775555287.png",
-    "image_generated_at": "2026-04-07 17:48:07"
+    "image_url": "/images/dishes/00249_松菌.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "面筋三法",
@@ -6024,8 +6026,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/250_面筋三法_1775555293.png",
-    "image_generated_at": "2026-04-07 17:48:13"
+    "image_url": "/images/dishes/00250_面筋三法.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "茄二法",
@@ -6050,8 +6052,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/251_茄二法_1775555299.png",
-    "image_generated_at": "2026-04-07 17:48:19"
+    "image_url": "/images/dishes/00251_茄二法.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "苋羹",
@@ -6074,8 +6076,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/252_苋羹_1775555305.png",
-    "image_generated_at": "2026-04-07 17:48:25"
+    "image_url": "/images/dishes/00252_苋羹.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "芋羹",
@@ -6098,8 +6100,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/253_芋羹_1775555311.png",
-    "image_generated_at": "2026-04-07 17:48:31"
+    "image_url": "/images/dishes/00253_芋羹.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "豆腐皮",
@@ -6123,8 +6125,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/254_豆腐皮_1775555317.png",
-    "image_generated_at": "2026-04-07 17:48:38"
+    "image_url": "/images/dishes/00254_豆腐皮.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "扁豆",
@@ -6147,8 +6149,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/255_扁豆_1775555323.png",
-    "image_generated_at": "2026-04-07 17:48:43"
+    "image_url": "/images/dishes/00255_扁豆.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "瓠子、王瓜",
@@ -6172,8 +6174,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/256_瓠子、王瓜_1775555329.png",
-    "image_generated_at": "2026-04-07 17:48:49"
+    "image_url": "/images/dishes/00256_瓠子、王瓜.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "煨木耳、香蕈",
@@ -6196,8 +6198,8 @@
     "processed": true,
     "longitude": 119.42,
     "latitude": 32.39,
-    "image_url": "/images/dishes/257_煨木耳、香蕈_1775555334.png",
-    "image_generated_at": "2026-04-07 17:48:54"
+    "image_url": "/images/dishes/00257_煨木耳、香蕈.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "冬瓜",
@@ -6220,8 +6222,8 @@
     "processed": true,
     "longitude": 119.42,
     "latitude": 32.39,
-    "image_url": "/images/dishes/258_冬瓜_1775555340.png",
-    "image_generated_at": "2026-04-07 17:49:00"
+    "image_url": "/images/dishes/00258_冬瓜.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "煨鲜菱",
@@ -6245,8 +6247,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/259_煨鲜菱_1775555346.png",
-    "image_generated_at": "2026-04-07 17:49:06"
+    "image_url": "/images/dishes/00259_煨鲜菱.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "缸豆",
@@ -6268,8 +6270,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/260_缸豆_1775555352.png",
-    "image_generated_at": "2026-04-07 17:49:12"
+    "image_url": "/images/dishes/00260_缸豆.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "煨三笋",
@@ -6293,8 +6295,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/261_煨三笋_1775555357.png",
-    "image_generated_at": "2026-04-07 17:49:17"
+    "image_url": "/images/dishes/00261_煨三笋.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "芋煨白菜",
@@ -6317,8 +6319,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/262_芋煨白菜_1775555363.png",
-    "image_generated_at": "2026-04-07 17:49:23"
+    "image_url": "/images/dishes/00262_芋煨白菜.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "香珠豆",
@@ -6341,8 +6343,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/263_香珠豆_1775555368.png",
-    "image_generated_at": "2026-04-07 17:49:28"
+    "image_url": "/images/dishes/00263_香珠豆.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "马兰",
@@ -6365,8 +6367,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/264_马兰_1775555374.png",
-    "image_generated_at": "2026-04-07 17:49:34"
+    "image_url": "/images/dishes/00264_马兰.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "杨花菜",
@@ -6387,8 +6389,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/265_杨花菜_1775555379.png",
-    "image_generated_at": "2026-04-07 17:49:40"
+    "image_url": "/images/dishes/00265_杨花菜.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "问政笋丝",
@@ -6411,8 +6413,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/266_问政笋丝_1775555385.png",
-    "image_generated_at": "2026-04-07 17:49:45"
+    "image_url": "/images/dishes/00266_问政笋丝.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "炒鸡腿蘑菇",
@@ -6436,8 +6438,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/267_炒鸡腿蘑菇_1775555391.png",
-    "image_generated_at": "2026-04-07 17:49:51"
+    "image_url": "/images/dishes/00267_炒鸡腿蘑菇.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "盖碗装肉",
@@ -6459,8 +6461,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/268_盖碗装肉_1775555397.png",
-    "image_generated_at": "2026-04-07 17:49:57"
+    "image_url": "/images/dishes/00268_盖碗装肉.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "杨公圆",
@@ -6482,8 +6484,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/269_杨公圆_1775555403.png",
-    "image_generated_at": "2026-04-07 17:50:03"
+    "image_url": "/images/dishes/00269_杨公圆.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "猪头二法",
@@ -6508,8 +6510,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/270_猪头二法_1775555409.png",
-    "image_generated_at": "2026-04-07 17:50:10"
+    "image_url": "/images/dishes/00270_猪头二法.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "猪蹄四法",
@@ -6534,8 +6536,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/271_猪蹄四法_1775555416.png",
-    "image_generated_at": "2026-04-07 17:50:16"
+    "image_url": "/images/dishes/00271_猪蹄四法.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "猪爪猪筋",
@@ -6558,8 +6560,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/272_猪爪猪筋_1775555422.png",
-    "image_generated_at": "2026-04-07 17:50:22"
+    "image_url": "/images/dishes/00272_猪爪猪筋.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "猪肚二法",
@@ -6582,8 +6584,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/273_猪肚二法_1775555428.png",
-    "image_generated_at": "2026-04-07 17:50:28"
+    "image_url": "/images/dishes/00273_猪肚二法.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "猪肺二法",
@@ -6606,8 +6608,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/274_猪肺二法_1775555434.png",
-    "image_generated_at": "2026-04-07 17:50:34"
+    "image_url": "/images/dishes/00274_猪肺二法.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "猪腰",
@@ -6630,8 +6632,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/275_猪腰_1775555441.png",
-    "image_generated_at": "2026-04-07 17:50:41"
+    "image_url": "/images/dishes/00275_猪腰.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "猪里肉",
@@ -6655,8 +6657,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/276_猪里肉_1775555446.png",
-    "image_generated_at": "2026-04-07 17:50:47"
+    "image_url": "/images/dishes/00276_猪里肉.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "白片肉",
@@ -6676,8 +6678,8 @@
     "geo_factors": "源于北方游牧民族，满族跳神肉是其变体。北方寒冷气候需温补肉类，且猪只饲养普遍，肉质紧实适合切片。南方气候湿热，猪只脂肪较厚，难以做出北方白肉片的细腻口感。",
     "cultural_story": "袁枚在《随园食单》中特意提及此菜与儒家“割不正不食”的对比，赞赏其随性自然的割法。满族跳神肉原为祭祀用肉，后融入汉族饮食。清代文人常以此菜待客，因其制作考究却显低调，暗合文人“大味若淡”的审美追求。",
     "processed": true,
-    "image_url": "/images/dishes/277_白片肉_1775555452.png",
-    "image_generated_at": "2026-04-07 17:50:53"
+    "image_url": "/images/dishes/00277_白片肉.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "红煨肉三法",
@@ -6700,8 +6702,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/278_红煨肉三法_1775555459.png",
-    "image_generated_at": "2026-04-07 17:50:59"
+    "image_url": "/images/dishes/00278_红煨肉三法.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "白煨肉",
@@ -6725,8 +6727,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/279_白煨肉_1775555465.png",
-    "image_generated_at": "2026-04-07 17:51:06"
+    "image_url": "/images/dishes/00279_白煨肉.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "油灼肉",
@@ -6750,8 +6752,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/280_油灼肉_1775555471.png",
-    "image_generated_at": "2026-04-07 17:51:12"
+    "image_url": "/images/dishes/00280_油灼肉.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "干锅蒸肉",
@@ -6774,8 +6776,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/281_干锅蒸肉_1775555477.png",
-    "image_generated_at": "2026-04-07 17:51:17"
+    "image_url": "/images/dishes/00281_干锅蒸肉.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "磁坛装肉",
@@ -6798,8 +6800,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/282_磁坛装肉_1775555483.png",
-    "image_generated_at": "2026-04-07 17:51:23"
+    "image_url": "/images/dishes/00282_磁坛装肉.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "脱沙肉",
@@ -6825,8 +6827,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/283_脱沙肉_1775555489.png",
-    "image_generated_at": "2026-04-07 17:51:29"
+    "image_url": "/images/dishes/00283_脱沙肉.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "晒干肉",
@@ -6848,8 +6850,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/284_晒干肉_1775555494.png",
-    "image_generated_at": "2026-04-07 17:51:35"
+    "image_url": "/images/dishes/00284_晒干肉.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "火腿煨肉",
@@ -6873,8 +6875,8 @@
     "processed": true,
     "longitude": 100.24,
     "latitude": 26.87,
-    "image_url": "/images/dishes/285_火腿煨肉_1775555500.png",
-    "image_generated_at": "2026-04-07 17:51:40"
+    "image_url": "/images/dishes/00285_火腿煨肉.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "台鲞煨肉",
@@ -6897,8 +6899,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/286_台鲞煨肉_1775555506.png",
-    "image_generated_at": "2026-04-07 17:51:46"
+    "image_url": "/images/dishes/00286_台鲞煨肉.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "粉蒸肉",
@@ -6922,8 +6924,8 @@
     "processed": true,
     "longitude": 115.89,
     "latitude": 28.68,
-    "image_url": "/images/dishes/287_粉蒸肉_1775555512.png",
-    "image_generated_at": "2026-04-07 17:51:52"
+    "image_url": "/images/dishes/00287_粉蒸肉.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "熏煨肉",
@@ -6947,8 +6949,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/288_熏煨肉_1775555518.png",
-    "image_generated_at": "2026-04-07 17:51:58"
+    "image_url": "/images/dishes/00288_熏煨肉.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "芙蓉肉",
@@ -6972,8 +6974,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/289_芙蓉肉_1775555524.png",
-    "image_generated_at": "2026-04-07 17:52:04"
+    "image_url": "/images/dishes/00289_芙蓉肉.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "荔枝肉",
@@ -6997,8 +6999,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/290_荔枝肉_1775555530.png",
-    "image_generated_at": "2026-04-07 17:52:10"
+    "image_url": "/images/dishes/00290_荔枝肉.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "八宝肉",
@@ -7023,8 +7025,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/291_八宝肉_1775555536.png",
-    "image_generated_at": "2026-04-07 17:52:16"
+    "image_url": "/images/dishes/00291_八宝肉.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "菜花头煨肉",
@@ -7046,8 +7048,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/292_菜花头煨肉_1775555542.png",
-    "image_generated_at": "2026-04-07 17:52:22"
+    "image_url": "/images/dishes/00292_菜花头煨肉.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "炒肉丝",
@@ -7072,8 +7074,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/293_炒肉丝_1775555548.png",
-    "image_generated_at": "2026-04-07 17:52:28"
+    "image_url": "/images/dishes/00293_炒肉丝.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "炒肉片",
@@ -7097,8 +7099,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/294_炒肉片_1775555553.png",
-    "image_generated_at": "2026-04-07 17:52:34"
+    "image_url": "/images/dishes/00294_炒肉片.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "八宝肉圆",
@@ -7123,8 +7125,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/295_八宝肉圆_1775555559.png",
-    "image_generated_at": "2026-04-07 17:52:39"
+    "image_url": "/images/dishes/00295_八宝肉圆.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "空心肉圆",
@@ -7147,8 +7149,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/296_空心肉圆_1775555565.png",
-    "image_generated_at": "2026-04-07 17:52:45"
+    "image_url": "/images/dishes/00296_空心肉圆.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "锅烧肉",
@@ -7172,8 +7174,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/297_锅烧肉_1775555570.png",
-    "image_generated_at": "2026-04-07 17:52:51"
+    "image_url": "/images/dishes/00297_锅烧肉.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "酱肉",
@@ -7196,8 +7198,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/298_酱肉_1775555576.png",
-    "image_generated_at": "2026-04-07 17:52:56"
+    "image_url": "/images/dishes/00298_酱肉.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "糟肉",
@@ -7220,8 +7222,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/299_糟肉_1775555582.png",
-    "image_generated_at": "2026-04-07 17:53:02"
+    "image_url": "/images/dishes/00299_糟肉.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "暴腌肉",
@@ -7243,8 +7245,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/300_暴腌肉_1775555588.png",
-    "image_generated_at": "2026-04-07 17:53:08"
+    "image_url": "/images/dishes/00300_暴腌肉.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "尹文端公家风肉",
@@ -7267,8 +7269,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/301_尹文端公家风肉_1775555594.png",
-    "image_generated_at": "2026-04-07 17:53:14"
+    "image_url": "/images/dishes/00301_尹文端公家风肉.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "家乡肉",
@@ -7290,8 +7292,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/302_家乡肉_1775555600.png",
-    "image_generated_at": "2026-04-07 17:53:20"
+    "image_url": "/images/dishes/00302_家乡肉.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "笋煨火肉",
@@ -7314,8 +7316,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/303_笋煨火肉_1775555605.png",
-    "image_generated_at": "2026-04-07 17:53:25"
+    "image_url": "/images/dishes/00303_笋煨火肉.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "烧小猪",
@@ -7336,8 +7338,8 @@
     "geo_factors": "源于满族旗人饮食，北方游牧民族擅长烧烤，炭火炙烤体现草原烹饪特色。奶酥油和秋油为北方特产，与当地物产紧密相关。",
     "cultural_story": "此菜为清代满族名菜，随园主人袁枚记载其弟龙文精通此法。满族入关后，烧烤技艺与汉族烹饪融合，成为宫廷宴席佳肴。乾隆年间，炙小猪曾作为御膳房招牌菜，体现满汉饮食文化的交融。",
     "processed": true,
-    "image_url": "/images/dishes/304_烧小猪_1775555612.png",
-    "image_generated_at": "2026-04-07 17:53:32"
+    "image_url": "/images/dishes/00304_烧小猪.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "烧猪肉",
@@ -7359,8 +7361,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/305_烧猪肉_1775555617.png",
-    "image_generated_at": "2026-04-07 17:53:37"
+    "image_url": "/images/dishes/00305_烧猪肉.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "排骨",
@@ -7384,8 +7386,8 @@
     "processed": true,
     "longitude": 121.47,
     "latitude": 31.23,
-    "image_url": "/images/dishes/306_排骨_1775555623.png",
-    "image_generated_at": "2026-04-07 17:53:43"
+    "image_url": "/images/dishes/00306_排骨.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "罗蓑肉",
@@ -7409,8 +7411,8 @@
     "processed": true,
     "longitude": 113.28,
     "latitude": 23.13,
-    "image_url": "/images/dishes/307_罗蓑肉_1775555629.png",
-    "image_generated_at": "2026-04-07 17:53:49"
+    "image_url": "/images/dishes/00307_罗蓑肉.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "端州三种肉",
@@ -7433,8 +7435,8 @@
     "processed": true,
     "longitude": 120.15,
     "latitude": 30.28,
-    "image_url": "/images/dishes/308_端州三种肉_1775555635.png",
-    "image_generated_at": "2026-04-07 17:53:55"
+    "image_url": "/images/dishes/00308_端州三种肉.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "黄芽菜煨火腿",
@@ -7458,8 +7460,8 @@
     "processed": true,
     "longitude": 100.24,
     "latitude": 26.87,
-    "image_url": "/images/dishes/309_黄芽菜煨火腿_1775555641.png",
-    "image_generated_at": "2026-04-07 17:54:01"
+    "image_url": "/images/dishes/00309_黄芽菜煨火腿.png",
+    "image_generated_at": ""
   },
   {
     "dish_name": "蜜火腿",
@@ -7481,7 +7483,7 @@
     "processed": true,
     "longitude": 100.24,
     "latitude": 26.87,
-    "image_url": "/images/dishes/310_蜜火腿_1775555648.png",
-    "image_generated_at": "2026-04-07 17:54:08"
+    "image_url": "/images/dishes/00310_蜜火腿.png",
+    "image_generated_at": ""
   }
 ]

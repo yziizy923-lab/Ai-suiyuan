@@ -6,7 +6,7 @@ import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import ParticleCanvas, { type IngredientPoint } from "@/components/ParticleCanvas";
 import FlavorDiffusionCanvas, { type FlavorType, type ImportanceLevel } from "@/components/FlavorDiffusionCanvas";
-import FloatingDialog, { type IngredientGeoInfo } from "@/components/FloatingDialog";
+import FloatingDialog, { type IngredientGeoInfo, type GraphIngredientData, type GraphIngredientPoint } from "@/components/FloatingDialog";
 import CookingCompareOverlay from "@/components/CookingCompareOverlay";
 import dishData from "@/data/wang_sitai_babao_doufu.json";
 
@@ -140,6 +140,12 @@ export default function WangSitaiPage() {
 
   const [cookingMode, setCookingMode] = useState(false);
   const [selectedIngredient, setSelectedIngredient] = useState<IngredientGeoInfo | null>(null);
+
+  // 知识图谱数据
+  const [graphIngredientsData, setGraphIngredientsData] = useState<GraphIngredientData[]>([]);
+  const [graphLoading, setGraphLoading] = useState(false);
+  const graphCacheRef = useRef<Map<string, GraphIngredientData>>(new Map());
+  const graphMarkersRef = useRef<mapboxgl.Marker[]>([]);
 
   const ingredientGeoInfo: Record<string, IngredientGeoInfo> = (() => {
     const info: Record<string, IngredientGeoInfo> = {};
@@ -1160,6 +1166,30 @@ export default function WangSitaiPage() {
         }}
         geoIngredientDetail={geoIngredientDetail}
         geoIngredientLoading={geoIngredientLoading}
+        geoCauseTarget={geoTarget}
+        geoCauseText={geoCauseText}
+        geoCauseLoading={geoCauseLoading}
+        onGeoCauseClear={() => {
+          setGeoTarget(null);
+          setGeoCauseText("");
+          setGeoCauseLoading(false);
+        }}
+        graphIngredientsData={graphIngredientsData}
+        graphLoading={graphLoading}
+        onGraphIngredientClick={(ingredient, points) => {
+          if (points.length > 0) {
+            const pt = points[0];
+            const map = mapRef.current;
+            if (map) {
+              map.flyTo({
+                center: [pt.lng, pt.lat],
+                zoom: 6,
+                duration: 1400,
+                essential: true,
+              });
+            }
+          }
+        }}
       />
 
       {/* 地理成因悬浮卡（ingredients tab 点击产地） */}

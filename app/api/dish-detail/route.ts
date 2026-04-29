@@ -1,11 +1,9 @@
 import { NextResponse } from 'next/server';
 import wangSitaiData from '@/data/wang_sitai_babao_doufu.json';
 
-// 食材分布数据缓存
-const ingredientDistributionCache: Record<string, typeof wangSitaiData> = {};
-
 /**
  * 获取菜品详细数据（包含食材分布）
+ * 仅对特菜品（如王太守八宝豆腐）返回完整数据
  */
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -39,7 +37,7 @@ export async function GET(request: Request) {
       }
     }
 
-    // 如果没有匹配的特菜品，返回空
+    // 如果没有匹配的特菜品，返回 null（由前端使用 Neo4j 图谱数据）
     return NextResponse.json({
       success: true,
       data: null,

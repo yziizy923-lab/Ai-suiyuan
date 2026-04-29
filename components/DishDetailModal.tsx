@@ -268,23 +268,61 @@ export default function DishDetailModal({ dish, onClose }: DishDetailModalProps)
     async function loadIngredientData() {
       if (!dish?.name) return;
       try {
-        const res = await fetch(`/api/dish-detail?name=${encodeURIComponent(dish.name)}`);
-        const result = await res.json();
-        if (result.success && result.data) {
-          setDishExtraData({
-            dish_location: result.data.dish_location,
-            ingredients_distribution: result.data.ingredients_distribution,
-          });
+        // 首先尝试从 Neo4j 知识图谱获取食材分布数据
+        const graphRes = await fetch(`/api/dish-ingredients-graph?name=${encodeURIComponent(dish.name)}`);
+        const graphResult = await graphRes.json();
+        
+        if (graphResult.success && graphResult.ingredients && graphResult.ingredients.length > 0) {
+          // 将图谱数据转换为 ingredients_distribution 格式
+          const ingredients_distribution = graphResult.ingredients.map((ing: any) => ({
+            ingredient: ing.ingredient,
+            category: '食材',
+            distribution_locations: ing.points.map((pt: any) => ({
+              name: pt.region,
+              longitude: pt.lng,
+              latitude: pt.lat,
+              note: pt.desc || pt.factor || '',
+            })),
+          }));
+          
+          // 默认菜品产地（江南地区）
+          const dish_location = {
+            name: dish.name,
+            origin: '江南地区（今江苏、浙江一带）',
+            longitude: 120.15,
+            latitude: 30.28,
+            note: '源于江南地区，体现江南饮食文化特色',
+          };
+          
+          setDishExtraData({ dish_location, ingredients_distribution });
           const points = generateIngredientPoints({
             ...dish,
-            ingredients_distribution: result.data.ingredients_distribution,
-            dish_location: result.data.dish_location,
+            ingredients_distribution,
+            dish_location,
           });
           setIngredientPoints(points);
+          console.log(`[DishDetailModal] Loaded ${ingredients_distribution.length} ingredients from Neo4j`);
         } else {
-          setIngredientPoints(generateIngredientPoints(dish));
+          // 如果图谱没有数据，尝试使用 dish-detail API（特菜品）
+          const res = await fetch(`/api/dish-detail?name=${encodeURIComponent(dish.name)}`);
+          const result = await res.json();
+          if (result.success && result.data) {
+            setDishExtraData({
+              dish_location: result.data.dish_location,
+              ingredients_distribution: result.data.ingredients_distribution,
+            });
+            const points = generateIngredientPoints({
+              ...dish,
+              ingredients_distribution: result.data.ingredients_distribution,
+              dish_location: result.data.dish_location,
+            });
+            setIngredientPoints(points);
+          } else {
+            setIngredientPoints(generateIngredientPoints(dish));
+          }
         }
-      } catch {
+      } catch (err) {
+        console.error('[DishDetailModal] Failed to load ingredient data:', err);
         setIngredientPoints(generateIngredientPoints(dish));
       }
     }

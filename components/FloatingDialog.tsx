@@ -6,6 +6,21 @@ import CookingCompareOverlay from "./CookingCompareOverlay";
 
 type Tab = "geo" | "culture" | "ingredients" | "flavor";
 
+// 知识图谱返回的食材地理信息
+export type GraphIngredientPoint = {
+  region: string;
+  lat: number;
+  lng: number;
+  desc: string;
+  factor: string;
+};
+
+export type GraphIngredientData = {
+  ingredient: string;
+  factors: string[];
+  points: GraphIngredientPoint[];
+};
+
 export interface IngredientGeoInfo {
   name: string;
   ingredient: string;
@@ -28,6 +43,10 @@ interface FloatingDialogProps {
   geoCauseText?: string;
   geoCauseLoading?: boolean;
   onGeoCauseClear?: () => void;
+  // 知识图谱数据
+  graphIngredientsData?: GraphIngredientData[];
+  graphLoading?: boolean;
+  onGraphIngredientClick?: (ingredient: string, points: GraphIngredientPoint[]) => void;
 }
 
 export default function FloatingDialog({
@@ -43,6 +62,9 @@ export default function FloatingDialog({
   geoCauseText = "",
   geoCauseLoading = false,
   onGeoCauseClear,
+  graphIngredientsData = [],
+  graphLoading = false,
+  onGraphIngredientClick,
 }: FloatingDialogProps) {
   const [collapsed, setCollapsed] = useState(false);
   const [cookingOpen, setCookingOpen] = useState(false);
@@ -211,6 +233,176 @@ export default function FloatingDialog({
               {/* ── 地理分布 Tab ── */}
               {activeTab === "geo" && (
                 <div>
+                  {/* 知识图谱数据区块 */}
+                  {(graphIngredientsData.length > 0 || graphLoading) && (
+                    <div style={{ marginBottom: 14 }}>
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: 6,
+                          marginBottom: 10,
+                        }}
+                      >
+                        <span style={{ fontSize: 13 }}>🔗</span>
+                        <span
+                          style={{
+                            fontSize: 10,
+                            letterSpacing: "3px",
+                            color: "rgba(244,197,66,0.7)",
+                            fontWeight: 600,
+                          }}
+                        >
+                          知识图谱 · 地理坐标
+                        </span>
+                        {graphLoading && (
+                          <span
+                            style={{
+                              fontSize: 10,
+                              color: "rgba(255,255,255,0.35)",
+                              letterSpacing: "1px",
+                              animation: "wst-shimmer 1.5s ease-in-out infinite",
+                            }}
+                          >
+                            查询中...
+                          </span>
+                        )}
+                      </div>
+
+                      {/* 图谱来源坐标列表 */}
+                      <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                        {graphIngredientsData.map((gdata) => (
+                          <div
+                            key={gdata.ingredient}
+                            style={{
+                              padding: "8px 10px",
+                              background: "rgba(244,197,66,0.06)",
+                              borderRadius: 8,
+                              border: "1px solid rgba(244,197,66,0.15)",
+                            }}
+                          >
+                            <div
+                              style={{
+                                display: "flex",
+                                alignItems: "center",
+                                gap: 6,
+                                marginBottom: 4,
+                              }}
+                            >
+                              <span
+                                style={{
+                                  color: "rgba(244,197,66,0.85)",
+                                  fontSize: 12,
+                                  fontWeight: 600,
+                                  letterSpacing: "1px",
+                                }}
+                              >
+                                {gdata.ingredient}
+                              </span>
+                              {gdata.factors.length > 0 && (
+                                <span
+                                  style={{
+                                    fontSize: 10,
+                                    color: "rgba(255,255,255,0.35)",
+                                    letterSpacing: "0.5px",
+                                  }}
+                                >
+                                  {gdata.factors[0]}
+                                </span>
+                              )}
+                            </div>
+                            {gdata.points.slice(0, 3).map((pt, idx) => (
+                              <div
+                                key={idx}
+                                onClick={() => onGraphIngredientClick?.(gdata.ingredient, gdata.points)}
+                                style={{
+                                  display: "flex",
+                                  alignItems: "flex-start",
+                                  gap: 6,
+                                  padding: "3px 0",
+                                  cursor: onGraphIngredientClick ? "pointer" : "default",
+                                  transition: "opacity 0.2s",
+                                }}
+                                onMouseEnter={(e) =>
+                                  onGraphIngredientClick &&
+                                  ((e.currentTarget as HTMLElement).style.opacity = "0.7")
+                                }
+                                onMouseLeave={(e) =>
+                                  ((e.currentTarget as HTMLElement).style.opacity = "1")
+                                }
+                              >
+                                <span style={{ color: "rgba(244,197,66,0.5)", fontSize: 11, lineHeight: "16px" }}>
+                                  📍
+                                </span>
+                                <div>
+                                  <div
+                                    style={{
+                                      color: "rgba(255,255,255,0.65)",
+                                      fontSize: 11,
+                                      letterSpacing: "0.5px",
+                                      lineHeight: 1.5,
+                                    }}
+                                  >
+                                    {pt.region}
+                                    <span
+                                      style={{
+                                        marginLeft: 6,
+                                        color: "rgba(255,255,255,0.3)",
+                                        fontSize: 10,
+                                      }}
+                                    >
+                                      ({pt.lat.toFixed(2)}, {pt.lng.toFixed(2)})
+                                    </span>
+                                  </div>
+                                  {pt.desc && (
+                                    <div
+                                      style={{
+                                        color: "rgba(255,255,255,0.3)",
+                                        fontSize: 10,
+                                        lineHeight: 1.4,
+                                        marginTop: 1,
+                                      }}
+                                    >
+                                      {pt.desc}
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                            ))}
+                            {gdata.points.length > 3 && (
+                              <div
+                                style={{
+                                  color: "rgba(255,255,255,0.25)",
+                                  fontSize: 10,
+                                  letterSpacing: "1px",
+                                  marginTop: 2,
+                                }}
+                              >
+                                +{gdata.points.length - 3} 处图谱坐标
+                              </div>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+
+                      <div
+                        style={{
+                          marginTop: 8,
+                          padding: "5px 8px",
+                          background: "rgba(244,197,66,0.06)",
+                          borderRadius: 5,
+                          border: "1px solid rgba(244,197,66,0.1)",
+                          fontSize: 10,
+                          color: "rgba(255,255,255,0.3)",
+                          letterSpacing: "0.5px",
+                          lineHeight: 1.6,
+                        }}
+                      >
+                        💡 点击坐标可飞往该区域 · 坐标来源于知识图谱与地理因素映射
+                      </div>
+                    </div>
+                  )}
+
                   {selectedIngredient ? (
                     <>
                       {/* 已选食材：展示 AI 生成的地理条件 */}

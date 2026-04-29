@@ -1,9 +1,12 @@
 "use client";
 
 import { useRouter, useParams } from "next/navigation";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
+import ParticleCanvas, { type IngredientPoint } from "@/components/ParticleCanvas";
+import FlavorDiffusionCanvas, { type FlavorType, type ImportanceLevel } from "@/components/FlavorDiffusionCanvas";
+import FloatingDialog, { type IngredientGeoInfo, type GraphIngredientData, type GraphIngredientPoint } from "@/components/FloatingDialog";
 import CookingCompareOverlay from "@/components/CookingCompareOverlay";
 
 type Dish = {
@@ -14,8 +17,25 @@ type Dish = {
   tags: string[];
   ingredients: string[];
   origin?: string;
-  originCoords?: [number, number]; // [经度偏移%, 纬度偏移%] 用于地图标记
+  originCoords?: [number, number];
   history?: string;
+  dish_location?: {
+    name: string;
+    origin: string;
+    longitude: number;
+    latitude: number;
+    note: string;
+  };
+  ingredients_distribution?: Array<{
+    ingredient: string;
+    category: string;
+    distribution_locations: Array<{
+      name: string;
+      longitude: number;
+      latitude: number;
+      note: string;
+    }>;
+  }>;
 };
 
 type CookingStep = {
@@ -27,1575 +47,675 @@ type CookingStep = {
   success?: boolean;
 };
 
-async function fetchDishFromAPI(id: number): Promise<Dish | null> {
-  try {
-    const response = await fetch(`/api/dishes/${id}`);
-    if (!response.ok) {
-      if (response.status === 404) {
-        return null;
-      }
-      throw new Error('Failed to fetch dish');
-    }
-    const dish = await response.json();
-    // 处理数据库返回的数据格式
-    return {
-      ...dish,
-      // 数据库中 tags 和 ingredients 可能是数组、JSON字符串或逗号分隔的字符串，需要处理
-      tags: Array.isArray(dish.tags) ? dish.tags : parseArrayField(dish.tags),
-      ingredients: Array.isArray(dish.ingredients) ? dish.ingredients : parseArrayField(dish.ingredients),
-      image: dish.image || `https://picsum.photos/seed/${dish.id}/800/500`
-    };
-  } catch (error) {
-    console.error('Failed to fetch dish:', error);
-    return null;
+type ActiveTab = "geo" | "culture" | "ingredients" | "flavor";
+
+type GeoCauseTarget = {
+  ingredient: string;
+  placeName: string;
+  lng: number;
+  lat: number;
+};
+
+// 食材颜色映射
+const INGREDIENT_COLORS: Record<string, string> = {
+  "鸡肉": "#FF6B6B",
+  "鸡汤": "#FFB347",
+  "香菇": "#D4A574",
+  "蘑菇": "#C8A882",
+  "松子仁": "#8B7355",
+  "瓜子仁": "#C9B037",
+  "火腿": "#E84545",
+  "豆腐脑": "#FFFACD",
+  "猪肉": "#FF8C8C",
+  "牛肉": "#CD853F",
+  "羊肉": "#D2691E",
+  "鱼肉": "#87CEEB",
+  "虾": "#FFB6C1",
+  "蟹": "#FFA500",
+  "青菜": "#90EE90",
+  "白菜": "#98FB98",
+  "default": "#8b5a2b",
+};
+
+const FLAVOR_COLORS: Record<FlavorType, string> = {
+  "酸": "#FF6B6B",
+  "甜": "#FFB5E8",
+  "苦": "#5C7A5C",
+  "辣": "#FF4500",
+  "咸": "#87CEEB",
+  "鲜": "#FFD700",
+};
+
+// 地理预设数据
+type GeoPreset = {
+  id: string;
+  flyTo: { center: [number, number]; zoom: number };
+  rivers: string[];
+  terrain: string[];
+  climate: string[];
+  notes?: string[];
+};
+
+function getGeoPreset(placeName: string): GeoPreset | null {
+  const lower = placeName.toLowerCase();
+  
+  if (lower.includes("高邮") || lower.includes("扬州") || lower.includes("江苏")) {
+    return { id: "gaoyou", flyTo: { center: [119.45, 32.78], zoom: 7.2 }, rivers: ["京杭大运河", "长江下游水系"], terrain: ["里下河平原"], climate: ["江淮湿润季风"] };
   }
+  if (lower.includes("金华") || lower.includes("浙江")) {
+    return { id: "jinhua", flyTo: { center: [119.65, 29.09], zoom: 7.6 }, rivers: ["钱塘江水系（婺江）"], terrain: ["金衢盆地"], climate: ["亚热带湿润季风"] };
+  }
+  if (lower.includes("庆元") || lower.includes("丽水") || lower.includes("浙江")) {
+    return { id: "qingyuan", flyTo: { center: [119.07, 27.63], zoom: 7.6 }, rivers: ["瓯江上游支流"], terrain: ["浙南山地", "林地覆盖"], climate: ["湿润多雨"] };
+  }
+  if (lower.includes("伊春") || lower.includes("黑龙江") || lower.includes("东北")) {
+    return { id: "yichun", flyTo: { center: [128.9, 47.73], zoom: 6.9 }, rivers: ["松花江水系"], terrain: ["小兴安岭山地林海"], climate: ["寒温带季风"] };
+  }
+  if (lower.includes("南京") || lower.includes("江苏")) {
+    return { id: "nanjing", flyTo: { center: [118.78, 32.06], zoom: 7.2 }, rivers: ["长江", "秦淮河"], terrain: ["宁镇丘陵与滨江平原"], climate: ["江淮湿润季风"] };
+  }
+  if (lower.includes("宣威") || lower.includes("云南")) {
+    return { id: "xuanwei", flyTo: { center: [104.10, 26.22], zoom: 7.2 }, rivers: ["牛栏江流域"], terrain: ["云贵高原"], climate: ["高原季风气候"] };
+  }
+  if (lower.includes("延边") || lower.includes("长白山") || lower.includes("吉林")) {
+    return { id: "yanbian", flyTo: { center: [128.04, 41.93], zoom: 7.2 }, rivers: ["图们江水系"], terrain: ["长白山脉"], climate: ["温带季风"] };
+  }
+  if (lower.includes("清远") || lower.includes("广东")) {
+    return { id: "qingyuan", flyTo: { center: [113.05, 23.68], zoom: 7.2 }, rivers: ["北江水系"], terrain: ["珠三角平原"], climate: ["亚热带季风"] };
+  }
+  if (lower.includes("苏州") || lower.includes("杭州")) {
+    return { id: "suzhou", flyTo: { center: [120.62, 31.30], zoom: 7.5 }, rivers: ["京杭大运河", "太湖"], terrain: ["江南水乡"], climate: ["亚热带湿润季风"] };
+  }
+  return null;
 }
 
-// 解析数组字段，支持数组、JSON字符串或逗号分隔的字符串
 function parseArrayField(value: unknown): string[] {
   if (Array.isArray(value)) return value;
   if (typeof value === 'string') {
-    try {
-      return JSON.parse(value);
-    } catch {
-      return value.split(',').map(s => s.trim()).filter(Boolean);
-    }
+    try { return JSON.parse(value); }
+    catch { return value.split(',').map(s => s.trim()).filter(Boolean); }
   }
   return [];
 }
 
-// 袁枚原文数据
+async function fetchDishFullDetail(id: number) {
+  try {
+    const res = await fetch(`/api/dish-full-detail?id=${id}`);
+    const result = await res.json();
+    if (result.success && result.data) {
+      return result.data;
+    }
+  } catch (e) {
+    console.error('[DishDetail] Failed to fetch full detail:', e);
+  }
+  return null;
+}
+
+async function fetchDishBasic(id: number): Promise<Dish | null> {
+  try {
+    const response = await fetch(`/api/dishes/${id}`);
+    if (!response.ok) return null;
+    const dish = await response.json();
+    return {
+      ...dish,
+      tags: Array.isArray(dish.tags) ? dish.tags : parseArrayField(dish.tags),
+      ingredients: Array.isArray(dish.ingredients) ? dish.ingredients : parseArrayField(dish.ingredients),
+      image: dish.image || `https://picsum.photos/seed/${dish.id}/800/500`
+    };
+  } catch { return null; }
+}
 
 export default function DishDetailPage() {
   const router = useRouter();
   const params = useParams();
   const [dish, setDish] = useState<Dish | null>(null);
+  const [ingredientsDistribution, setIngredientsDistribution] = useState<Dish['ingredients_distribution']>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [showContent, setShowContent] = useState(false);
-  const [imgError, setImgError] = useState(false); // 用于 fallback
-  const [showCookingSteps, setShowCookingSteps] = useState(false);
-  const [cookingSteps, setCookingSteps] = useState<CookingStep[]>([]);
-  const [loadingSteps, setLoadingSteps] = useState(false);
-  // AI 图片生成状态
+  const [cookingMode, setCookingMode] = useState(false);
+  const [activeTab, setActiveTab] = useState<ActiveTab>("geo");
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [isGeneratingImage, setIsGeneratingImage] = useState(true);
-  const [imageError, setImageError] = useState<string | null>(null);
-  // 动画状态
-  const [currentStep, setCurrentStep] = useState(0);
-  const animationIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  // 古今对比弹窗状态
-  const [cookingMode, setCookingMode] = useState(false);
 
-  // 地图背景引用 - 必须在所有 useEffect 之前声明，避免早期返回导致 Hooks 顺序变化
+  // 地图相关
   const mapContainerRef = useRef<HTMLDivElement>(null);
-  const mapBgRef = useRef<mapboxgl.Map | null>(null);
+  const mapRef = useRef<mapboxgl.Map | null>(null);
+  const [mapLoaded, setMapLoaded] = useState(false);
+  const markersRef = useRef<mapboxgl.Marker[]>([]);
+  const dishMarkerRef = useRef<mapboxgl.Marker | null>(null);
+  const flowAnimRef = useRef<number | null>(null);
+
+  // 地理成因相关
+  const [geoTarget, setGeoTarget] = useState<GeoCauseTarget | null>(null);
+  const [geoCauseOpen, setGeoCauseOpen] = useState(false);
+  const [geoCauseLoading, setGeoCauseLoading] = useState(false);
+  const [geoCauseText, setGeoCauseText] = useState<string>("");
+  const geoCauseCacheRef = useRef<Map<string, string>>(new Map());
+
+  // 粒子点击 → 对话面板地理条件
+  const [geoIngredientDetail, setGeoIngredientDetail] = useState<string>("");
+  const [geoIngredientLoading, setGeoIngredientLoading] = useState(false);
+  const geoIngredientCacheRef = useRef<Map<string, string>>(new Map());
+
+  // 选中的食材
+  const [selectedIngredient, setSelectedIngredient] = useState<IngredientGeoInfo | null>(null);
+
+  // 知识图谱数据
+  const [graphIngredientsData, setGraphIngredientsData] = useState<GraphIngredientData[]>([]);
+  const [graphLoading, setGraphLoading] = useState(false);
+  const graphCacheRef = useRef<Map<string, GraphIngredientData>>(new Map());
+  const graphMarkersRef = useRef<mapboxgl.Marker[]>([]);
 
   const dishId = Number(params.id);
 
-  // 加载制作步骤
-  const loadCookingSteps = async () => {
-    if (!dish) return;
+  // 计算地图中心
+  const effectiveDishCenter = dish?.dish_location
+    ? { lng: dish.dish_location.longitude, lat: dish.dish_location.latitude }
+    : dish?.originCoords
+      ? { lng: dish.originCoords[0], lat: dish.originCoords[1] }
+      : { lng: 108, lat: 34 };
 
-    setLoadingSteps(true);
-    try {
-      // 1. 获取 AI 生成的步骤
-      const stepsRes = await fetch(
-        `/api/cooking-steps?dish=${encodeURIComponent(dish.name)}&desc=${encodeURIComponent(dish.desc)}&ingredients=${encodeURIComponent(dish.ingredients.join(','))}`
-      );
-      const stepsData = await stepsRes.json();
+  // 生成食材点数据
+  const ingredientPoints: IngredientPoint[] = ingredientsDistribution.flatMap((ing) => {
+    const color = INGREDIENT_COLORS[ing.ingredient] || INGREDIENT_COLORS.default;
+    return ing.distribution_locations.map((loc) => ({
+      lng: loc.longitude,
+      lat: loc.latitude,
+      name: loc.name,
+      ingredient: ing.ingredient,
+      color,
+    }));
+  });
 
-      if (stepsData.success && stepsData.steps) {
-        setCookingSteps(stepsData.steps);
-        setShowCookingSteps(true);
+  // 生成风味数据
+  const flavorData = ingredientsDistribution.flatMap((ing) => {
+    const flavorMap: Record<string, FlavorType> = {
+      "鸡肉": "鲜", "香菇": "鲜", "蘑菇": "鲜", "松子仁": "鲜",
+      "鸡汤": "鲜", "猪肉": "咸", "牛肉": "咸", "羊肉": "咸",
+      "鱼肉": "鲜", "虾": "鲜", "蟹": "鲜", "火腿": "咸",
+      "豆腐": "淡", "豆腐脑": "淡", "青菜": "淡", "白菜": "淡",
+    };
+    const importanceMap: Record<string, ImportanceLevel> = {
+      "鸡肉": "main", "香菇": "main", "蘑菇": "important",
+      "火腿": "important", "松子仁": "important",
+      "鸡汤": "normal", "猪肉": "normal",
+    };
+    return ing.distribution_locations.map((loc) => ({
+      lng: loc.longitude,
+      lat: loc.latitude,
+      name: loc.name,
+      ingredient: ing.ingredient,
+      flavor: flavorMap[ing.ingredient] || "鲜",
+      importance: importanceMap[ing.ingredient] || "normal",
+      color: FLAVOR_COLORS[flavorMap[ing.ingredient] || "鲜"],
+    }));
+  });
 
-        // 2. 批量生成步骤图片
-        const batchRes = await fetch('/api/step-image', {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            steps: stepsData.steps,
-            dishName: dish.name,
-          }),
-        });
-        const batchData = await batchRes.json();
-
-        if (batchData.success && batchData.steps) {
-          // 合并图片到步骤
-          setCookingSteps((prev) =>
-            prev.map((step) => {
-              const generated = batchData.steps.find(
-                (s: { stepNumber: number }) => s.stepNumber === step.step
-              );
-              return generated?.success
-                ? { ...step, imageBase64: generated.imageBase64 }
-                : step;
-            })
-          );
-        }
+  // 构建食材地理信息
+  const ingredientGeoInfo: Record<string, IngredientGeoInfo> = (() => {
+    const info: Record<string, IngredientGeoInfo> = {};
+    ingredientsDistribution.forEach((ing) => {
+      const locations = ing.distribution_locations;
+      if (locations.length > 0) {
+        const geoCondition = locations.map((loc) => `${loc.name}：${loc.note}`).join("；");
+        info[locations[0].name] = {
+          name: locations[0].name,
+          ingredient: ing.ingredient,
+          color: INGREDIENT_COLORS[ing.ingredient] || INGREDIENT_COLORS.default,
+          geoCondition,
+        };
       }
-    } catch (error) {
-      console.error('加载制作步骤失败:', error);
-      alert('生成制作过程失败，请重试');
-    } finally {
-      setLoadingSteps(false);
+    });
+    return info;
+  })();
+
+  const findIngredientGeoInfo = (name: string): IngredientGeoInfo | null => {
+    for (const locName in ingredientGeoInfo) {
+      if (locName === name) return ingredientGeoInfo[locName];
     }
+    return null;
   };
 
+  // 从知识图谱获取食材地理信息
+  const fetchIngredientFromGraph = useCallback(async (ingredientName: string): Promise<GraphIngredientData | null> => {
+    const cached = graphCacheRef.current.get(ingredientName);
+    if (cached) return cached;
+
+    setGraphLoading(true);
+    try {
+      const res = await fetch(`/api/dish-ingredients-graph?ingredient=${encodeURIComponent(ingredientName)}`);
+      if (!res.ok) return null;
+      const data = await res.json();
+      if (data.success && data.points && data.points.length > 0) {
+        const graphData: GraphIngredientData = {
+          ingredient: data.ingredient,
+          factors: data.factors,
+          points: data.points,
+        };
+        graphCacheRef.current.set(ingredientName, graphData);
+        return graphData;
+      }
+    } catch { /* ignore */ } finally { setGraphLoading(false); }
+    return null;
+  }, []);
+
+  // 地理高亮效果
+  const applyGeoHighlight = useCallback((preset: GeoPreset | null) => {
+    const map = mapRef.current;
+    if (!map) return;
+    const id = preset?.id;
+
+    if (preset) {
+      map.flyTo({ center: preset.flyTo.center, zoom: preset.flyTo.zoom, duration: 1200, essential: true });
+    }
+
+    const riverHL = "wst-rivers-highlight";
+    const climateHL = "wst-climate-highlight";
+
+    try {
+      map.setFilter(riverHL, id ? ["==", ["get", "place"], id] : ["==", ["get", "place"], "__none__"]);
+      map.setFilter(climateHL, id ? ["==", ["get", "place"], id] : ["==", ["get", "place"], "__none__"]);
+    } catch { /* layers may not exist yet */ }
+
+    if (preset) {
+      try {
+        map.setPaintProperty(climateHL, "fill-opacity", 0.22);
+        window.setTimeout(() => { try { map.setPaintProperty(climateHL, "fill-opacity", 0.12); } catch { /* ignore */ } }, 520);
+      } catch { /* ignore */ }
+    }
+  }, []);
+
+  // 打开地理成因面板
+  const openGeoCause = useCallback(async (target: GeoCauseTarget) => {
+    setGeoTarget(target);
+    setGeoCauseOpen(true);
+    setGeoCauseText("");
+
+    const preset = getGeoPreset(target.placeName);
+    applyGeoHighlight(preset);
+
+    const cacheKey = `${dish?.name}::${target.ingredient}::${target.placeName}`;
+    const cached = geoCauseCacheRef.current.get(cacheKey);
+    if (cached) { setGeoCauseText(cached); return; }
+
+    setGeoCauseLoading(true);
+    try {
+      const res = await fetch("/api/geo-cause", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ dish: dish?.name, ingredient: target.ingredient, placeName: target.placeName, lng: target.lng, lat: target.lat }),
+      });
+      const data = await res.json();
+      if (data.success && data.content) {
+        geoCauseCacheRef.current.set(cacheKey, data.content);
+        setGeoCauseText(data.content);
+      }
+    } catch { /* ignore */ } finally { setGeoCauseLoading(false); }
+  }, [dish?.name, applyGeoHighlight]);
+
+  // 处理食材点击（带知识图谱查询）
+  const handleIngredientClickWithGraph = useCallback(async (placeName: string, ingredient: string, lng: number, lat: number) => {
+    const map = mapRef.current;
+
+    // 1. 从本地数据找地理条件
+    const geoInfo = findIngredientGeoInfo(placeName);
+    if (geoInfo) {
+      setSelectedIngredient(geoInfo);
+    }
+
+    // 2. 查询知识图谱
+    const graphData = await fetchIngredientFromGraph(ingredient);
+    if (graphData && graphData.points.length > 0) {
+      setGraphIngredientsData((prev) => {
+        const filtered = prev.filter((d) => d.ingredient !== ingredient);
+        return [...filtered, graphData!];
+      });
+
+      // 添加知识图谱标记
+      if (map) {
+        graphMarkersRef.current.forEach((m) => m.remove());
+        graphMarkersRef.current = [];
+        const marker = addGraphGeoMarkers(map, ingredient, graphData.points);
+        if (marker) graphMarkersRef.current.push(marker);
+      }
+    }
+
+    // 3. 触发产地高亮
+    const preset = getGeoPreset(placeName);
+    applyGeoHighlight(preset);
+
+    // 4. 弹出地理成因面板
+    openGeoCause({ ingredient, placeName, lng, lat });
+  }, [findIngredientGeoInfo, fetchIngredientFromGraph, applyGeoHighlight, openGeoCause]);
+
+  // 添加知识图谱地理坐标点
+  const addGraphGeoMarkers = useCallback((map: mapboxgl.Map, ingredientName: string, points: GraphIngredientPoint[]) => {
+    const color = INGREDIENT_COLORS[ingredientName] || "#f4c542";
+    const el = document.createElement("div");
+    el.style.position = "relative";
+    el.style.width = "20px";
+    el.style.height = "20px";
+
+    const inner = document.createElement("div");
+    inner.style.cssText = `position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 12px; height: 12px; border-radius: 50%; background: ${color}; border: 2px solid #f4c542; box-shadow: 0 0 8px 2px ${color}80; animation: graph-pulse 1.8s ease-out infinite;`;
+
+    if (points.length > 0) {
+      const pt = points[0];
+      const popup = new mapboxgl.Popup({ offset: 20, closeButton: false }).setHTML(`<div style="font-family:'Noto Serif SC',serif; font-size:12px;"><div style="color:#f4c542;font-weight:600;margin-bottom:4px;">📍 ${ingredientName} · 图谱坐标</div><div style="color:rgba(255,255,255,0.6);">地区：${pt.region}</div></div>`);
+
+      const marker = new mapboxgl.Marker({ element: el }).setLngLat([pt.lng, pt.lat]).setPopup(popup).addTo(map);
+      el.addEventListener("mouseenter", () => marker.getPopup()?.addTo(map));
+      el.addEventListener("mouseleave", () => marker.getPopup()?.remove());
+
+      map.flyTo({ center: [pt.lng, pt.lat], zoom: 6, duration: 1400, essential: true });
+      return marker;
+    }
+    return null;
+  }, []);
+
+  // 加载菜品数据
   useEffect(() => {
     async function loadDish() {
       setLoading(true);
-      setError(null);
       try {
-        const dishData = await fetchDishFromAPI(dishId);
-        if (dishData) {
-          setDish(dishData);
+        const [fullDetail, basicDish] = await Promise.all([fetchDishFullDetail(dishId), fetchDishBasic(dishId)]);
+        if (basicDish) {
+          setDish(basicDish);
+          if (fullDetail?.ingredients_distribution?.length > 0) {
+            setIngredientsDistribution(fullDetail.ingredients_distribution);
+          }
           setTimeout(() => setShowContent(true), 300);
         } else {
           setError('菜品未找到');
         }
-      } catch (err) {
-        console.error('Error loading dish:', err);
-        setError('加载失败');
-      } finally {
-        setLoading(false);
-      }
+      } catch (err) { setError('加载失败'); } finally { setLoading(false); }
     }
-
-    if (dishId) {
-      loadDish();
-    }
+    if (dishId) loadDish();
   }, [dishId]);
 
-  useEffect(() => {
-    if (showCookingSteps && cookingSteps.length > 0) {
-      setCurrentStep(0);
-    }
-  }, [showCookingSteps]);
-
-  useEffect(() => {
-    if (animationIntervalRef.current) {
-      clearInterval(animationIntervalRef.current);
-      animationIntervalRef.current = null;
-    }
-    if (!showCookingSteps || cookingSteps.length <= 1) return;
-    animationIntervalRef.current = setInterval(() => {
-      setCurrentStep((i) => (i + 1) % cookingSteps.length);
-    }, 3000);
-    return () => {
-      if (animationIntervalRef.current) {
-        clearInterval(animationIntervalRef.current);
-        animationIntervalRef.current = null;
-      }
-    };
-  }, [showCookingSteps, cookingSteps.length]);
-
-  // 初始化地图背景 - 依赖 dish 确保在数据加载完成后执行
-  useEffect(() => {
-    if (!dish || !mapContainerRef.current || mapBgRef.current) return;
-
-    const accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
-    console.log('[Mapbox] Token exists:', !!accessToken);
-    console.log('[Mapbox] Token prefix:', accessToken?.substring(0, 10) || 'none');
-    if (!accessToken) {
-      console.error('[Mapbox] NEXT_PUBLIC_MAPBOX_TOKEN is not set');
-      // 设置备用背景
-      if (mapContainerRef.current) {
-        mapContainerRef.current.style.backgroundImage = 
-          'radial-gradient(circle at 50% 50%, rgba(139, 90, 43, 0.1) 0%, transparent 60%)';
-      }
-      return;
-    }
-
-    try {
-      mapboxgl.accessToken = accessToken;
-
-      // 创建复古风格的地图背景
-      const map = new mapboxgl.Map({
-        container: mapContainerRef.current,
-        style: "mapbox://styles/mapbox/light-v11",
-        center: [108, 34],
-        zoom: 5.5,
-        interactive: false,
-        attributionControl: false,
-        logoPosition: 'bottom-right',
-        projection: "mercator",
-        // 限制地图范围在中国境内
-        maxBounds: [
-          [73.5, 18.0],
-          [135.0, 54.0],
-        ],
-        minZoom: 3,
-        maxZoom: 10,
-      });
-
-      map.on('load', () => {
-        console.log('[Mapbox] Map loaded successfully');
-
-        // 设置地图语言为中文
-        map.getStyle().layers?.forEach((layer: mapboxgl.Layer) => {
-          if (layer.layout && 'text-field' in layer.layout) {
-            map.setLayoutProperty(layer.id, 'text-field', ['get', 'name_zh-Hans']);
-          }
-        });
-
-        // 复古背景色逻辑
-        map.getStyle().layers?.forEach((layer: mapboxgl.Layer) => {
-          if (layer.type === 'background') {
-            map.setPaintProperty(layer.id, 'background-color', '#e8dcc8');
-          }
-        });
-
-        // 如果有产地坐标，添加定位标记
-        if (dish?.originCoords) {
-          console.log('[Mapbox] Adding marker at:', dish.originCoords);
-
-          // 注入全局样式用于动态创建的标记元素
-          if (!document.getElementById('dish-marker-styles')) {
-            const styleEl = document.createElement('style');
-            styleEl.id = 'dish-marker-styles';
-            styleEl.textContent = `
-              .dish-location-marker {
-                cursor: pointer;
-                z-index: 10;
-              }
-              .marker-pin {
-                position: relative;
-                width: 32px;
-                height: 32px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-              }
-              .marker-dot {
-                width: 16px;
-                height: 16px;
-                background: linear-gradient(135deg, #d44444, #a83232);
-                border: 3px solid rgba(255,255,255,0.9);
-                border-radius: 50%;
-                box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-                position: relative;
-                z-index: 2;
-              }
-              .marker-pulse {
-                position: absolute;
-                width: 32px;
-                height: 32px;
-                background: rgba(212, 68, 68, 0.4);
-                border-radius: 50%;
-                animation: pulse-ring 2s ease-out infinite;
-              }
-              @keyframes pulse-ring {
-                0% {
-                  transform: scale(0.8);
-                  opacity: 0.8;
-                }
-                100% {
-                  transform: scale(2.5);
-                  opacity: 0;
-                }
-              }
-              .dish-popup .mapboxgl-popup-content {
-                background: linear-gradient(135deg, #2d2926, #3d3530) !important;
-                border-radius: 8px !important;
-                padding: 12px 16px !important;
-                box-shadow: 0 4px 16px rgba(0,0,0,0.3) !important;
-                min-width: 120px;
-              }
-              .dish-popup .mapboxgl-popup-tip {
-                border-top-color: #2d2926 !important;
-              }
-              .dish-popup .popup-content {
-                font-family: "Noto Serif SC", "SimSun", serif;
-              }
-              .dish-popup .popup-title {
-                color: #fff;
-                font-size: 14px;
-                font-weight: 600;
-                letter-spacing: 1px;
-                margin-bottom: 4px;
-              }
-              .dish-popup .popup-origin {
-                color: rgba(255,255,255,0.7);
-                font-size: 12px;
-              }
-            `;
-            document.head.appendChild(styleEl);
-          }
-
-          // 创建自定义定位标记元素
-          const markerElement = document.createElement('div');
-          markerElement.className = 'dish-location-marker';
-          markerElement.innerHTML = `
-            <div class="marker-pin">
-              <div class="marker-dot"></div>
-              <div class="marker-pulse"></div>
-            </div>
-          `;
-
-          // 创建弹出框
-          const popup = new mapboxgl.Popup({
-            offset: [0, -30],
-            closeButton: false,
-            closeOnClick: false,
-            className: 'dish-popup'
-          }).setHTML(`
-            <div class="popup-content">
-              <div class="popup-title">${dish.name}</div>
-              ${dish.origin ? `<div class="popup-origin">📍 ${dish.origin}</div>` : ''}
-            </div>
-          `);
-
-          // 创建标记
-          const marker = new mapboxgl.Marker({ element: markerElement })
-            .setLngLat([dish.originCoords[0], dish.originCoords[1]])
-            .setPopup(popup)
-            .addTo(map);
-
-          console.log('[Mapbox] Marker added successfully');
-
-          // 点击标记时聚焦到该位置
-          markerElement.addEventListener('click', () => {
-            map.flyTo({
-              center: [dish.originCoords![0], dish.originCoords![1]],
-              zoom: 7,
-              duration: 1500,
-              essential: true,
-            });
-            marker.togglePopup();
-          });
-
-          // 页面加载后默认飞向标记位置
-          setTimeout(() => {
-            map.flyTo({
-              center: [dish.originCoords![0], dish.originCoords![1]],
-              zoom: 6,
-              duration: 3000,
-              essential: true,
-            });
-          }, 500);
-        } else {
-          console.log('[Mapbox] No originCoords found for dish:', dish?.name);
-        }
-      });
-
-      map.on('error', (e) => {
-        console.error('[Mapbox] Map error:', e);
-      });
-
-      mapBgRef.current = map;
-
-      return () => {
-        map.remove();
-        mapBgRef.current = null;
-      };
-    } catch (err) {
-      console.error('[Mapbox] Failed to initialize map:', err);
-    }
-  }, [dish]);
-
-  // AI 生成菜品图片
+  // 生成图片
   useEffect(() => {
     if (!dish) return;
-
     const generateImage = async () => {
       setIsGeneratingImage(true);
-      setImageError(null);
       try {
         const response = await fetch('/api/generate-dish-image', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            dish: dish.name,
-            desc: dish.desc || '',
-            ancient: dish.history || '',
-            method: '',
-          }),
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ dish: dish.name, desc: dish.desc || '', ancient: dish.history || '', method: '' }),
         });
         const data = await response.json();
-        if (data.success && data.imageUrl) {
-          setImageUrl(data.imageUrl);
-        } else {
-          setImageError(data.error || '生成失败');
-        }
-      } catch {
-        setImageError('网络错误');
-      } finally {
-        setIsGeneratingImage(false);
-      }
+        if (data.success && data.imageUrl) setImageUrl(data.imageUrl);
+      } catch { /* ignore */ } finally { setIsGeneratingImage(false); }
     };
-
     generateImage();
-  }, [dish?.id, dish?.name, dish?.desc, dish?.history]);
+  }, [dish?.name, dish?.desc, dish?.history]);
 
-  const handleShare = () => {
-    if (navigator.share) {
-      navigator.share({
-        title: dish?.name,
-        text: dish?.desc,
-        url: window.location.href,
+  // 构建地图标记
+  const buildMarkers = useCallback((map: mapboxgl.Map) => {
+    markersRef.current.forEach((m) => m.remove());
+    markersRef.current = [];
+    dishMarkerRef.current?.remove();
+
+    if (!document.getElementById("wst-marker-styles")) {
+      const style = document.createElement("style");
+      style.id = "wst-marker-styles";
+      style.textContent = `
+        .wst-marker-wrap { position: relative; width: 24px; height: 24px; cursor: pointer; }
+        .wst-marker-wrap.hidden { display: none !important; }
+        .wst-glow-dot { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 10px; height: 10px; border-radius: 50%; animation: wst-pulse 2s ease-out infinite; }
+        .wst-outer-ring { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 20px; height: 20px; border-radius: 50%; border: 1.5px solid currentColor; opacity: 0.45; animation: wst-ring 2s ease-out infinite; }
+        .wst-marker-label { position: absolute; top: -22px; left: 50%; transform: translateX(-50%); white-space: nowrap; font-size: 11px; font-family: "Noto Serif SC", serif; color: rgba(255,255,255,0.85); text-shadow: 0 1px 4px rgba(0,0,0,0.7); pointer-events: none; letter-spacing: 1px; }
+        @keyframes wst-pulse { 0% { transform: translate(-50%,-50%) scale(1); opacity: 0.9; } 100% { transform: translate(-50%,-50%) scale(2.8); opacity: 0; } }
+        @keyframes wst-ring { 0% { transform: translate(-50%,-50%) scale(0.8); opacity: 0.45; } 100% { transform: translate(-50%,-50%) scale(2.2); opacity: 0; } }
+        .wst-dish-marker-wrap { position: relative; width: 40px; height: 40px; }
+        .wst-dish-dot { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 22px; height: 22px; border-radius: 50%; background: radial-gradient(circle, #f4c542, #d4a017); border: 3px solid rgba(255,255,255,0.9); animation: wst-dish-pulse 2.5s ease-out infinite; }
+        .wst-dish-ring { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 36px; height: 36px; border-radius: 50%; border: 2px solid rgba(244,197,66,0.5); animation: wst-ring 2.5s ease-out infinite; }
+        @keyframes wst-dish-pulse { 0%,100% { box-shadow: 0 0 12px 4px rgba(244,197,66,0.5); } 50% { box-shadow: 0 0 20px 8px rgba(244,197,66,0.7); } }
+        .wst-popup .mapboxgl-popup-content { background: rgba(45,38,32,0.95) !important; border-radius: 8px !important; padding: 10px 14px !important; box-shadow: 0 4px 20px rgba(0,0,0,0.4) !important; border: 1px solid rgba(139,90,43,0.3) !important; }
+        .wst-popup .mapboxgl-popup-tip { border-top-color: rgba(45,38,32,0.95) !important; }
+      `;
+      document.head.appendChild(style);
+    }
+
+    ingredientPoints.forEach((pt) => {
+      const el = document.createElement("div");
+      el.className = "wst-marker-wrap";
+      el.style.color = pt.color;
+
+      const label = document.createElement("div");
+      label.className = "wst-marker-label";
+      label.textContent = pt.name;
+      el.appendChild(label);
+
+      const dot = document.createElement("div");
+      dot.className = "wst-glow-dot";
+      dot.style.background = pt.color;
+      dot.style.boxShadow = `0 0 6px 2px ${pt.color}`;
+      el.appendChild(dot);
+
+      const ring = document.createElement("div");
+      ring.className = "wst-outer-ring";
+      ring.style.borderColor = pt.color;
+      el.appendChild(ring);
+
+      const popup = new mapboxgl.Popup({ offset: 18, closeButton: false, closeOnClick: false, className: "wst-popup" }).setHTML(`<div style="font-family:'Noto Serif SC',serif;"><div style="color:#f4c542;font-size:13px;font-weight:600;margin-bottom:4px;letter-spacing:1px;">${pt.name}</div><div style="color:rgba(255,255,255,0.6);font-size:11px;">${pt.ingredient}</div></div>`);
+
+      const marker = new mapboxgl.Marker({ element: el }).setLngLat([pt.lng, pt.lat]).setPopup(popup).addTo(map);
+      el.addEventListener("mouseenter", () => marker.getPopup()?.addTo(map));
+      el.addEventListener("mouseleave", () => marker.getPopup()?.remove());
+      el.addEventListener("click", (ev) => { ev.stopPropagation(); handleIngredientClickWithGraph(pt.name, pt.ingredient, pt.lng, pt.lat); });
+
+      markersRef.current.push(marker);
+    });
+
+    const dishEl = document.createElement("div");
+    dishEl.className = "wst-dish-marker-wrap";
+    const dishDot = document.createElement("div");
+    dishDot.className = "wst-dish-dot";
+    dishEl.appendChild(dishDot);
+    const dishRing = document.createElement("div");
+    dishRing.className = "wst-dish-ring";
+    dishEl.appendChild(dishRing);
+
+    const dishPopup = new mapboxgl.Popup({ offset: 22, closeButton: false, closeOnClick: false, className: "wst-popup" }).setHTML(`<div style="font-family:'Noto Serif SC',serif;"><div style="color:#f4c542;font-size:13px;font-weight:600;margin-bottom:4px;">${dish?.name || ''}</div><div style="color:rgba(255,255,255,0.6);font-size:11px;">${dish?.dish_location?.origin || '江南·随园'}</div></div>`);
+
+    dishMarkerRef.current = new mapboxgl.Marker({ element: dishEl }).setLngLat([effectiveDishCenter.lng, effectiveDishCenter.lat]).setPopup(dishPopup).addTo(map);
+    dishMarkerRef.current.togglePopup();
+
+    if (ingredientPoints.length > 0) {
+      const bounds = new mapboxgl.LngLatBounds();
+      ingredientPoints.forEach((pt) => bounds.extend([pt.lng, pt.lat]));
+      bounds.extend([effectiveDishCenter.lng, effectiveDishCenter.lat]);
+      map.fitBounds(bounds, { padding: { top: 80, bottom: 100, left: 60, right: 60 }, duration: 2000 });
+    }
+  }, [ingredientPoints, dish?.name, dish?.dish_location, effectiveDishCenter, handleIngredientClickWithGraph]);
+
+  // 初始化地图
+  useEffect(() => {
+    if (!mapContainerRef.current || mapRef.current || !dish) return;
+    const token = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
+    if (!token) return;
+
+    mapboxgl.accessToken = token;
+    const map = new mapboxgl.Map({
+      container: mapContainerRef.current,
+      style: "mapbox://styles/mapbox/light-v11",
+      center: [effectiveDishCenter.lng, effectiveDishCenter.lat],
+      zoom: 4,
+      attributionControl: false,
+      logoPosition: "bottom-right",
+      projection: "mercator",
+      minZoom: 2,
+      maxZoom: 10,
+    });
+
+    map.addControl(new mapboxgl.NavigationControl({ showCompass: true }), "top-right");
+
+    map.on("load", () => {
+      setMapLoaded(true);
+
+      map.getStyle().layers?.forEach((layer: any) => {
+        if (layer.layout?.["text-field"]) map.setLayoutProperty(layer.id, "text-field", ["get", "name_zh-Hans"]);
+        if (layer.type === "background") map.setPaintProperty(layer.id, "background-color", "#e8dcc8");
       });
-    } else {
-      navigator.clipboard.writeText(window.location.href);
-      alert("链接已复制到剪贴板");
-    }
-  };
 
-  const handleSave = () => {
-    const saved = JSON.parse(localStorage.getItem("savedDishes") || "[]");
-    if (!saved.includes(dishId)) {
-      saved.push(dishId);
-      localStorage.setItem("savedDishes", JSON.stringify(saved));
-      alert(`「${dish?.name}」已收藏至随园`);
-    } else {
-      alert("此菜已在随园收藏中");
+      // 河流数据
+      if (!map.getSource("wst-rivers")) {
+        map.addSource("wst-rivers", {
+          type: "geojson",
+          data: { type: "FeatureCollection", features: [
+            { type: "Feature", properties: { place: "nanjing", name: "长江" }, geometry: { type: "LineString", coordinates: [[116.8, 31.6], [118.2, 31.9], [118.78, 32.06], [119.6, 32.2]] } },
+            { type: "Feature", properties: { place: "gaoyou", name: "京杭大运河" }, geometry: { type: "LineString", coordinates: [[118.9, 33.2], [119.1, 32.95], [119.45, 32.78]] } },
+            { type: "Feature", properties: { place: "jinhua", name: "婺江" }, geometry: { type: "LineString", coordinates: [[118.7, 29.0], [119.65, 29.09], [120.0, 29.25]] } },
+            { type: "Feature", properties: { place: "qingyuan", name: "瓯江" }, geometry: { type: "LineString", coordinates: [[118.6, 27.4], [119.07, 27.63]] } },
+            { type: "Feature", properties: { place: "yichun", name: "松花江" }, geometry: { type: "LineString", coordinates: [[126.2, 47.2], [128.9, 47.73]] } },
+          ] },
+        });
+      }
+      if (!map.getLayer("wst-rivers-base")) map.addLayer({ id: "wst-rivers-base", type: "line", source: "wst-rivers", paint: { "line-color": "rgba(60,140,220,0.45)", "line-width": 2, "line-opacity": 0.22 } });
+      if (!map.getLayer("wst-rivers-highlight")) map.addLayer({ id: "wst-rivers-highlight", type: "line", source: "wst-rivers", filter: ["==", ["get", "place"], "__none__"], paint: { "line-color": "rgba(214,170,72,0.98)", "line-width": 3.5, "line-opacity": 0.92, "line-dasharray": [1, 2] } });
+
+      // 气候数据
+      if (!map.getSource("wst-climate")) {
+        map.addSource("wst-climate", {
+          type: "geojson",
+          data: { type: "FeatureCollection", features: [
+            { type: "Feature", properties: { zone: "humid", place: "jinhua" }, geometry: { type: "Polygon", coordinates: [[[105.0, 22.0], [123.5, 22.0], [123.5, 32.5], [105.0, 32.5], [105.0, 22.0]]] } },
+            { type: "Feature", properties: { zone: "humid", place: "qingyuan" }, geometry: { type: "Polygon", coordinates: [[[105.0, 22.0], [123.5, 22.0], [123.5, 32.5], [105.0, 32.5], [105.0, 22.0]]] } },
+            { type: "Feature", properties: { zone: "humid", place: "gaoyou" }, geometry: { type: "Polygon", coordinates: [[[105.0, 22.0], [123.5, 22.0], [123.5, 32.5], [105.0, 32.5], [105.0, 22.0]]] } },
+            { type: "Feature", properties: { zone: "dry", place: "yichun" }, geometry: { type: "Polygon", coordinates: [[[100.0, 33.0], [135.0, 33.0], [135.0, 54.0], [100.0, 54.0], [100.0, 33.0]]] } },
+          ] },
+        });
+      }
+      if (!map.getLayer("wst-climate-highlight")) map.addLayer({ id: "wst-climate-highlight", type: "fill", source: "wst-climate", filter: ["==", ["get", "place"], "__none__"], paint: { "fill-color": ["match", ["get", "zone"], "humid", "rgba(100,200,120,0.9)", "dry", "rgba(230,210,90,0.9)", "rgba(200,200,200,0.6)"], "fill-opacity": 0.12 } });
+
+      buildMarkers(map);
+    });
+
+    mapRef.current = map;
+    return () => { if (flowAnimRef.current) cancelAnimationFrame(flowAnimRef.current); markersRef.current.forEach((m) => m.remove()); dishMarkerRef.current?.remove(); graphMarkersRef.current.forEach((m) => m.remove()); map.remove(); mapRef.current = null; };
+  }, [dish, effectiveDishCenter, buildMarkers]);
+
+  // 处理 tab 切换
+  useEffect(() => {
+    if (activeTab === "geo") {
+      markersRef.current.forEach((m) => { const el = m.getElement(); if (el) el.classList.add("hidden"); });
+      dishMarkerRef.current?.getElement().classList.add("hidden");
+      setGeoCauseOpen(false);
+      applyGeoHighlight(null);
+    } else if (activeTab === "ingredients") {
+      markersRef.current.forEach((m) => { const el = m.getElement(); if (el) el.classList.remove("hidden"); });
+      dishMarkerRef.current?.getElement().classList.remove("hidden");
     }
-  };
+  }, [activeTab, applyGeoHighlight]);
 
   if (loading) {
     return (
-      <div className="loading-screen">
-        <div className="ink-stain" />
-        <div className="loading-text">正在翻阅食单...</div>
-        <style jsx>{`
-          .loading-screen {
-            position: fixed; inset: 0;
-            background: linear-gradient(135deg, #f5f0e6 0%, #e8dcc8 100%);
-            display: flex; flex-direction: column;
-            align-items: center; justify-content: center; gap: 20px;
-            font-family: "Noto Serif SC", "SimSun", serif;
-          }
-          .ink-stain {
-            width: 40px; height: 40px; background: #332c28; border-radius: 50%;
-            filter: blur(8px);
-            animation: pulse 1.5s infinite;
-          }
-          @keyframes pulse {
-            0%,100% { transform: scale(0.8); opacity: 0.3; }
-            50% { transform: scale(1.3); opacity: 0.6; }
-          }
-          .loading-text { font-size: 18px; color: #8b5a2b; letter-spacing: 4px; }
-        `}</style>
+      <div style={{ position: "fixed", inset: 0, background: "linear-gradient(135deg, #f5f0e6 0%, #e8dcc8 100%)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 20, fontFamily: '"Noto Serif SC", "SimSun", serif' }}>
+        <div style={{ width: 40, height: 40, background: "#332c28", borderRadius: "50%", filter: "blur(8px)", animation: "pulse 1.5s infinite" }} />
+        <div style={{ fontSize: 18, color: "#8b5a2b", letterSpacing: 4 }}>正在翻阅食单...</div>
+        <style>{`@keyframes pulse { 0%,100% { transform: scale(0.8); opacity: 0.3; } 50% { transform: scale(1.3); opacity: 0.6; } }`}</style>
       </div>
     );
   }
 
   if (error || !dish) {
     return (
-      <div className="error-screen">
-        <div className="error-content">
-          <div className="error-icon">!</div>
-          <h2 className="error-title">{error || '菜品未找到'}</h2>
-          <button onClick={() => router.push("/chat")} className="back-btn">「 返回随园 」</button>
+      <div style={{ position: "fixed", inset: 0, background: "linear-gradient(135deg, #f5f0e6 0%, #e8dcc8 100%)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", fontFamily: '"Noto Serif SC", "SimSun", serif' }}>
+        <div style={{ textAlign: "center" }}>
+          <div style={{ width: 60, height: 60, background: "rgba(139,90,43,0.15)", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 32, color: "#8b5a2b", margin: "0 auto 20px" }}>!</div>
+          <h2 style={{ fontSize: 20, color: "#8b5a2b", letterSpacing: 4, margin: "0 0 30px" }}>{error || '菜品未找到'}</h2>
+          <button onClick={() => router.push("/chat")} style={{ background: "rgba(255,252,245,0.88)", border: "1px solid #8b5a2b", color: "#8b5a2b", padding: "10px 24px", borderRadius: 3, cursor: "pointer", fontSize: 14, fontFamily: "inherit" }}>「 返回随园 」</button>
         </div>
-        <style jsx>{`
-          .error-screen {
-            position: fixed; inset: 0;
-            background: linear-gradient(135deg, #f5f0e6 0%, #e8dcc8 100%);
-            display: flex; flex-direction: column;
-            align-items: center; justify-content: center;
-            font-family: "Noto Serif SC", "SimSun", serif;
-          }
-          .error-content {
-            text-align: center;
-          }
-          .error-icon {
-            width: 60px; height: 60px; 
-            background: rgba(139,90,43,0.15);
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 32px; color: #8b5a2b;
-            margin: 0 auto 20px;
-          }
-          .error-title {
-            font-size: 20px; color: #8b5a2b;
-            letter-spacing: 4px; margin: 0 0 30px;
-          }
-          .back-btn {
-            background: rgba(255,252,245,0.88); backdrop-filter: blur(8px);
-            border: 1px solid #8b5a2b; color: #8b5a2b;
-            padding: 10px 24px; border-radius: 3px; cursor: pointer;
-            font-size: 14px; transition: all 0.3s; font-family: inherit;
-          }
-          .back-btn:hover { background: #8b5a2b; color: #fff; }
-        `}</style>
       </div>
     );
   }
 
   return (
-    <div className="dish-detail-container">
+    <div style={{ position: "fixed", inset: 0, background: "#e8dcc8", overflow: "hidden", fontFamily: '"Noto Serif SC", "SimSun", serif' }}>
+      {/* 地图 */}
+      <div ref={mapContainerRef} className="dish-detail-map" style={{ position: "absolute", inset: 0 }} />
 
-      {/* 背景：地理地图 */}
-      <div ref={mapContainerRef} className="map-bg" />
+      {/* 粒子动画 */}
+      <ParticleCanvas ingredientPoints={ingredientPoints} dishCenterLng={effectiveDishCenter.lng} dishCenterLat={effectiveDishCenter.lat} mapRef={mapRef} visible={activeTab === "geo"} containerRef={mapContainerRef} onIngredientClick={(name, ingredient, color) => { const pt = ingredientPoints.find(p => p.name === name); if (pt) handleIngredientClickWithGraph(name, ingredient, pt.lng, pt.lat); }} />
 
-      {/* 左侧绢轴背景 + 菜品图片叠加 */}
-      <div className="left-bg-image">
-        {/* 图片容器 */}
-        <div className="dish-image-overlay">
-          {isGeneratingImage ? (
-            <div className="overlay-generating">
-              <div className="overlay-spinner" />
-              <span className="overlay-text">画中寻味...</span>
-            </div>
-          ) : imageUrl ? (
-            <img
-              src={imageUrl}
-              alt={dish?.name}
-              className="overlay-dish-img"
-              onError={() => setImgError(true)}
-            />
-          ) : imageError ? (
-            <div className="overlay-error">
-              <span className="overlay-error-icon">🌿</span>
-              <span className="overlay-error-text">{imageError}</span>
-            </div>
-          ) : dish?.image ? (
-            <img
-              src={imgError ? `https://picsum.photos/seed/${dish.id}/400/500` : dish.image}
-              alt={dish?.name}
-              className="overlay-dish-img"
-              onError={() => setImgError(true)}
-            />
-          ) : (
-            <div className="overlay-placeholder">
-              <span className="overlay-placeholder-icon">🥢</span>
-            </div>
-          )}
-          <div className="overlay-vignette" />
-          <div className="overlay-frame" />
-        </div>
-        {/* 图片下方的文字信息 */}
-        <div className="dish-image-info">
-          {dish?.history && (
-            <div className="info-section origin-text">
-              <span className="info-label-tag">袁枚曰</span>
-              <p className="info-text">{dish.history}</p>
-            </div>
-          )}
-          {dish?.tags && dish.tags.length > 0 && (
-            <div className="info-section flavor-tags">
-              <span className="info-label-tag">口味</span>
-              <div className="tags-row">
-                {dish.tags.map((tag, idx) => (
-                  <span key={idx} className="flavor-tag">{tag}</span>
-                ))}
-              </div>
-            </div>
-          )}
-          {dish?.ingredients && dish.ingredients.length > 0 && (
-            <div className="info-section main-ingredients">
-              <span className="info-label-tag">主要食材</span>
-              <p className="info-text">{dish.ingredients.join('、')}</p>
-            </div>
-          )}
-        </div>
-      </div>
+      {/* 风味扩散 */}
+      <FlavorDiffusionCanvas ingredientData={flavorData} dishCenterLng={effectiveDishCenter.lng} dishCenterLat={effectiveDishCenter.lat} mapRef={mapRef} visible={activeTab === "flavor"} containerRef={mapContainerRef} />
 
       {/* 顶部导航 */}
-      <nav className={`top-nav ${showContent ? 'visible' : ''}`}>
-        <button onClick={() => router.push("/chat")} className="back-link">「 返回随园 」</button>
+      <nav style={{ position: "fixed", top: 0, left: 0, right: 0, padding: "20px 48px", display: "flex", alignItems: "center", justifyContent: "space-between", zIndex: 300, opacity: showContent ? 1 : 0, transition: "all 0.7s ease" }}>
+        <button onClick={() => router.push("/chat")} style={{ background: "rgba(255,252,245,0.88)", backdropFilter: "blur(8px)", border: "1px solid rgba(139,90,43,0.3)", color: "#8b5a2b", padding: "7px 20px", borderRadius: 3, cursor: "pointer", fontSize: 14, fontFamily: "inherit", letterSpacing: "2px", transition: "all 0.25s" }}>「 返回随园 」</button>
+        <div style={{ background: "rgba(255,252,245,0.75)", backdropFilter: "blur(8px)", padding: "7px 20px", letterSpacing: "6px", fontSize: 13, color: "rgba(139,90,43,0.7)", fontWeight: 600 }}>清 · 袁枚</div>
       </nav>
 
-      {/* 右侧三个按键 */}
-      <div className={`right-actions ${showContent ? 'visible' : ''}`}>
-        <button className="right-action-btn" title="古今对比" onClick={() => setCookingMode(true)}>
-          <span className="right-action-icon">🔄</span>
-          <span className="right-action-text">古今对比</span>
-        </button>
-        <button className="right-action-btn" title="分享">
-          <span className="right-action-icon">📤</span>
-          <span className="right-action-text">分享</span>
-        </button>
-        <button
-          className="right-action-btn"
-          title="地图探索"
-          onClick={() => router.push("/dish/wang-sitai-babao-doufu")}
-        >
-          <span className="right-action-icon">🗺️</span>
-          <span className="right-action-text">探索</span>
-        </button>
-        <button
-          className="right-action-btn right-action-primary"
-          title="制作"
-          onClick={loadCookingSteps}
-          disabled={loadingSteps}
-        >
-          {loadingSteps ? (
-            <span className="right-action-icon right-action-spinner" />
-          ) : (
-            <span className="right-action-icon">🍳</span>
-          )}
-          <span className="right-action-text">制作</span>
-        </button>
-      </div>
-
-      {/* 主内容 */}
-      <div className={`content-overlay ${showContent ? 'visible' : ''}`}>
-        
-      </div>
-
-      {/* 底部按键 */}
-      <div className={`bottom-actions ${showContent ? 'visible' : ''}`}>
-      </div>
-
-      {/* 制作过程动画 */}
-      {showCookingSteps && dish && cookingSteps.length > 0 && (
-        <div className="cooking-steps-modal">
-          <div className="modal-backdrop" onClick={() => setShowCookingSteps(false)} />
-          <div className="modal-content">
-            <button className="modal-close" onClick={() => setShowCookingSteps(false)}>
-              ✕
-            </button>
-
-            {/* 标题 */}
-            <div className="anim-header">
-              <span className="anim-icon">🍳</span>
-              <h2 className="anim-title">制作过程</h2>
-              <span className="anim-subtitle">{dish.name}</span>
-            </div>
-
-            {/* 横向时间轴 - 直接点击图片切换 */}
-            <div className="anim-timeline" role="region" aria-label="制作步骤时间轴">
-              <div className="anim-track">
-                {cookingSteps.map((s: CookingStep, i: number) => {
-                  const isActive = i === currentStep;
-                  const isPast = i < currentStep;
-                  return (
-                    <button
-                      type="button"
-                      key={s.step}
-                      className={`anim-frame ${isActive ? 'anim-frame-active' : ''} ${isPast ? 'anim-frame-past' : ''}`}
-                      aria-current={isActive ? 'step' : undefined}
-                      aria-label={`步骤 ${s.step}: ${s.title}`}
-                      onClick={() => setCurrentStep(i)}
-                    >
-                      {s.imageBase64 ? (
-                        <img
-                          src={`data:image/png;base64,${s.imageBase64}`}
-                          alt={s.title}
-                          className="anim-frame-img"
-                        />
-                      ) : (
-                        <div className="anim-frame-placeholder">
-                          <span className="anim-frame-placeholder-icon">🍽️</span>
-                        </div>
-                      )}
-                      <span className={`anim-frame-badge ${isActive ? 'anim-frame-badge-active' : ''}`}>
-                        {s.step}
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* 当前步骤文字 */}
-            <div className="anim-textbox" key={currentStep}>
-              <h3 className="anim-step-title">{cookingSteps[currentStep]?.title}</h3>
-              <p className="anim-step-desc">{cookingSteps[currentStep]?.desc}</p>
-            </div>
-
-            {/* 底部进度点 */}
-            <div className="anim-progress-row" aria-hidden>
-              {cookingSteps.map((_: CookingStep, i: number) => (
-                <div
-                  key={i}
-                  className={`anim-dot ${i === currentStep ? 'anim-dot-active' : ''} ${i < currentStep ? 'anim-dot-past' : ''}`}
-                />
-              ))}
-            </div>
+      {/* 标题卡片 */}
+      <div style={{ position: "fixed", top: 90, left: 48, zIndex: 200, background: "rgba(45,38,32,0.88)", backdropFilter: "blur(20px)", border: "1px solid rgba(139,90,43,0.35)", borderRadius: 12, padding: "24px 32px", maxWidth: 340, boxShadow: "0 8px 32px rgba(0,0,0,0.3)", opacity: showContent ? 1 : 0, transform: showContent ? "translateY(0)" : "translateY(-16px)", transition: "all 0.8s cubic-bezier(0.23,1,0.32,1)", transitionDelay: "0.2s" }}>
+        <div style={{ color: "rgba(244,197,66,0.7)", fontSize: 11, letterSpacing: "4px", marginBottom: 10 }}>随园食单 · 珍馐</div>
+        <h1 style={{ color: "#fff", fontSize: 28, fontWeight: 700, margin: "0 0 12px", letterSpacing: "4px", borderBottom: "1px solid rgba(139,90,43,0.3)", paddingBottom: 12 }}>{dish.name}</h1>
+        <p style={{ color: "rgba(255,255,255,0.6)", fontSize: 13, lineHeight: 1.9, margin: 0, letterSpacing: "0.5px" }}>{dish.desc}</p>
+        {dish.tags?.length > 0 && (
+          <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 14 }}>
+            {dish.tags.map((tag) => (
+              <span key={tag} style={{ background: "rgba(139,90,43,0.25)", border: "1px solid rgba(139,90,43,0.3)", color: "rgba(244,197,66,0.85)", padding: "3px 10px", borderRadius: 12, fontSize: 12, letterSpacing: "1px" }}>{tag}</span>
+            ))}
           </div>
+        )}
+      </div>
+
+      {/* 袁枚原文 */}
+      {dish.history && (
+        <div style={{ position: "fixed", bottom: 80, left: 48, zIndex: 200, maxWidth: 360, background: "rgba(255,252,245,0.88)", backdropFilter: "blur(16px)", border: "1px solid rgba(139,90,43,0.25)", borderRadius: 10, padding: "18px 22px", borderLeft: "4px solid #8b5a2b", boxShadow: "0 4px 20px rgba(0,0,0,0.1)", opacity: showContent ? 1 : 0, transform: showContent ? "translateY(0)" : "translateY(16px)", transition: "all 0.8s cubic-bezier(0.23,1,0.32,1)", transitionDelay: "0.4s" }}>
+          <div style={{ color: "#8b5a2b", fontSize: 11, letterSpacing: "3px", marginBottom: 10 }}>袁枚原文</div>
+          <p style={{ color: "#3a3430", fontSize: 13, lineHeight: 2, margin: 0, fontStyle: "italic" }}>{dish.history}</p>
         </div>
       )}
 
-      <style jsx>{`
-        .dish-detail-container {
-          position: fixed;
-          top: 0;
-          right: 0;
-          bottom: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          overflow: hidden;
-          font-family: "Noto Serif SC", "Source Han Serif CN", "SimSun", "STSong", serif;
-          color: #2d2926;
-          display: flex;
-          flex-direction: column;
-        }
+      {/* 底部统计栏 */}
+      <div style={{ position: "fixed", bottom: 0, left: 0, right: 0, padding: "12px 48px", background: "rgba(45,38,32,0.8)", backdropFilter: "blur(12px)", borderTop: "1px solid rgba(139,90,43,0.2)", display: "flex", alignItems: "center", gap: 32, zIndex: 200, opacity: showContent ? 1 : 0, transition: "all 0.8s ease", transitionDelay: "0.5s" }}>
+        <span style={{ color: "rgba(255,255,255,0.4)", fontSize: 11, letterSpacing: "2px" }}>食材 {ingredientsDistribution.length || dish.ingredients?.length || 0} 种</span>
+        <span style={{ color: "rgba(255,255,255,0.4)", fontSize: 11, letterSpacing: "2px" }}>产地 {ingredientsDistribution.reduce((sum, d) => sum + d.distribution_locations.length, 0)} 处</span>
+        <div style={{ marginLeft: "auto", display: "flex", gap: 6 }}>
+          {Object.entries(INGREDIENT_COLORS).slice(0, 8).map(([name, color]) => (
+            <div key={name} title={name} style={{ width: 12, height: 12, borderRadius: "50%", background: color, boxShadow: `0 0 6px ${color}`, cursor: "default" }} />
+          ))}
+        </div>
+      </div>
 
-        /* 地理地图背景 */
-        .map-bg {
-          position: absolute;
-          top: 0;
-          right: 0;
-          bottom: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          z-index: 0;
-          /* 备用背景色 - 复古宣纸色调 */
-          background-color: #e8dcc8;
-          background-image: 
-            radial-gradient(circle at 20% 30%, rgba(139, 90, 43, 0.08) 0%, transparent 50%),
-            radial-gradient(circle at 80% 70%, rgba(139, 90, 43, 0.06) 0%, transparent 40%);
-        }
-
-        /* 确保 Mapbox canvas 正确显示 */
-        :global(.map-bg .mapboxgl-canvas) {
-          outline: none;
-        }
-
-        :global(.map-bg .mapboxgl-map) {
-          width: 100% !important;
-          height: 100% !important;
-        }
-
-        /* 确保地图标记在内容上方可见 */
-        :global(.map-bg .mapboxgl-marker) {
-          z-index: 100 !important;
-        }
-
-        /* 左侧绢轴背景 */
-        .left-bg-image {
-          position: absolute;
-          top: 10%;
-          left: 0;
-          width: 40%;
-          height: 85%;
-          background-image: url('/juanzhou.PNG');
-          background-size: 100% 100%;
-          background-repeat: no-repeat;
-          z-index: 2;
-        }
-
-        /* 图片容器 - 独立定位 */
-        .dish-image-overlay {
-          position: absolute;
-          top: 8%;
-          left: 18%;
-          right: 18%;
-          height: 48%;
-          border-radius: 12px;
-          overflow: hidden;
-        }
-
-        /* 图片下方的文字信息容器 - 独立定位 */
-        .dish-image-info {
-          position: absolute;
-          top: 58%;
-          left:10%;
-          right: 12%;
-          bottom: 10%;
-          padding: 30px 20px;
-          border-radius: 12px;
-          overflow-y: auto;
-          display: flex;
-          flex-direction: column;
-          gap: 12px;
-        }
-
-        .info-section {
-          display: flex;
-          align-items: flex-start;
-          gap: 8px;
-        }
-
-        .info-section .info-icon {
-          font-size: 16px;
-          flex-shrink: 0;
-          margin-top: 20px;
-        }
-
-        .info-label-tag {
-          font-size: 16px;
-          color: #8b5a2b;
-          letter-spacing: 2px;
-          font-weight: 600;
-          white-space: nowrap;
-          margin-right: 6px;
-        }
-
-        .info-text {
-          color: #3a3430;
-          line-height: 1.6;
-          margin: 0;
-          flex: 1;
-        }
-
-        .origin-text .info-text {
-          font-size: 14px;
-          color: #5a4a3a;
-        }
-
-        .tags-row {
-          display: flex;
-          gap: 6px;
-          flex-wrap: wrap;
-          flex: 1;
-        }
-
-        .flavor-tag {
-          background: linear-gradient(135deg, rgba(139,90,43,0.15), rgba(196,133,63,0.1));
-          color: #6b4423;
-          padding: 3px 10px;
-          border-radius: 12px;
-          font-size: 14px;
-          border: 1px solid rgba(139,90,43,0.2);
-        }
-
-        .main-ingredients .info-text {
-          font-size: 14px;
-        }
-        
-        .overlay-dish-img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          display: block;
-          filter: sepia(5%) contrast(1.05);
-          transition: transform 0.6s ease, filter 0.4s ease;
-          mask-image: radial-gradient(circle at center, black 70%, transparent 100%);
-          -webkit-mask-image: radial-gradient(circle at center, black 70%, transparent 100%);
-        }
-        
-        .dish-image-overlay:hover .overlay-dish-img {
-          transform: scale(1.03);
-          filter: sepia(3%) contrast(1.08);
-        }
-
-        /* 加载中状态 */
-        .overlay-generating {
-          width: 100%;
-          height: 100%;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          gap: 16px;
-          background: linear-gradient(135deg, #f5f0e6 0%, #e8dcc8 50%, #f5f0e6 100%);
-        }
-        
-        .overlay-spinner {
-          width: 40px;
-          height: 40px;
-          border: 2px solid rgba(139, 90, 43, 0.15);
-          border-top-color: #8b5a2b;
-          border-radius: 50%;
-          animation: spin 1s linear infinite;
-        }
-        
-        .overlay-text {
-          font-size: 13px;
-          color: #8b5a2b;
-          letter-spacing: 4px;
-          animation: pulse 2s ease-in-out infinite;
-        }
-
-        /* 错误状态 */
-        .overlay-error {
-          width: 100%;
-          height: 100%;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          gap: 12px;
-          background: linear-gradient(135deg, rgba(139, 90, 43, 0.08) 0%, rgba(196, 133, 63, 0.05) 100%);
-        }
-        
-        .overlay-error-icon {
-          font-size: 36px;
-          opacity: 0.6;
-        }
-        
-        .overlay-error-text {
-          font-size: 12px;
-          color: #8b5a2b;
-          letter-spacing: 2px;
-        }
-
-        /* 占位符 */
-        .overlay-placeholder {
-          width: 100%;
-          height: 100%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background: linear-gradient(135deg, #f5f0e6 0%, #e8dcc8 100%);
-        }
-        
-        .overlay-placeholder-icon {
-          font-size: 48px;
-          opacity: 0.3;
-        }
-
-        /* 右侧三个按键 */
-        .right-actions {
-          position: fixed;
-          right: 40px;
-          top: 50%;
-          transform: translateY(-50%) translateX(20px);
-          display: flex;
-          flex-direction: column;
-          gap: 16px;
-          z-index: 100;
-          opacity: 0;
-          transition: all 0.7s ease;
-        }
-        .right-actions.visible {
-          opacity: 1;
-          transform: translateY(-50%) translateX(0);
-          transition-delay: 0.3s;
-        }
-        .right-action-btn {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 6px;
-          padding: 14px 18px;
-          background: rgba(255, 252, 245, 0.92);
-          backdrop-filter: blur(12px);
-          border: 1px solid rgba(139, 90, 43, 0.25);
-          border-radius: 12px;
-          cursor: pointer;
-          transition: all 0.3s ease;
-          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-        }
-        .right-action-btn:hover {
-          background: rgba(139, 90, 43, 0.12);
-          border-color: #8b5a2b;
-          transform: scale(1.05);
-          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
-        }
-        .right-action-icon {
-          font-size: 22px;
-        }
-        .right-action-text {
-          font-size: 12px;
-          color: #8b5a2b;
-          letter-spacing: 2px;
-          font-family: inherit;
-        }
-        .right-action-primary {
-          background: linear-gradient(135deg, #8b5a2b, #a06830);
-          border-color: #8b5a2b;
-        }
-        .right-action-primary:hover {
-          background: linear-gradient(135deg, #a06830, #b07838);
-          border-color: #a06830;
-        }
-        .right-action-primary .right-action-text {
-          color: #fff;
-        }
-        .right-action-spinner {
-          width: 22px;
-          height: 22px;
-          border: 2px solid rgba(255, 255, 255, 0.3);
-          border-top-color: #fff;
-          border-radius: 50%;
-          animation: spin 1s linear infinite;
-        }
-
-        /* 导航 */
-        .top-nav {
-          position: fixed; top: 0; left: 0; right: 0;
-          padding: 28px 60px;
-          display: flex; justify-content: space-between; align-items: center;
-          z-index: 100;
-          opacity: 0; transform: translateY(-16px);
-          transition: all 0.7s ease;
-        }
-        .top-nav.visible { opacity: 1; transform: translateY(0); }
-        .back-link {
-          background: rgba(255,252,245,0.88); backdrop-filter: blur(8px);
-          border: 1px solid #8b5a2b; color: #8b5a2b;
-          padding: 7px 20px; border-radius: 3px; cursor: pointer;
-          font-size: 14px; transition: all 0.3s; font-family: inherit;
-        }
-        .back-link:hover { background: #8b5a2b; color: #fff; }
-        .dynasty-tag {
-          background: rgba(255,252,245,0.75); backdrop-filter: blur(8px);
-          padding: 7px 20px; letter-spacing: 6px; font-weight: bold;
-          opacity: 0.55; font-size: 14px;
-        }
-
-        /* 主内容区域 */
-        .content-overlay {
-          position: relative; z-index: 10;
-          flex: 1;
-          display: flex;
-          padding: 100px 60px 140px;
-          gap: 40px;
-          overflow-y: auto;
-        }
-
-        /* 左上角：菜品图片区域 */
-        .dish-image-section {
-          flex-shrink: 0;
-          width: 420px;
-          opacity: 0; transform: translateX(-30px);
-          transition: all 0.8s cubic-bezier(0.23,1,0.32,1);
-        }
-        .content-overlay.visible .dish-image-section {
-          opacity: 1; transform: translateX(0);
-          transition-delay: 0.15s;
-        }
-        .dish-image-wrap {
-          position: relative; 
-          height: 560px; 
-          overflow: hidden;
-          background: #e8e0d0;
-          border-radius: 12px;
-          box-shadow: 0 20px 60px rgba(0,0,0,0.15);
-        }
-        .dish-img {
-          width: 100%; height: 100%; object-fit: cover;
-          filter: sepia(8%); display: block;
-          transition: transform 0.6s ease;
-        }
-        .dish-image-wrap:hover .dish-img { transform: scale(1.03); }
-        .img-vignette {
-          position: absolute; inset: 0;
-          background: linear-gradient(to bottom, transparent 50%, rgba(45,41,38,0.18));
-          pointer-events: none;
-        }
-        .corner-seal {
-          position: absolute; top: 16px; right: 16px;
-          background: rgba(160,0,0,0.88); color: #fff;
-          padding: 5px 12px; font-size: 11px; letter-spacing: 2px;
-          border-radius: 3px;
-        }
-
-        /* AI 生成图片样式 */
-        .ai-generating {
-          position: absolute; inset: 0;
-          display: flex; flex-direction: column;
-          align-items: center; justify-content: center; gap: 16px;
-          background: linear-gradient(135deg, #f5f0e6 0%, #e8dcc8 100%);
-          z-index: 2;
-        }
-        .generating-spinner {
-          width: 48px; height: 48px;
-          border: 3px solid rgba(139,90,43,0.15);
-          border-top-color: #8b5a2b;
-          border-radius: 50%;
-          animation: spin 1s linear infinite;
-        }
-        .generating-text {
-          font-size: 14px; color: #8b5a2b;
-          letter-spacing: 3px;
-          animation: pulse 2s ease-in-out infinite;
-        }
-        @keyframes spin {
-          to { transform: rotate(360deg); }
-        }
-        @keyframes pulse {
-          0%, 100% { opacity: 0.5; }
-          50% { opacity: 1; }
-        }
-
-        /* 右侧：菜品信息区域 */
-        .dish-info-section {
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          opacity: 0; transform: translateX(30px);
-          transition: all 0.8s cubic-bezier(0.23,1,0.32,1);
-        }
-        .content-overlay.visible .dish-info-section {
-          opacity: 1; transform: translateX(0);
-          transition-delay: 0.3s;
-        }
-        .dish-info-card {
-          background: rgba(255,252,245,0.95); 
-          backdrop-filter: blur(16px);
-          border: 1px solid rgba(139,90,43,0.18);
-          border-radius: 12px; 
-          padding: 40px;
-          box-shadow: 0 20px 60px rgba(0,0,0,0.1);
-        }
-        
-        /* 菜品标题 */
-        .dish-header { margin-bottom: 32px; }
-        .dish-title {
-          font-size: 36px; margin: 0 0 16px;
-          letter-spacing: 6px; color: #1e1a17;
-          border-bottom: 2px solid #a00; 
-          padding-bottom: 16px;
-          display: inline-block;
-        }
-        .dish-desc {
-          font-size: 16px; color: #555; line-height: 2;
-          margin: 0; font-style: italic;
-        }
-
-        /* 信息块 */
-        .info-block {
-          display: flex;
-          align-items: flex-start;
-          gap: 16px;
-          padding: 16px 0;
-          border-bottom: 1px dashed rgba(139,90,43,0.15);
-        }
-        .info-icon { font-size: 20px; }
-        .info-content {
-          display: flex;
-          flex-direction: column;
-          gap: 4px;
-        }
-        .info-label {
-          font-size: 12px; color: #999; letter-spacing: 3px;
-          text-transform: uppercase;
-        }
-        .info-value {
-          font-size: 18px; color: #8b5a2b; font-weight: 500;
-        }
-
-        /* 袁枚原文 */
-        .yuanmei-block {
-          margin-top: 28px;
-          padding: 24px;
-          background: linear-gradient(135deg, rgba(139,90,43,0.06) 0%, rgba(196,133,63,0.04) 100%);
-          border-radius: 10px;
-          border-left: 4px solid #8b5a2b;
-        }
-        .yuanmei-header {
-          display: flex;
-          align-items: center;
-          gap: 12px;
-          margin-bottom: 16px;
-        }
-        .yuanmei-avatar {
-          width: 40px; height: 40px; border-radius: 50%;
-          background: linear-gradient(135deg, #8b5a2b, #c4853f);
-          color: #fff; font-size: 16px; font-weight: bold;
-          display: flex; align-items: center; justify-content: center;
-          border: 2px solid rgba(139,90,43,0.3);
-        }
-        .yuanmei-label { font-size: 14px; color: #666; letter-spacing: 2px; }
-        .yuanmei-quote-wrap {
-          position: relative;
-          padding: 0 20px;
-        }
-        .quote-mark {
-          font-size: 32px; color: rgba(139,90,43,0.3);
-          position: absolute;
-        }
-        .quote-mark:first-of-type { top: -10px; left: 0; }
-        .quote-mark-end { 
-          bottom: -20px; 
-          right: 20px; 
-          transform: rotate(180deg);
-        }
-        .yuanmei-quote {
-          font-size: 15px; color: #3a3430; line-height: 2.2;
-          margin: 0; padding: 0;
-          font-style: italic;
-        }
-
-        /* 标签 */
-        .tags-row { 
-          display: flex; gap: 10px; flex-wrap: wrap; 
-          margin-top: 24px;
-        }
-        .tag {
-          background: rgba(139,90,43,0.09); color: #8b5a2b;
-          padding: 6px 16px; border-radius: 20px; font-size: 13px;
-          border: 1px solid rgba(139,90,43,0.15);
-        }
-
-        /* 底部三个按键 */
-        .bottom-actions {
-          position: fixed;
-          bottom: 0; left: 0; right: 0;
-          padding: 20px 60px;
-          background: transparent;
-          display: flex;
-          justify-content: center;
-          gap: 20px;
-          z-index: 100;
-          opacity: 0;
-          transform: translateY(20px);
-          transition: all 0.8s ease;
-        }
-        .bottom-actions.visible {
-          opacity: 1;
-          transform: translateY(0);
-          transition-delay: 0.5s;
-        }
-        .action-btn {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          padding: 14px 32px;
-          border-radius: 8px;
-          font-size: 15px;
-          font-family: inherit;
-          cursor: pointer;
-          transition: all 0.3s ease;
-          border: 2px solid transparent;
-        }
-        .action-btn .btn-icon { font-size: 18px; }
-        .action-btn .btn-text { letter-spacing: 2px; }
-        
-        .action-primary {
-          background: linear-gradient(135deg, #8b5a2b, #a06830);
-          color: #fff;
-          border-color: #8b5a2b;
-        }
-        .action-primary:hover {
-          background: linear-gradient(135deg, #a06830, #b07838);
-          transform: translateY(-2px);
-          box-shadow: 0 8px 24px rgba(139,90,43,0.3);
-        }
-        
-        .action-secondary {
-          background: rgba(255,252,245,0.9);
-          color: #8b5a2b;
-          border-color: rgba(139,90,43,0.3);
-        }
-        .action-secondary:hover {
-          background: rgba(139,90,43,0.1);
-          border-color: #8b5a2b;
-          transform: translateY(-2px);
-        }
-
-        .action-cooking {
-          background: linear-gradient(135deg, #c9302c, #d44444);
-          color: #fff;
-          border-color: #c9302c;
-        }
-        .action-cooking:hover {
-          background: linear-gradient(135deg, #d44444, #e05555);
-          transform: translateY(-2px);
-          box-shadow: 0 8px 24px rgba(201,48,44,0.3);
-        }
-        .action-cooking:disabled {
-          opacity: 0.7;
-          cursor: wait;
-        }
-
-        /* 制作过程模态框 */
-        .cooking-steps-modal {
-          position: fixed;
-          inset: 0;
-          z-index: 1000;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          padding: 20px;
-        }
-        .modal-backdrop {
-          position: absolute;
-          inset: 0;
-          background: rgba(0,0,0,0.7);
-          backdrop-filter: blur(8px);
-        }
-        .modal-content {
-          position: relative;
-          width: 100%;
-          max-width: 900px;
-          max-height: 90vh;
-          overflow-y: auto;
-          z-index: 1;
-          border-radius: 16px;
-          background: linear-gradient(135deg, #1a1612 0%, #2d2620 40%, #1a1612 100%);
-          padding: 40px;
-        }
-        .modal-close {
-          position: absolute;
-          top: -50px;
-          right: 0;
-          width: 40px;
-          height: 40px;
-          border-radius: 50%;
-          background: rgba(255,255,255,0.2);
-          border: 1px solid rgba(255,255,255,0.3);
-          color: #fff;
-          font-size: 20px;
-          cursor: pointer;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          transition: all 0.2s;
-        }
-        .modal-close:hover {
-          background: rgba(255,255,255,0.3);
-        }
-
-        /* 动画样式 */
-        .anim-header {
-          display: flex;
-          align-items: center;
-          gap: 12px;
-          margin-bottom: 20px;
-        }
-        .anim-icon { font-size: 24px; }
-        .anim-title {
-          font-size: 20px;
-          font-weight: 600;
-          color: #fff;
-          margin: 0;
-          letter-spacing: 3px;
-        }
-        .anim-subtitle {
-          font-size: 13px;
-          color: #f4c542;
-          margin-left: auto;
-          letter-spacing: 1px;
-        }
-
-        /* ── 横向时间轴 ── */
-        .anim-timeline {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 12px;
-        }
-
-        .anim-track {
-          display: flex;
-          gap: 10px;
-          flex: 1;
-          min-width: 0;
-          overflow-x: auto;
-          scroll-behavior: smooth;
-          scrollbar-width: none;
-          -ms-overflow-style: none;
-        }
-        .anim-track::-webkit-scrollbar { display: none; }
-
-        .anim-frame {
-          flex-shrink: 0;
-          width: 120px;
-          aspect-ratio: 4 / 3;
-          border-radius: 10px;
-          overflow: hidden;
-          position: relative;
-          background: #2d2620;
-          border: 2px solid rgba(255,255,255,0.06);
-          transition: border-color 0.4s ease, box-shadow 0.4s ease, opacity 0.4s ease, transform 0.3s ease;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          cursor: pointer;
-        }
-
-        .anim-frame:hover {
-          transform: scale(1.05);
-          border-color: rgba(255,255,255,0.25);
-        }
-
-        .anim-frame-active {
-          border-color: rgba(244, 197, 66, 0.7);
-          box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4);
-          z-index: 2;
-        }
-
-        .anim-frame-past {
-          opacity: 0.5;
-        }
-
-        .anim-frame:not(.anim-frame-active):not(.anim-frame-past) {
-          opacity: 0.28;
-        }
-
-        .anim-frame-img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          display: block;
-        }
-
-        .anim-frame-placeholder {
-          width: 100%;
-          height: 100%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background: linear-gradient(135deg, #2d2620 0%, #1a1612 100%);
-        }
-
-        .anim-frame-placeholder-icon {
-          font-size: 24px;
-          opacity: 0.4;
-        }
-
-        .anim-frame-badge {
-          position: absolute;
-          bottom: 6px;
-          right: 8px;
-          background: rgba(0, 0, 0, 0.55);
-          color: rgba(255, 255, 255, 0.75);
-          font-size: 10px;
-          font-weight: 600;
-          padding: 2px 6px;
-          border-radius: 4px;
-          pointer-events: none;
-        }
-
-        .anim-frame-badge-active {
-          background: linear-gradient(135deg, #f4c542, #e6a91a);
-          color: #2d2926;
-        }
-
-        .anim-textbox {
-          margin-top: 16px;
-          padding: 0 4px;
-          animation: fadeSlide 0.4s ease-out;
-        }
-
-        @keyframes fadeSlide {
-          from { opacity: 0; transform: translateY(6px); }
-          to   { opacity: 1; transform: translateY(0); }
-        }
-
-        .anim-step-title {
-          font-size: 22px;
-          font-weight: 600;
-          color: #fff;
-          margin: 0 0 10px;
-          letter-spacing: 3px;
-        }
-
-        .anim-step-desc {
-          font-size: 14px;
-          line-height: 1.85;
-          color: rgba(255,255,255,0.75);
-          margin: 0;
-        }
-
-        .anim-progress-row {
-          display: flex;
-          justify-content: center;
-          gap: 8px;
-          margin-top: 16px;
-        }
-
-        .anim-dot {
-          width: 6px;
-          height: 6px;
-          border-radius: 50%;
-          background: rgba(255,255,255,0.2);
-          transition: all 0.35s ease;
-        }
-
-        .anim-dot-past {
-          background: rgba(255,255,255,0.35);
-        }
-
-        .anim-dot-active {
-          width: 20px;
-          border-radius: 3px;
-          background: linear-gradient(90deg, #f4c542, #e6a91a);
-        }
-
-        /* 地图定位标记样式 */
-        .dish-location-marker {
-          cursor: pointer;
-          z-index: 10;
-        }
-
-        .marker-pin {
-          position: relative;
-          width: 32px;
-          height: 32px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-
-        .marker-dot {
-          width: 16px;
-          height: 16px;
-          background: linear-gradient(135deg, #d44444, #a83232);
-          border: 3px solid rgba(255,255,255,0.9);
-          border-radius: 50%;
-          box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-          position: relative;
-          z-index: 2;
-        }
-
-        .marker-pulse {
-          position: absolute;
-          width: 32px;
-          height: 32px;
-          background: rgba(212, 68, 68, 0.4);
-          border-radius: 50%;
-          animation: pulse-ring 2s ease-out infinite;
-        }
-
-        @keyframes pulse-ring {
-          0% {
-            transform: scale(0.8);
-            opacity: 0.8;
+      {/* 浮动对话框 - 完整集成王太守八宝豆腐的功能 */}
+      <FloatingDialog
+        activeTab={activeTab}
+        onTabChange={(tab) => setActiveTab(tab as ActiveTab)}
+        ingredientColors={INGREDIENT_COLORS}
+        ingredientGeoInfo={ingredientGeoInfo}
+        selectedIngredient={selectedIngredient}
+        onIngredientSelect={(name) => {
+          if (!name) { setSelectedIngredient(null); setGeoCauseOpen(false); setGeoTarget(null); }
+          else { const info = findIngredientGeoInfo(name); if (info) setSelectedIngredient(info); }
+        }}
+        geoIngredientDetail={geoIngredientDetail}
+        geoIngredientLoading={geoIngredientLoading}
+        geoCauseTarget={geoTarget}
+        geoCauseText={geoCauseText}
+        geoCauseLoading={geoCauseLoading}
+        onGeoCauseClear={() => { setGeoTarget(null); setGeoCauseText(""); setSelectedIngredient(null); }}
+        graphIngredientsData={graphIngredientsData}
+        graphLoading={graphLoading}
+        onGraphIngredientClick={(ingredient, points) => {
+          if (points.length > 0 && mapRef.current) {
+            const pt = points[0];
+            mapRef.current.flyTo({ center: [pt.lng, pt.lat], zoom: 6, duration: 1400, essential: true });
           }
-          100% {
-            transform: scale(2.5);
-            opacity: 0;
-          }
-        }
-
-        /* 弹出框样式 - 使用 :global() 使 Mapbox 内置类样式生效 */
-        :global(.dish-popup .mapboxgl-popup-content) {
-          background: linear-gradient(135deg, #2d2926, #3d3530) !important;
-          border-radius: 8px !important;
-          padding: 12px 16px !important;
-          box-shadow: 0 4px 16px rgba(0,0,0,0.3) !important;
-          min-width: 120px;
-        }
-
-        :global(.dish-popup .mapboxgl-popup-tip) {
-          border-top-color: #2d2926 !important;
-        }
-
-        :global(.dish-popup .popup-content) {
-          font-family: "Noto Serif SC", "SimSun", serif;
-        }
-
-        :global(.dish-popup .popup-title) {
-          color: #fff;
-          font-size: 14px;
-          font-weight: 600;
-          letter-spacing: 1px;
-          margin-bottom: 4px;
-        }
-
-        :global(.dish-popup .popup-origin) {
-          color: rgba(255,255,255,0.7);
-          font-size: 12px;
-        }
-
-        /* 响应式 */
-        @media (max-width: 900px) {
-          .content-overlay {
-            flex-direction: column;
-            padding: 80px 24px 120px;
-          }
-          .dish-image-section { width: 100%; }
-          .dish-image-wrap { height: 300px; }
-          .top-nav { padding: 18px 24px; }
-          .dish-title { font-size: 26px; }
-          .bottom-actions { 
-            padding: 16px 24px;
-            gap: 12px;
-          }
-          .action-btn { 
-            padding: 12px 20px;
-            font-size: 14px;
-          }
-          .action-btn .btn-text { display: none; }
-        }
-      `}</style>
-
-      {/* 古今对比弹窗 - 使用统一的 CookingCompareOverlay 组件 */}
-      <CookingCompareOverlay
-        open={cookingMode}
-        onClose={() => setCookingMode(false)}
-        dishTitle={dish?.name || "菜品"}
+        }}
       />
+
+      {/* 古今对比 */}
+      <CookingCompareOverlay open={cookingMode} onClose={() => setCookingMode(false)} dishTitle={dish.name} />
+
+      <style>{`
+        .dish-detail-map .mapboxgl-canvas { outline: none !important; }
+        .wst-marker-wrap:hover { z-index: 999 !important; }
+      `}</style>
     </div>
   );
 }

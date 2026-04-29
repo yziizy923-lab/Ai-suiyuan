@@ -52,6 +52,19 @@ type GeoCauseTarget = {
   lat: number;
 };
 
+// 知识图谱返回的食材地理信息
+type GraphIngredientData = {
+  ingredient: string;
+  factors: string[];
+  points: Array<{
+    region: string;
+    lat: number;
+    lng: number;
+    desc: string;
+    factor: string;
+  }>;
+};
+
 type GeoPreset = {
   id: "gaoyou" | "jinhua" | "qingyuan" | "yichun" | "nanjing";
   flyTo: { center: [number, number]; zoom: number };
@@ -141,6 +154,12 @@ export default function WangSitaiPage() {
   const [cookingMode, setCookingMode] = useState(false);
   const [selectedIngredient, setSelectedIngredient] = useState<IngredientGeoInfo | null>(null);
 
+  // 知识图谱数据
+  const [graphIngredientsData, setGraphIngredientsData] = useState<GraphIngredientData[]>([]);
+  const [graphLoading, setGraphLoading] = useState(false);
+  const graphCacheRef = useRef<Map<string, GraphIngredientData>>(new Map());
+  const graphMarkersRef = useRef<mapboxgl.Marker[]>([]);
+
   const ingredientGeoInfo: Record<string, IngredientGeoInfo> = (() => {
     const info: Record<string, IngredientGeoInfo> = {};
     (dishData.ingredients_distribution as Array<{
@@ -175,6 +194,108 @@ export default function WangSitaiPage() {
     }
     return null;
   };
+
+  // ── 从知识图谱获取食材地理信息 ────────────────────────────────────────────
+  const fetchIngredientFromGraph = useCallback(
+    async (ingredientName: string): Promise<GraphIngredientData | null> => {
+      const cached = graphCacheRef.current.get(ingredientName);
+      if (cached) return cached;
+
+      setGraphLoading(true);
+      try {
+        const res = await fetch(
+          `/api/dish-ingredients-graph?ingredient=${encodeURIComponent(ingredientName)}`
+        );
+        if (!res.ok) return null;
+        const data = await res.json();
+        if (data.success && data.points && data.points.length > 0) {
+          const graphData: GraphIngredientData = {
+            ingredient: data.ingredient,
+            factors: data.factors,
+            points: data.points,
+          };
+          graphCacheRef.current.set(ingredientName, graphData);
+          return graphData;
+        }
+      } catch {
+        // ignore network errors
+      } finally {
+        setGraphLoading(false);
+      }
+      return null;
+    },
+    []
+  );
+
+  // ── 在地图上渲染知识图谱地理坐标点（带黄色高亮边框） ────────────────────────
+  const addGraphGeoMarkers = useCallback(
+    (map: mapboxgl.Map, ingredientName: string, points: GraphIngredientData["points"]) => {
+      const color = INGREDIENT_COLORS[ingredientName] || "#f4c542";
+      const el = document.createElement("div");
+      el.style.position = "relative";
+      el.style.width = "20px";
+      el.style.height = "20px";
+
+      const inner = document.createElement("div");
+      inner.style.cssText = `
+        position: absolute; top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        width: 12px; height: 12px; border-radius: 50%;
+        background: ${color};
+        border: 2px solid #f4c542;
+        box-shadow: 0 0 8px 2px ${color}80, 0 0 0 4px #f4c54240;
+        animation: graph-pulse 1.8s ease-out infinite;
+      `;
+
+      const style = document.createElement("style");
+      style.textContent = `
+        @keyframes graph-pulse {
+          0% { transform: translate(-50%,-50%) scale(1); opacity: 0.9; }
+          100% { transform: translate(-50%,-50%) scale(2); opacity: 0; }
+        }
+      `;
+      if (!document.getElementById("graph-marker-style")) {
+        style.id = "graph-marker-style";
+        document.head.appendChild(style);
+      }
+
+      el.appendChild(inner);
+
+      if (points.length > 0) {
+        const pt = points[0];
+        const popup = new mapboxgl.Popup({ offset: 20, closeButton: false })
+          .setHTML(`
+            <div style="font-family:'Noto Serif SC',serif; font-size:12px;">
+              <div style="color:#f4c542;font-weight:600;margin-bottom:4px;">📍 ${ingredientName} · 图谱坐标</div>
+              <div style="color:rgba(255,255,255,0.6);margin-bottom:2px;">地区：${pt.region}</div>
+              <div style="color:rgba(255,255,255,0.4);font-size:11px;">
+                ${pt.factor ? `地理因素：${pt.factor}` : ""}
+              </div>
+            </div>
+          `);
+
+        const marker = new mapboxgl.Marker({ element: el })
+          .setLngLat([pt.lng, pt.lat])
+          .setPopup(popup)
+          .addTo(map);
+
+        el.addEventListener("mouseenter", () => marker.getPopup()?.addTo(map));
+        el.addEventListener("mouseleave", () => marker.getPopup()?.remove());
+
+        // 飞向该点
+        map.flyTo({
+          center: [pt.lng, pt.lat],
+          zoom: 6,
+          duration: 1400,
+          essential: true,
+        });
+
+        return marker;
+      }
+      return null;
+    },
+    []
+  );
 
   const ingredientPoints: IngredientPoint[] = (
     dishData.ingredients_distribution as Array<{
@@ -281,6 +402,46 @@ export default function WangSitaiPage() {
       }
     },
     []
+  );
+
+  // ── 点击食材粒子：知识图谱查询 + 本地数据 + 地图高亮 ───────────────────────
+  const handleIngredientClickWithGraph = useCallback(
+    async (placeName: string, ingredient: string, lng: number, lat: number) => {
+      const map = mapRef.current;
+
+      // 1. 先从本地 JSON 数据中找地理条件
+      const geoInfo = findIngredientGeoInfo(placeName);
+      if (geoInfo) {
+        setSelectedIngredient(geoInfo);
+        setGeoIngredientDetail("");
+        fetchIngredientGeoDetail(placeName, ingredient, lng, lat);
+      }
+
+      // 2. 查询知识图谱，获取该食材关联的地理因素和坐标
+      const graphData = await fetchIngredientFromGraph(ingredient);
+      if (graphData && graphData.points.length > 0) {
+        setGraphIngredientsData((prev) => {
+          const filtered = prev.filter((d) => d.ingredient !== ingredient);
+          return [...filtered, graphData!];
+        });
+
+        // 在地图上添加知识图谱坐标点（黄色边框高亮）
+        if (map) {
+          graphMarkersRef.current.forEach((m) => m.remove());
+          graphMarkersRef.current = [];
+          const marker = addGraphGeoMarkers(map, ingredient, graphData.points);
+          if (marker) graphMarkersRef.current.push(marker);
+        }
+      }
+
+      // 3. 触发产地高亮和飞行动画
+      const preset = getGeoPreset(placeName);
+      applyGeoHighlight(preset);
+
+      // 4. 弹出地理成因面板
+      openGeoCause({ ingredient, placeName, lng, lat });
+    },
+    [findIngredientGeoInfo, fetchIngredientGeoDetail, fetchIngredientFromGraph, addGraphGeoMarkers, applyGeoHighlight, openGeoCause]
   );
 
   const runFlowAnimation = useCallback((map: mapboxgl.Map, layerId: string) => {
@@ -515,12 +676,7 @@ export default function WangSitaiPage() {
         el.addEventListener("mouseleave", () => marker.getPopup()?.remove());
         el.addEventListener("click", (ev) => {
           ev.stopPropagation();
-          openGeoCause({
-            ingredient: pt.ingredient,
-            placeName: pt.name,
-            lng: pt.lng,
-            lat: pt.lat,
-          });
+          handleIngredientClickWithGraph(pt.name, pt.ingredient, pt.lng, pt.lat);
         });
 
         markersRef.current.push(marker);
@@ -565,7 +721,7 @@ export default function WangSitaiPage() {
         duration: 2000,
       });
     },
-    [ingredientPoints, openGeoCause]
+    [ingredientPoints, handleIngredientClickWithGraph]
   );
 
   useEffect(() => {
@@ -925,13 +1081,9 @@ export default function WangSitaiPage() {
         visible={particleVisible}
         containerRef={mapContainerRef}
         onIngredientClick={(name, ingredient, color) => {
-          const geoInfo = findIngredientGeoInfo(name);
-          if (geoInfo) {
-            setSelectedIngredient(geoInfo);
-            // 清空上次内容，触发新一轮 AI 生成
-            setGeoIngredientDetail("");
-            const pt = ingredientPoints.find((p) => p.name === name);
-            if (pt) fetchIngredientGeoDetail(name, ingredient, pt.lng, pt.lat);
+          const pt = ingredientPoints.find((p) => p.name === name);
+          if (pt) {
+            handleIngredientClickWithGraph(name, ingredient, pt.lng, pt.lat);
           }
         }}
       />
@@ -1169,6 +1321,22 @@ export default function WangSitaiPage() {
           setGeoTarget(null);
           setGeoCauseText("");
           setGeoCauseLoading(false);
+        }}
+        graphIngredientsData={graphIngredientsData}
+        graphLoading={graphLoading}
+        onGraphIngredientClick={(ingredient, points) => {
+          if (points.length > 0) {
+            const pt = points[0];
+            const map = mapRef.current;
+            if (map) {
+              map.flyTo({
+                center: [pt.lng, pt.lat],
+                zoom: 6,
+                duration: 1400,
+                essential: true,
+              });
+            }
+          }
         }}
       />
 
